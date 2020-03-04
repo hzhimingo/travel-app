@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/components/extended_icon.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -35,6 +37,14 @@ class CustomBottomNavigationBar extends StatefulWidget {
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   int _currentIndex = 0;
+  AuthorizationBloc _authorizationBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _authorizationBloc = BlocProvider.of<AuthorizationBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -105,9 +115,12 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   }
 
   _handleOnTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    //如果没有登录授权的话，如果index=3也就是点击了"我的"按钮就保持原来的状态
+    if (!(index == 3 && _authorizationBloc.state is UnAuthorized)) {
+      setState(() {
+        _currentIndex = index;
+      });
+    }
     widget.onTap(index);
   }
 }

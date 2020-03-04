@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/core/constant/iconfont.dart';
+import 'package:travel/core/route/routes.dart';
+import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/pages/explore/explore.dart';
 import 'package:travel/presentation/pages/home/home.dart';
-import 'package:travel/presentation/pages/pop/pop.dart';
 import 'package:travel/presentation/pages/profile/profile.dart';
 import 'package:travel/presentation/pages/stroke/stroke.dart';
 
@@ -14,6 +16,8 @@ class Root extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //ignore: close_sinks
+    final AuthorizationBloc _authoriztionBloc = BlocProvider.of<AuthorizationBloc>(context);
     return Scaffold(
       body: PageView(
         controller: _controller,
@@ -28,21 +32,21 @@ class Root extends StatelessWidget {
       bottomNavigationBar: CustomBottomNavigationBar(
         onTap: (index) {
           //在此判断是否已经授权登录
-          _controller.jumpToPage(index);
+          if (index == 3 && _authoriztionBloc.state is UnAuthorized) {
+            GlobalRoute.router.navigateTo(context, '/login').then((value) {
+              if (_authoriztionBloc.state is UnAuthorized) {
+                //doNoting
+              } else {
+                _controller.jumpToPage(index);
+              }
+            });
+          } else {
+            _controller.jumpToPage(index);
+          }
         },
         activeColor: Theme.of(context).primaryColor,
         center: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return Pop();
-                },
-              ),
-            );
-          },
+          onTap: () => GlobalRoute.router.navigateTo(context, '/pop'),
           child: Container(
             width: 42.0,
             height: 32.0,
