@@ -1,0 +1,47 @@
+name: travel
+description: travel app
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dio: ^3.0.9
+  dartz: ^0.8.9
+  fluro: ^1.5.2
+  badges: ^1.1.1
+  get_it: ^4.0.0
+  oktoast: ^2.3.1+1
+  equatable: ^1.1.1
+  flutter_bloc: ^3.2.0
+  waterfall_flow: ^0.1.3
+  extended_image: ^0.7.1
+  cupertino_icons: ^0.1.2
+  flutter_spinkit: ^4.1.2
+  pull_to_refresh: ^1.5.8
+  shared_preferences: ^0.5.6+2
+  pin_code_text_field: ^1.5.1
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^4.1.1
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: IconFont
+      fonts:
+        - asset: assets/fonts/iconfont.ttf
+    - family: PingFangRegular
+      fonts:
+        - asset: assets/fonts/PingFangRegular.ttf
+    - family: PingFangSCLight
+      fonts:
+        - asset: assets/fonts/PingFangSCLight.otf
+    - family: PingFangSCThin
+      fonts:
+        - asset: assets/fonts/PingFangSCThin.otf
