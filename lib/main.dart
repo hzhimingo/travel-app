@@ -2,10 +2,13 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:travel/core/route/routes.dart';
+import 'package:travel/injection/injection.dart';
+import 'package:travel/route/routes.dart';
 import 'package:travel/core/theme/themes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await init();
   setStatusBar();
   setRoute();
   runApp(TravelApp());

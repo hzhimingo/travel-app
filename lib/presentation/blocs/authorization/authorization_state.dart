@@ -10,6 +10,9 @@ class UnAuthorized extends AuthorizationState {
 }
 
 class Authorized extends AuthorizationState {
+  final Authorization authorization;
+
+  Authorized({this.authorization});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [authorization];
 }

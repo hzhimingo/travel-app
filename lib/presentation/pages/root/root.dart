@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/core/constant/iconfont.dart';
-import 'package:travel/core/route/routes.dart';
-import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
+import 'package:travel/route/routes.dart';
 import 'package:travel/presentation/pages/explore/explore.dart';
 import 'package:travel/presentation/pages/home/home.dart';
 import 'package:travel/presentation/pages/profile/profile.dart';
 import 'package:travel/presentation/pages/stroke/stroke.dart';
+import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 
 import './components/components.dart';
 

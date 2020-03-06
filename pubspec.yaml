@@ -45,3 +45,5 @@ flutter:
     - family: PingFangSCThin
       fonts:
         - asset: assets/fonts/PingFangSCThin.otf
+  assets:
+    - assets/images/login_background.jpg

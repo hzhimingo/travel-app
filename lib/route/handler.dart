@@ -1,13 +1,14 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/pages/pages.dart';
 import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 
 var rootHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return BlocProvider(
-      create: (context) => AuthorizationBloc(),
+      create: (context) => AuthorizationBloc()..add(InitAuthorized()),
       child: Root(),
     );
   },
@@ -22,7 +23,10 @@ var loginHandler = Handler(
       PageRouteBuilder(
         opaque: false,
         pageBuilder: (BuildContext context, _, __) {
-          return Login();
+          return BlocProvider<LoginBloc>(
+            create: (context) => LoginBloc(),
+            child: Login(),
+          );
         },
       ),
     );
