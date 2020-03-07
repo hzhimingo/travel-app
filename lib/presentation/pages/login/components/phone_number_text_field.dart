@@ -10,8 +10,8 @@ class PhoneNumberTextField extends StatefulWidget {
 
 class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
   TextEditingController _controller;
-  SmsFormBloc _smsFormBloc;
   bool editable;
+  SmsFormBloc _smsFormBloc;
 
   @override
   void initState() {
@@ -64,13 +64,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                 ],
                 enabled: editable,
                 onChanged: (text) {
-                  if (text.length == 11) {
-                    _smsFormBloc.add(MakeFormValidated(phoneNumber: text));
-                  } else {
-                    if (_smsFormBloc.state is SmsFormValidated) {
-                      _smsFormBloc.add(MakeFormUnValidated());
-                    }
-                  }
+                  _smsFormBloc.add(VerifyPhoneNumber(phoneNumber: text));
                 },
                 controller: _controller,
                 style: TextStyle(
@@ -98,7 +92,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
             child: IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                _smsFormBloc.add(MakeFormUnValidated());
+                _smsFormBloc.add(SetPhoneNumberUnValided());
                 _controller.clear();
               },
             ),

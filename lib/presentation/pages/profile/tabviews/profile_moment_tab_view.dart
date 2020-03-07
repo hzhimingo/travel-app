@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/route/routes.dart';
 
 class ProfileMomentTabView extends StatelessWidget {
   const ProfileMomentTabView({Key key}) : super(key: key);
@@ -7,7 +8,12 @@ class ProfileMomentTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('MomentTabView'),
+        child: RaisedButton(
+          child: Text('登录'),
+          onPressed: () {
+            GlobalRoute.router.navigateTo(context, Routes.login);
+          },
+        ),
       ),
     );
   }

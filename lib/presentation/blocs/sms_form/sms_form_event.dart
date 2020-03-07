@@ -4,15 +4,16 @@ abstract class SmsFormEvent extends Equatable {
   const SmsFormEvent();
 }
 
-class MakeFormValidated extends SmsFormEvent {
+class VerifyPhoneNumber extends SmsFormEvent {
   final String phoneNumber;
 
-  MakeFormValidated({this.phoneNumber});
+  VerifyPhoneNumber({@required this.phoneNumber});
+
   @override
   List<Object> get props => [phoneNumber];
 }
 
-class MakeFormUnValidated extends SmsFormEvent {
+class SetPhoneNumberUnValided extends SmsFormEvent {
   @override
   List<Object> get props => [];
 }
@@ -20,9 +21,10 @@ class MakeFormUnValidated extends SmsFormEvent {
 class RequestSendSmsCode extends SmsFormEvent {
   final String phoneNumber;
 
-  RequestSendSmsCode({this.phoneNumber});
-
+  RequestSendSmsCode({
+    @required this.phoneNumber,
+  });
   @override
   List<Object> get props => [phoneNumber];
-}
 
+}

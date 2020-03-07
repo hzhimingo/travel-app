@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key key}) : super(key: key);
@@ -8,7 +7,6 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //ignore: close_sinks
-    final AuthorizationBloc _authorizationBloc = BlocProvider.of<AuthorizationBloc>(context);
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -16,7 +14,6 @@ class Settings extends StatelessWidget {
           RaisedButton(
             child: Text('退出登录'),
             onPressed: () {
-              _authorizationBloc.add(RemoveAuthorized());
             },
           ),
         ],

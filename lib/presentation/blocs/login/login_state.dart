@@ -1,23 +1,32 @@
 part of 'login_bloc.dart';
 
+enum LoginType {
+  SmsCode,
+  Password,
+}
+
 abstract class LoginState extends Equatable {
   const LoginState();
 }
 
-class SendSmsCode extends LoginState {
+class UnLoggedIn extends LoginState {
+  final LoginType loginType;
+  UnLoggedIn({this.loginType});
+  @override
+  List<Object> get props => [loginType];
+}
+
+class LoggingIn extends LoginState {
   @override
   List<Object> get props => [];
 }
 
-class SmsCodeLogin extends LoginState {
-  final String phoneNumber;
-
-  SmsCodeLogin({this.phoneNumber});
+class LoginSuccess extends LoginState {
   @override
-  List<Object> get props => [phoneNumber];
+  List<Object> get props => [];
 }
 
-class PasswordLogin extends LoginState {
+class LoginFailure extends LoginState {
   @override
   List<Object> get props => [];
 }

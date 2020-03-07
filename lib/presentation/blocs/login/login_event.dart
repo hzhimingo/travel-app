@@ -4,7 +4,7 @@ abstract class LoginEvent extends Equatable {
   const LoginEvent();
 }
 
-class ChangeToSendSmsCode extends LoginEvent {
+class ChangeToSmsLogin extends LoginEvent {
   @override
   List<Object> get props => [];
 }
@@ -14,11 +14,26 @@ class ChangeToPasswordLogin extends LoginEvent {
   List<Object> get props => [];
 }
 
-class JumpToSmsCodeLogin extends LoginEvent {
+class LoginBySmsCode extends LoginEvent {
   final String phoneNumber;
+  final String checkCode;
 
-  JumpToSmsCodeLogin({this.phoneNumber});
-  
+  LoginBySmsCode({
+    @required this.phoneNumber,
+    @required this.checkCode,
+  });
   @override
-  List<Object> get props => [phoneNumber];
+  List<Object> get props => [phoneNumber, checkCode];
+}
+
+class LoginByPassword extends LoginEvent {
+  final String account;
+  final String password;
+
+  LoginByPassword({
+    @required this.account,
+    @required this.password,
+  });
+  @override
+  List<Object> get props => [account, password];
 }

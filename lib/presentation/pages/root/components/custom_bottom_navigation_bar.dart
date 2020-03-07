@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/components/extended_icon.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -37,12 +35,10 @@ class CustomBottomNavigationBar extends StatefulWidget {
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   int _currentIndex = 0;
-  AuthorizationBloc _authorizationBloc;
 
   @override
   void initState() {
     super.initState();
-    _authorizationBloc = BlocProvider.of<AuthorizationBloc>(context);
   }
 
   @override

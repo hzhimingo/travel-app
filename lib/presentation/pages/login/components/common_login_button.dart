@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:travel/core/util/validators.dart';
-import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/blocs/pwd_form/pwd_form_bloc.dart';
 import 'package:travel/presentation/blocs/sms_form/sms_form_bloc.dart';
-import 'package:travel/route/routes.dart';
 
 class CommonLoginButton extends StatelessWidget {
   final double height = 55.0;
@@ -22,77 +18,62 @@ class CommonLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      //ignore: missing_return
+    return BlocConsumer<LoginBloc, LoginState>(
+      listener: (context, state) {},
+      buildWhen: (previous, current) => current is UnLoggedIn,
       builder: (context, state) {
-        if (state is SendSmsCode) {
-          return BlocConsumer<SmsFormBloc, SmsFormState>(
-            listener: (context, state) {
-              if (state is SmsSendSuccess) {
-                showToast('短信验证码发送成功');
-                context.bloc<LoginBloc>().add(JumpToSmsCodeLogin(phoneNumber: state.phoneNumber));
-              }
-              if (state is SmsSendFail) {
-                showToast('短信验证码发送失败,请重试');
-              }
-            },
-            //ignore: missing_return
-            builder: (context, state) {
-              if (state is SmsFormUnValidated) {
-                return _buildButton('获取验证码', defaultColor);
-              }
-              if (state is SmsFormValidated) {
-                return GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    if (Validators.isPhoneNumber(state.phoneNumber)) {
-                      //发送短信验证码
-                      context.bloc<SmsFormBloc>().add(
-                          RequestSendSmsCode(phoneNumber: state.phoneNumber));
-                    } else {
-                      showToast('请输入正确的手机号码');
-                    }
-                  },
-                  child: _buildButton('获取验证码', activeColor),
-                );
-              }
-            },
-          );
-        }
-        if (state is PasswordLogin) {
-          return BlocConsumer<PwdFormBloc, PwdFormState>(
-            listener: (context, state) {
-              if (state.isSubmitting) {
-                //登录
-                showToast('登录中......');
-              }
-              if (state.isSuccess) {
-                showToast('登录成功');
-                context.bloc<AuthorizationBloc>().add(SetAuthorized(authorization: state.authorization));
-                GlobalRoute.router.pop(context);
-              }
-              if (state.isFailure) {
-                showToast('登录失败，用户名或密码错误');
-              }
-            },
-            builder: (context, state) {
-              if (state.isFormValid) {
-                return GestureDetector(
-                  onTap: () {
-                    context.bloc<PwdFormBloc>().add(
-                          SubmitForm(
-                            account: state.account,
-                            password: state.password,
-                          ),
-                        );
-                  },
-                  child: _buildButton('登录', activeColor),
-                );
-              } else {
-                return _buildButton('登录', defaultColor);
-              }
-            },
-          );
+        if (state is UnLoggedIn) {
+          if (state.loginType == LoginType.SmsCode) {
+            return BlocConsumer<SmsFormBloc, SmsFormState>(
+              listener: (context, state) {
+                if (state is SmsSending) {
+                  print('发送中');
+                }
+                if (state is SmsSendSuccess) {
+                  print('发送成功');
+                }
+                if (state is SmsSendFailure) {
+                  print('发送失败');
+                }
+              },
+              buildWhen: (previous, current) => current is SmsUnSend,
+              builder: (context, state) {
+                if (state is SmsUnSend) {
+                  if (state.isPhoneValided) {
+                    return GestureDetector(
+                      onTap: () {
+                        context.bloc<SmsFormBloc>().add(
+                            RequestSendSmsCode(phoneNumber: state.phoneNumber));
+                      },
+                      child: _buildButton('获取验证码', activeColor),
+                    );
+                  } else {
+                    return _buildButton('获取验证码', defaultColor);
+                  }
+                }
+              },
+            );
+          } else {
+            return BlocBuilder<PwdFormBloc, PwdFormState>(
+              builder: (context, state) {
+                if (state.isFormValided) {
+                  return GestureDetector(
+                    onTap: () {
+                      context.bloc<LoginBloc>().add(
+                            LoginByPassword(
+                              account: state.account,
+                              password: state.password,
+                            ),
+                          );
+                    },
+                    child: _buildButton('登录', activeColor),
+                  );
+                } else {
+                  return _buildButton('登录', defaultColor);
+                }
+              },
+            );
+          }
         }
       },
     );

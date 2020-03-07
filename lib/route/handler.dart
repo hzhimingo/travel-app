@@ -46,7 +46,6 @@ var popHandler = Handler(
 );
 
 var settingsHandler = Handler(
-  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    return Settings();
-  }
-);
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return Settings();
+});

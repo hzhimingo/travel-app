@@ -1,8 +1,9 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/presentation/blocs/pwd_form/pwd_form_bloc.dart';
 import 'package:travel/presentation/blocs/sms_form/sms_form_bloc.dart';
 import 'package:travel/route/routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 
 import './components/components.dart';
@@ -65,24 +66,37 @@ class Login extends StatelessWidget {
                     ],
                   ),
                 ),
-                BlocBuilder<LoginBloc, LoginState>(
+                BlocConsumer<LoginBloc, LoginState>(
+                  listener: (context, state) {
+                    if (state is LoginSuccess) {
+                      print('登录成功.....');
+                      //TODO: 更新授权信息,刷新Profile页的信息
+                    }
+                    if (state is LoginFailure) {
+                      print('登录失败......发生了错误');
+                    }
+                    if (state is LoggingIn) {
+                      print('登录中......');
+                    }
+                  },
+                  buildWhen: (previous, current) => current is UnLoggedIn,
+                  //ignore: missing_return
                   builder: (context, state) {
-                    if (state is SmsCodeLogin) {
-                      return SmsLoginForm();
-                    } else if (state is PasswordLogin) {
-                      return BlocProvider<PwdFormBloc>(
-                        create: (context) => PwdFormBloc(),
-                        child: PasswordLoginForm(),
-                      );
-                    } else {
-                      return BlocProvider<SmsFormBloc>(
-                        create: (context) => SmsFormBloc(),
-                        child: SendSmsForm(),
-                      );
+                    if (state is UnLoggedIn) {
+                      if (state.loginType == LoginType.SmsCode) {
+                        return BlocProvider<SmsFormBloc>(
+                          create: (context) => SmsFormBloc(),
+                          child: SmsLoginForm(),
+                        );
+                      } else {
+                        return BlocProvider<PwdFormBloc>(
+                          create: (context) => PwdFormBloc(),
+                          child: PasswordLoginForm(),
+                        );
+                      }
                     }
                   },
                 ),
-                LoginOption(),
               ],
             ),
           ),

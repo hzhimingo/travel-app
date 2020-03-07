@@ -1,48 +1,36 @@
 part of 'sms_form_bloc.dart';
 
 abstract class SmsFormState extends Equatable {
+  const SmsFormState();
+}
+
+class SmsUnSend extends SmsFormState {
+  final bool isPhoneValided;
   final String phoneNumber;
-  const SmsFormState(this.phoneNumber);
-}
 
-class SmsFormEmpty extends SmsFormState {
-  SmsFormEmpty({String phoneNumber}) : super(phoneNumber);
-
+  SmsUnSend({
+    @required this.isPhoneValided,
+    @required this.phoneNumber,
+  });
   @override
-  List<Object> get props => [phoneNumber];
-}
-
-class SmsFormUnValidated extends SmsFormState {
-  SmsFormUnValidated({String phoneNumber}) : super(phoneNumber);
-
-  @override
-  List<Object> get props => [phoneNumber];
-}
-
-class SmsFormValidated extends SmsFormState {
-  SmsFormValidated({phoneNumber}) : super(phoneNumber);
-
-  @override
-  List<Object> get props => [phoneNumber];
+  List<Object> get props => [isPhoneValided, phoneNumber];
 }
 
 class SmsSending extends SmsFormState {
-  SmsSending({phoneNumber}) : super(phoneNumber);
-
   @override
-  List<Object> get props => [phoneNumber];
+  List<Object> get props => [];
+
+}
+
+class SmsSendFailure extends SmsFormState {
+  @override
+  List<Object> get props => [];
 }
 
 class SmsSendSuccess extends SmsFormState {
-  SmsSendSuccess({phoneNumber}) : super(phoneNumber);
+  final String phoneNumber;
 
-  @override
-  List<Object> get props => [phoneNumber];
-}
-
-class SmsSendFail extends SmsFormState {
-  SmsSendFail({phoneNumber}) : super(phoneNumber);
-
+  SmsSendSuccess({@required this.phoneNumber});
   @override
   List<Object> get props => [phoneNumber];
 }
