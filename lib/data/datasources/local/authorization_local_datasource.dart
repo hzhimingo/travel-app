@@ -26,4 +26,8 @@ class AuthorizationLocalDataSource {
       return Authorization.fromJson(json.decode(jsonStr));
     }
   }
+
+  Future<void> removeAuthorized() async {
+    return await sharedPreferences.remove('Authorization');
+  }
 }

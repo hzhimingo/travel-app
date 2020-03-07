@@ -33,4 +33,9 @@ class AuthorizationRepository {
       return Left(CacheNotExistFailure());
     }
   }
+
+  Future<Either<Failure, void>> removeAuthorized() async {
+    await local.removeAuthorized();
+    return Right(1);
+  }
 }

@@ -31,18 +31,7 @@ class Root extends StatelessWidget {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         onTap: (index) {
-          //在此判断是否已经授权登录
-          if (index == 3 && _authoriztionBloc.state is UnAuthorized) {
-            GlobalRoute.router.navigateTo(context, '/login').then((value) {
-              if (_authoriztionBloc.state is UnAuthorized) {
-                //doNoting
-              } else {
-                _controller.jumpToPage(index);
-              }
-            });
-          } else {
-            _controller.jumpToPage(index);
-          }
+          _controller.jumpToPage(index);
         },
         activeColor: Theme.of(context).primaryColor,
         center: GestureDetector(

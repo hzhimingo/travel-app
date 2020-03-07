@@ -15,4 +15,8 @@ class AuthorizationService {
   Future<Either<Failure, Authorization>> getLocalAuthorized() async {
     return await repository.getStoreAuthoried();
   }
+
+  Future<Either<Failure, void>> removeAuthorized() async {
+    return await repository.removeAuthorized();
+  }
 }

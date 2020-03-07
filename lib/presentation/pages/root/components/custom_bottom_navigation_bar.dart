@@ -115,12 +115,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   }
 
   _handleOnTap(int index) {
-    //如果没有登录授权的话，如果index=3也就是点击了"我的"按钮就保持原来的状态
-    if (!(index == 3 && _authorizationBloc.state is UnAuthorized)) {
-      setState(() {
-        _currentIndex = index;
-      });
-    }
+    setState(() {
+      _currentIndex = index;
+    });
     widget.onTap(index);
   }
 }

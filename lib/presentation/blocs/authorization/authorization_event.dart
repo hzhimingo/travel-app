@@ -16,3 +16,8 @@ class SetAuthorized extends AuthorizationEvent {
   @override
   List<Object> get props => [authorization];
 }
+
+class RemoveAuthorized extends AuthorizationEvent {
+  @override
+  List<Object> get props => [];
+}

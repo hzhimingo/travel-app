@@ -29,5 +29,14 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
         (authorization) => Authorized(authorization: authorization),
       );
     }
+
+    if (event is RemoveAuthorized) {
+      AuthorizationService service = getIt.get<AuthorizationService>();
+      var data = await service.removeAuthorized();
+      yield data.fold(
+        (failure) => Authorized(),
+        (suceess) => UnAuthorized(),
+      );
+    }
   }
 }

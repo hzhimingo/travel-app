@@ -1,8 +1,11 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:travel/injection/injection.dart';
+import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
+import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/route/routes.dart';
 import 'package:travel/core/theme/themes.dart';
 
@@ -39,12 +42,22 @@ class TravelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OKToast(
-      child: MaterialApp(
-        // 去掉右上角调试标识
-        debugShowCheckedModeBanner: false,
-        theme: Themes.normalLight,
-        initialRoute: '/',
-        onGenerateRoute: GlobalRoute.router.generator,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthorizationBloc>(
+            create: (context) => AuthorizationBloc(),
+          ),
+          BlocProvider<CurrentUserBloc>(
+            create: (context) => CurrentUserBloc(),
+          ),
+        ],
+        child: MaterialApp(
+          // 去掉右上角调试标识
+          debugShowCheckedModeBanner: false,
+          theme: Themes.normalLight,
+          initialRoute: '/',
+          onGenerateRoute: GlobalRoute.router.generator,
+        ),
       ),
     );
   }

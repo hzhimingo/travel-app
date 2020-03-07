@@ -3,14 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/pages/pages.dart';
-import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 
 var rootHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    return BlocProvider(
-      create: (context) => AuthorizationBloc()..add(InitAuthorized()),
-      child: Root(),
-    );
+    return Root();
   },
 );
 
@@ -47,4 +43,10 @@ var popHandler = Handler(
       ),
     );
   },
+);
+
+var settingsHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return Settings();
+  }
 );
