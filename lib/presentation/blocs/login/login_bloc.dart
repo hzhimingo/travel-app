@@ -3,11 +3,15 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:travel/service/authorization_service.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  final AuthorizationService authorizationService;
+  LoginBloc({this.authorizationService});
+
   @override
   LoginState get initialState => UnLoggedIn(loginType: LoginType.SmsCode);
 
@@ -26,6 +30,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
     if (event is LoginByPassword) {
       yield LoggingIn();
+      var result = await authorizationService.getAuthorizedByPwd(
+        event.account,
+        event.password,
+      );
+      yield result.fold(
+        (failure) => LoginFailure(),
+        (authorzation) => LoginSuccess(),
+      );
     }
   }
 }

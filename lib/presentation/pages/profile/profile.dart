@@ -35,8 +35,8 @@ class _ProfileState extends State<Profile>
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           print('$innerBoxIsScrolled');
           return <Widget>[
-            // AvatarFollowPanel(),
-            // UserInfoPanel(),
+            AvatarFollowPanel(),
+            UserInfoPanel(),
             FunctionPanel(),
             SliverPersistentTabBar(
               controller: _tabController,

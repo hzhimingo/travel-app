@@ -9,13 +9,17 @@ class AuthorizationLocalDataSource {
 
   AuthorizationLocalDataSource({this.sharedPreferences});
 
-  Future<void> storeAuthorization(Authorization authorization) async {
-    return sharedPreferences.setString(
+  Future<bool> storeAuthorization(Authorization authorization) async {
+    return await sharedPreferences.setString(
       'Authorization',
       json.encode(
         authorization.toJson(),
       ),
     );
+  }
+
+  Future<bool> hasAuthorized() async {
+    return sharedPreferences.containsKey('Authorization');
   }
 
   Future<Authorization> getAuthorized() async {
@@ -27,7 +31,7 @@ class AuthorizationLocalDataSource {
     }
   }
 
-  Future<void> removeAuthorized() async {
+  Future<bool> removeAuthorized() async {
     return await sharedPreferences.remove('Authorization');
   }
 }

@@ -45,10 +45,10 @@ class TravelApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthorizationBloc>(
-            create: (context) => AuthorizationBloc(),
+            create: (context) => getIt.get<AuthorizationBloc>()..add(ResumeAuthorized()),
           ),
           BlocProvider<CurrentUserBloc>(
-            create: (context) => CurrentUserBloc(),
+            create: (context) => getIt.get<CurrentUserBloc>()..add(RefreshCurrentUser()),
           ),
         ],
         child: MaterialApp(

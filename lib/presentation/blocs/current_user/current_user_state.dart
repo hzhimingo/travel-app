@@ -4,7 +4,15 @@ abstract class CurrentUserState extends Equatable {
   const CurrentUserState();
 }
 
-class CurrentUserInitial extends CurrentUserState {
+class CurrentUserEmpty extends CurrentUserState {
   @override
   List<Object> get props => [];
+}
+
+class CurrentUserLoaded extends CurrentUserState {
+  final User currentUser;
+
+  CurrentUserLoaded({this.currentUser});
+  @override
+  List<Object> get props => [currentUser];
 }

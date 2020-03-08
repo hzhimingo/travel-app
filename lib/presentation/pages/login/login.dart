@@ -1,5 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
+import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/presentation/blocs/pwd_form/pwd_form_bloc.dart';
 import 'package:travel/presentation/blocs/sms_form/sms_form_bloc.dart';
 import 'package:travel/route/routes.dart';
@@ -70,7 +72,11 @@ class Login extends StatelessWidget {
                   listener: (context, state) {
                     if (state is LoginSuccess) {
                       print('登录成功.....');
-                      //TODO: 更新授权信息,刷新Profile页的信息
+                      context.bloc<AuthorizationBloc>().add(GrantAuthorized());
+                      context.bloc<CurrentUserBloc>().add(RefreshCurrentUser());
+                      Future.delayed(Duration(milliseconds: 500)).then((value) {
+                        GlobalRoute.router.pop(context);
+                      });
                     }
                     if (state is LoginFailure) {
                       print('登录失败......发生了错误');

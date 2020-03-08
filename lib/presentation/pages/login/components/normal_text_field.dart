@@ -70,11 +70,20 @@ class _NormalTextFieldState extends State<NormalTextField> {
             offstage: hasText,
             child: IconButton(
               icon: Icon(Icons.clear),
-              onPressed: () {},
+              onPressed: () {
+                _pwdFormBloc.add(AccountChanged(account: null));
+                _controller.clear();
+              },
             ),
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }

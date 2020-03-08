@@ -11,10 +11,12 @@ class PasswordTextField extends StatefulWidget {
 
 class _PasswordTextFieldState extends State<PasswordTextField> {
   PwdFormBloc _pwdFormBloc;
+  TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = TextEditingController();
     _pwdFormBloc = BlocProvider.of<PwdFormBloc>(context);
   }
 
@@ -36,6 +38,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         children: [
           Expanded(
             child: TextField(
+              controller: _controller,
               obscureText: true,
               onChanged: (text) {
                 _pwdFormBloc.add(PasswordChanged(password: text));
@@ -64,11 +67,20 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             offstage: false,
             child: IconButton(
               icon: Icon(Icons.clear),
-              onPressed: () {},
+              onPressed: () {
+                _pwdFormBloc.add(PasswordChanged(password: null));
+                _controller.clear();
+              },
             ),
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }

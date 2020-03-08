@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/injection/injection.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/pages/pages.dart';
 
@@ -20,7 +21,7 @@ var loginHandler = Handler(
         opaque: false,
         pageBuilder: (BuildContext context, _, __) {
           return BlocProvider<LoginBloc>(
-            create: (context) => LoginBloc(),
+            create: (context) => getIt.get<LoginBloc>(),
             child: Login(),
           );
         },

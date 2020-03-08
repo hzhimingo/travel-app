@@ -16,7 +16,11 @@ class AuthorizationService {
     return await repository.getStoreAuthoried();
   }
 
-  Future<Either<Failure, void>> removeAuthorized() async {
+  Future<Either<Failure, bool>> hasGrantedAuthorized() async {
+    return await repository.hasGrantedAuthorized();
+  }
+
+  Future<Either<Failure, bool>> removeAuthorized() async {
     return await repository.removeAuthorized();
   }
 }

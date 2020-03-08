@@ -1,29 +1,32 @@
-import 'package:travel/entity/user.dart';
-
-
 class Authorization {
-  User user;
-  String token;
+  String accessToken;
+  String tokenType;
   String refreshToken;
-  String date;
+  String expiresIn;
+  String scope;
 
-  Authorization({this.user, this.token, this.refreshToken, this.date});
+  Authorization(
+      {this.accessToken,
+      this.tokenType,
+      this.refreshToken,
+      this.expiresIn,
+      this.scope});
 
   Authorization.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    token = json['token'];
-    refreshToken = json['refreshToken'];
-    date = json['date'];
+    accessToken = json['access_token'];
+    tokenType = json['token_type'];
+    refreshToken = json['refresh_token'];
+    expiresIn = json['expires_in'];
+    scope = json['scope'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.user != null) {
-      data['user'] = this.user.toJson();
-    }
-    data['token'] = this.token;
-    data['refreshToken'] = this.refreshToken;
-    data['date'] = this.date;
+    data['access_token'] = this.accessToken;
+    data['token_type'] = this.tokenType;
+    data['refresh_token'] = this.refreshToken;
+    data['expires_in'] = this.expiresIn;
+    data['scope'] = this.scope;
     return data;
   }
 }
