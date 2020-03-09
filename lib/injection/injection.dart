@@ -5,13 +5,17 @@ import 'package:travel/core/http/http.dart';
 import 'package:travel/data/datasources/local/authorization_local_datasource.dart';
 import 'package:travel/data/datasources/local/user_local_datasource.dart';
 import 'package:travel/data/datasources/remote/authorzation_remote_datasource.dart';
+import 'package:travel/data/datasources/remote/moment_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/user_remote_datasource.dart';
 import 'package:travel/data/repositories/authorzation_repository.dart';
+import 'package:travel/data/repositories/moment_repository.dart';
 import 'package:travel/data/repositories/user_repository.dart';
 import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
+import 'package:travel/presentation/blocs/moment_pool/moment_pool_bloc.dart';
 import 'package:travel/service/authorization_service.dart';
+import 'package:travel/service/moment_service.dart';
 import 'package:travel/service/user_service.dart';
 
 GetIt getIt = GetIt.instance;
@@ -31,6 +35,11 @@ Future<void> init() async {
   getIt.registerFactory(
     () => CurrentUserBloc(
       userService: getIt(),
+    ),
+  );
+  getIt.registerFactory(
+    () => MomentPoolBloc(
+      momentService: getIt(),
     ),
   );
   
@@ -56,6 +65,9 @@ Future<void> init() async {
   getIt.registerLazySingleton(
     () => UserRemoteDataSource(http: getIt()),
   );
+  getIt.registerLazySingleton(
+    () => MomentRemoteDataSource(http: getIt()),
+  );
 
   //repository
   getIt.registerLazySingleton(
@@ -66,10 +78,20 @@ Future<void> init() async {
       userRemote: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => MomentRepository(
+      remote: getIt(),
+    ),
+  );
 
   //service
   getIt.registerLazySingleton(
     () => AuthorizationService(
+      repository: getIt(),
+    ),
+  );
+  getIt.registerLazySingleton(
+    () => MomentService(
       repository: getIt(),
     ),
   );
