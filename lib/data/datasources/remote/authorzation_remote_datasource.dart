@@ -19,7 +19,6 @@ class AuthorizationRemoteDataSource {
     );
     if (response.statusCode == 200) {
       Result result = Result.fromJson(response.data);
-      print(result);
       if (result.code == 0) {
         return Authorization.fromJson(result.data);
       } else {

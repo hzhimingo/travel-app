@@ -33,7 +33,6 @@ class _ProfileState extends State<Profile>
       backgroundColor: Colors.white,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          print('$innerBoxIsScrolled');
           return <Widget>[
             AvatarFollowPanel(),
             UserInfoPanel(),

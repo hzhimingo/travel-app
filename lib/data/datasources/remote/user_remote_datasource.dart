@@ -17,7 +17,6 @@ class UserRemoteDataSource {
     );
     if (response.statusCode == 200) {
       Result result = Result.fromJson(response.data);
-      print(result);
       if (result.code == 0) {
         return User.fromJson(result.data);
       } else {

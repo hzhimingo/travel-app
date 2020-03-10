@@ -10,12 +10,14 @@ dependencies:
     sdk: flutter
   dio: ^3.0.9
   dartz: ^0.8.9
-  fluro: ^1.5.2
+  fluro: ^1.6.1
   badges: ^1.1.1
   get_it: ^4.0.0
+  shimmer: ^1.1.0
   oktoast: ^2.3.1+1
   equatable: ^1.1.1
   flutter_bloc: ^3.2.0
+  extended_list: ^0.1.4
   waterfall_flow: ^0.1.3
   extended_image: ^0.7.1
   cupertino_icons: ^0.1.2
@@ -47,3 +49,16 @@ flutter:
         - asset: assets/fonts/PingFangSCThin.otf
   assets:
     - assets/images/login_background.jpg
+    - assets/images/suggest_food.png
+    - assets/images/suggest_guide.png
+    - assets/images/suggest_qa.png
+    - assets/images/suggest_view.png
+    - assets/images/number1.png
+    - assets/images/number2.png
+    - assets/images/number3.png
+    - assets/images/number4.png
+    - assets/images/number5.png
+    - assets/images/number6.png
+    - assets/images/number7.png
+    - assets/images/number8.png
+    - assets/images/number9.png

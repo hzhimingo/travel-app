@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:travel/presentation/components/shimmer/topic_pool_shimmer.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -11,10 +12,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Container(
-       child: Center(
-         child: Text('Home'),
-       ),
+    return Center(
+      child: TopicPoolShimmer(),
     );
   }
 

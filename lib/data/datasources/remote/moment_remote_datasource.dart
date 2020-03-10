@@ -14,7 +14,6 @@ class MomentRemoteDataSource {
     );
     if (response.statusCode == 200) {
       Result result = Result.fromJson(response.data);
-      print(result);
       if (result.code == 0) {
         List<MomentCover> momentCovers = result.data['moments']
             .map<MomentCover>((item) => MomentCover.fromJson(item))

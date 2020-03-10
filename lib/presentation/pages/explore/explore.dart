@@ -65,8 +65,8 @@ class _ExploreState extends State<Explore>
               create: (context) => getIt.get<MomentPoolBloc>()..add(InitializeMomentPool()),
               child: MomentTabView(),
             ),
-            TopicTabView(),
             QuestionTabView(),
+            TopicTabView(),
              BlocProvider<MomentPoolBloc>(
               create: (context) => getIt.get<MomentPoolBloc>()..add(InitializeMomentPool()),
               child: MomentTabView(),
