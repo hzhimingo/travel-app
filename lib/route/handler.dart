@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/injection/injection.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
+import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
+import 'package:travel/presentation/pages/moment_detail/moment_detail_rebuild.dart';
 import 'package:travel/presentation/pages/pages.dart';
 
 var rootHandler = Handler(
@@ -47,6 +49,19 @@ var popHandler = Handler(
 );
 
 var settingsHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-  return Settings();
-});
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return Settings();
+  },
+);
+
+var momentDetailHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    String momentId = params['momentId'].first;
+    print(momentId);
+    // return BlocProvider<MomentDetailBloc>(
+    //   create: (context) => getIt.get<MomentDetailBloc>()..add(FetchMomnetDetail(momentId: int.parse(momentId))),
+    //   child: MomentDetail(),
+    // );
+    return MomentDetailRebuild();
+  },
+);

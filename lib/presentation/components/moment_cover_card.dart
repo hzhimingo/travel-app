@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel/entity/moment_cover.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:travel/route/routes.dart';
 
 class MomentCoverCard extends StatelessWidget {
   final MomentCover momentCover;
@@ -9,7 +10,12 @@ class MomentCoverCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        GlobalRoute.router.navigateTo(
+          context,
+          '/momentDetail?momentId=${momentCover.momentId}',
+        );
+      },
       child: Card(
         child: Column(
           children: <Widget>[

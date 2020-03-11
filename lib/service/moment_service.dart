@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:travel/core/error/failures.dart';
 import 'package:travel/entity/moment_cover.dart';
 import 'package:travel/data/repositories/moment_repository.dart';
+import 'package:travel/entity/moment_detail.dart';
 
 class MomentService {
   final MomentRepository repository;
@@ -11,6 +12,10 @@ class MomentService {
 
   Future<Either<Failure, List<MomentCover>>> fetchMomentCovers() async {
     return await repository.fetchMomentCovers();
+  }
+
+  Future<Either<Failure, MomentDetail>> fetchMomentDetail(int id) async {
+    return await repository.fetchMomentDetail(id);
   }
 }
 

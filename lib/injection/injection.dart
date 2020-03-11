@@ -16,6 +16,7 @@ import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart'
 import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/presentation/blocs/hot_topic/hot_topic_bloc.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
+import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
 import 'package:travel/presentation/blocs/moment_pool/moment_pool_bloc.dart';
 import 'package:travel/presentation/blocs/topic_pool/topic_pool_bloc.dart';
 import 'package:travel/service/authorization_service.dart';
@@ -55,6 +56,11 @@ Future<void> init() async {
   getIt.registerFactory(
     () => TopicPoolBloc(
       topicService: getIt(),
+    ),
+  );
+  getIt.registerFactory(
+    () => MomentDetailBloc(
+      momentService: getIt(),
     ),
   );
   
