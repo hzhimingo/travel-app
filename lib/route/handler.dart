@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/injection/injection.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
+import 'package:travel/presentation/blocs/topic_detail/topic_detail_bloc.dart';
 import 'package:travel/presentation/pages/pages.dart';
 
 var rootHandler = Handler(
@@ -58,8 +59,20 @@ var momentDetailHandler = Handler(
     String momentId = params['momentId'].first;
     print(momentId);
     return BlocProvider<MomentDetailBloc>(
-      create: (context) => getIt.get<MomentDetailBloc>()..add(FetchMomnetDetail(momentId: int.parse(momentId))),
+      create: (context) => getIt.get<MomentDetailBloc>()
+        ..add(FetchMomnetDetail(momentId: int.parse(momentId))),
       child: MomentDetail(),
+    );
+  },
+);
+
+var topicDetailHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    String topicId = params['topicId'].first;
+    print(topicId);
+    return BlocProvider<TopicDetailBloc>(
+      create: (context) => TopicDetailBloc(),
+      child: TopicDetail(),
     );
   },
 );

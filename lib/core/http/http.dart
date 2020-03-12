@@ -1,7 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Http {
+  final SharedPreferences sharedPreferences;
+
+  Http({this.sharedPreferences});
+
   static Dio initHttpConfig() {
     Dio dio = Dio();
     dio.options.baseUrl = 'http://rap2api.taobao.org/app/mock/236828/travel/api/v1';

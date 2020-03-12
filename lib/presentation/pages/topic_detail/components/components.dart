@@ -1,0 +1,1 @@
+export 'package:travel/presentation/pages/topic_detail/components/topic_detail_panel.dart';

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:travel/core/constant/iconfont.dart';
 import 'package:travel/core/util/number_convert.dart';
 import 'package:travel/entity/topic_cover.dart';
+import 'package:travel/route/routes.dart';
 
 class TopicCoverCard extends StatelessWidget {
   final TopicCover topicCover;
@@ -12,7 +13,9 @@ class TopicCoverCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        GlobalRoute.router.navigateTo(context, '/topicDetail?topicId=${topicCover.topicId}');
+      },
       child: Container(
         width: double.infinity,
         height: ((MediaQuery.of(context).size.width - 50.0) / 3) + 105.0,
