@@ -4,9 +4,9 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:travel/entity/picture.dart';
 
 
-class MomentPictureDisplay extends StatelessWidget {
+class MomentPicturePool extends StatelessWidget {
   final List<Picture> pictures;
-  const MomentPictureDisplay({Key key, this.pictures}) : super(key: key);
+  const MomentPicturePool({Key key, this.pictures}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

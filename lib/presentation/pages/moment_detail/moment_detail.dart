@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:travel/entity/picture.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
 import 'package:travel/route/routes.dart';
+import 'package:extended_image/extended_image.dart';
+
 import './components/components.dart';
 
 class MomentDetail extends StatelessWidget {
@@ -13,9 +13,8 @@ class MomentDetail extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        brightness: Brightness.light,
         backgroundColor: Colors.white,
-        elevation: 0.3,
+        brightness: Brightness.light,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
@@ -32,13 +31,15 @@ class MomentDetail extends StatelessWidget {
                 if (state is MomentDetailLoaded) {
                   return CircleAvatar(
                     radius: 22.0,
-                    backgroundImage: ExtendedNetworkImageProvider(state.momentDetail.avatar),
+                    backgroundImage: ExtendedNetworkImageProvider(
+                      state.momentDetail.avatar,
+                    ),
                   );
                 } else {
                   return CircleAvatar(
-                    radius: 22.0,
+                    radius: 20.0,
                     backgroundImage: ExtendedNetworkImageProvider(
-                      'https://travel-1257167414.cos.ap-shanghai.myqcloud.com/avatar.jpg',
+                      'https://assets.leetcode-cn.com/aliyun-lc-upload/default_avatar.png',
                     ),
                   );
                 }
@@ -51,8 +52,9 @@ class MomentDetail extends StatelessWidget {
                   return Text(
                     state.momentDetail.nickname,
                     style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: 17.0,
                     ),
                   );
                 } else {
@@ -69,86 +71,85 @@ class MomentDetail extends StatelessWidget {
               color: Colors.black,
               size: 30.0,
             ),
-            onPressed: null,
+            onPressed: () {},
           ),
         ],
       ),
       body: BlocBuilder<MomentDetailBloc, MomentDetailState>(
-        //ignore: missing_return
         builder: (context, state) {
-          if (state is MomentDetailEmpty) {
+          if (state is MomentDetailLoaded) {
+            return Stack(
+              children: <Widget>[
+                SingleChildScrollView(
+                  padding: EdgeInsets.only(bottom: 60.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      MomentPicturePool(pictures: state.momentDetail.pictures),
+                      Offstage(
+                        offstage: state.momentDetail.title == null,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 20.0,
+                            left: 15.0,
+                            right: 15.0,
+                            bottom: 15.0,
+                          ),
+                          child: Text(
+                            state.momentDetail.title,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'PingFangSCLight',
+                            ),
+                          ),
+                        ),
+                      ),
+                      LocationLine(
+                        country: state.momentDetail.country,
+                        city: state.momentDetail.city,
+                        location: state.momentDetail.locationName,
+                      ),
+                      MomentContent(text: state.momentDetail.content),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Text('${state.momentDetail.releaseDate}发布'),
+                      ),
+                      MentionSpot(
+                        spots: state.momentDetail.spots,
+                      ),
+                      LikedUserLine(
+                        urls: state.momentDetail.favUsers,
+                        favNum: state.momentDetail.favNum,
+                      ),
+                      CommentInputLine(),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  left: 0.0,
+                  bottom: 0.0,
+                  child: BottomActionPanel(
+                    favNum: state.momentDetail.favNum,
+                    starNum: state.momentDetail.starNum,
+                    commentNum: state.momentDetail.commentNum,
+                    isFav: state.momentDetail.isFav,
+                    isStar: state.momentDetail.isStar,
+                  ),
+                ),
+              ],
+            );
+          } else if (state is MomentDetailEmpty) {
             return Center(
               child: SpinKitThreeBounce(
                 color: Theme.of(context).primaryColor,
                 size: 33.0,
               ),
             );
-          }
-          if (state is MomentDetailFaliure) {
-            return Center(
-              child: Text('Failure......'),
-            );
-          }
-          if (state is MomentDetailLoaded) {
-            return ListView(
-              children: <Widget>[
-                MomentPictureDisplay(
-                  pictures: state.momentDetail.pictures,
-                ),
-                MomentContent(
-                  text: state.momentDetail.content,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 15.0,
-                    right: 15.0,
-                    top: 10.0,
-                  ),
-                  child: Text(
-                    '${state.momentDetail.releaseDate} 发布',
-                    style: TextStyle(
-                      color: Colors.black38,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 15.0),
-                Divider(
-                  color: Colors.grey[200],
-                ),
-                MentionSpot(
-                  spot: state.momentDetail.spot,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 15.0,
-                    right: 15.0,
-                    top: 10.0,
-                  ),
-                  child: Text(
-                    '拍摄于${state.momentDetail.takeDate}',
-                    style: TextStyle(color: Colors.black38, fontSize: 15.0),
-                  ),
-                ),
-                Container(
-                  height: 400.0,
-                ),
-              ],
-            );
-          }
-        },
-      ),
-      bottomNavigationBar: BlocBuilder<MomentDetailBloc, MomentDetailState>(
-        builder: (context, state) {
-          if (state is MomentDetailLoaded) {
-            return BottomActionPanel(
-              isFav: false,
-              isStar: false,
-              commentNum: state.momentDetail.commentNum,
-              starNum: state.momentDetail.starNum,
-              favNum: state.momentDetail.favNum,
-            );
           } else {
-            return Container();
+            return Center(
+              child: Text('Fail....'),
+            );
           }
         },
       ),

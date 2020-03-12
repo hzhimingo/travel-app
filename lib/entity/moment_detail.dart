@@ -2,47 +2,46 @@ import 'package:travel/entity/picture.dart';
 import 'package:travel/entity/spot.dart';
 
 class MomentDetail {
-  int momentId;
-  String title;
   String content;
   String releaseDate;
   String takeDate;
   String country;
   String city;
+  bool isFav;
+  bool isStar;
   String locationName;
   int authorId;
   String avatar;
   String nickname;
   List<Picture> pictures;
-  Spot spot;
+  String title;
+  List<Spot> spots;
   int commentNum;
   int favNum;
   int starNum;
-  int isFav;
-  int isStar;
   List<String> favUsers;
+  int momentId;
 
-  MomentDetail({
-    this.content,
-    this.releaseDate,
-    this.takeDate,
-    this.country,
-    this.city,
-    this.authorId,
-    this.avatar,
-    this.nickname,
-    this.pictures,
-    this.title,
-    this.spot,
-    this.commentNum,
-    this.favNum,
-    this.starNum,
-    this.favUsers,
-    this.momentId,
-    this.isFav,
-    this.isStar,
-    this.locationName,
-  });
+  MomentDetail(
+      {this.content,
+      this.releaseDate,
+      this.takeDate,
+      this.country,
+      this.city,
+      this.isFav,
+      this.isStar,
+      this.locationName,
+      this.authorId,
+      this.avatar,
+      this.nickname,
+      this.pictures,
+      this.title,
+      this.spots,
+      this.commentNum,
+      this.favNum,
+      this.starNum,
+      this.favUsers,
+      this.momentId});
 
   MomentDetail.fromJson(Map<String, dynamic> json) {
     content = json['content'];
@@ -50,6 +49,9 @@ class MomentDetail {
     takeDate = json['takeDate'];
     country = json['country'];
     city = json['city'];
+    isFav = json['isFav'];
+    isStar = json['isStar'];
+    locationName = json['locationName'];
     authorId = json['authorId'];
     avatar = json['avatar'];
     nickname = json['nickname'];
@@ -60,7 +62,12 @@ class MomentDetail {
       });
     }
     title = json['title'];
-    spot = json['spot'] != null ? new Spot.fromJson(json['spot']) : null;
+    if (json['spot'] != null) {
+      spots = new List<Spot>();
+      json['spot'].forEach((v) {
+        spots.add(new Spot.fromJson(v));
+      });
+    }
     commentNum = json['commentNum'];
     favNum = json['favNum'];
     starNum = json['starNum'];
@@ -75,6 +82,9 @@ class MomentDetail {
     data['takeDate'] = this.takeDate;
     data['country'] = this.country;
     data['city'] = this.city;
+    data['isFav'] = this.isFav;
+    data['isStar'] = this.isStar;
+    data['locationName'] = this.locationName;
     data['authorId'] = this.authorId;
     data['avatar'] = this.avatar;
     data['nickname'] = this.nickname;
@@ -82,8 +92,8 @@ class MomentDetail {
       data['pictures'] = this.pictures.map((v) => v.toJson()).toList();
     }
     data['title'] = this.title;
-    if (this.spot != null) {
-      data['spot'] = this.spot.toJson();
+    if (this.spots != null) {
+      data['spot'] = this.spots.map((v) => v.toJson()).toList();
     }
     data['commentNum'] = this.commentNum;
     data['favNum'] = this.favNum;

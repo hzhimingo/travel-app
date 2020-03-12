@@ -27,13 +27,16 @@ class MomentContent extends StatelessWidget {
                   ),
                 ),
                 WidgetSpan(
-                  child: ExpandableButton(
-                    child: Text(
-                      '展开',
-                      style: TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                  child: Offstage(
+                    offstage: isNeedSplit(text, context),
+                    child: ExpandableButton(
+                      child: Text(
+                        '展开',
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
@@ -49,6 +52,26 @@ class MomentContent extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool isNeedSplit(String text, BuildContext context) {
+    TextPainter painter = TextPainter(
+      maxLines: 8,
+      textDirection: TextDirection.ltr,
+      text: TextSpan(
+          text: text,
+          style: TextStyle(
+            fontSize: 17.0,
+          )),
+    )..layout(
+        maxWidth: MediaQuery.of(context).size.width,
+        minWidth: MediaQuery.of(context).size.width,
+      );
+    if (painter.didExceedMaxLines) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   String _splitText(String text, BuildContext context) {

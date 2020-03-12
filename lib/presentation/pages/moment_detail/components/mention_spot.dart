@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:travel/entity/spot.dart';
 
 class MentionSpot extends StatelessWidget {
-  final Spot spot;
-  const MentionSpot({Key key, this.spot}) : super(key: key);
+  final List<Spot> spots;
+  const MentionSpot({Key key, this.spots}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 5.0),
+      margin: EdgeInsets.only(top: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -18,20 +18,20 @@ class MentionSpot extends StatelessWidget {
             child: Text(
               '文中提及',
               style: TextStyle(
-                fontSize: 17.0,
+                fontSize: 19.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10.0),
+            margin: EdgeInsets.only(top: 5.0),
             width: MediaQuery.of(context).size.width,
             height: 140.0,
             child: ListView.builder(
               padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: 1,
+              itemCount: spots.length,
               itemBuilder: _buildMentionSpotItem,
             ),
           ),
@@ -52,9 +52,9 @@ class MentionSpot extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey[200],
-              blurRadius: 5.0,
-              spreadRadius: 3.0,
+              color: Colors.black12,
+              blurRadius: 3.0,
+              spreadRadius: 1.0,
               offset: Offset(0.0, 0.0),
             ),
           ],
@@ -68,7 +68,7 @@ class MentionSpot extends StatelessWidget {
         child: Row(
           children: <Widget>[
             ExtendedImage.network(
-              spot.thumbnail,
+              spots[index].thumbnail,
               width: 100.0,
               height: 100.0,
               fit: BoxFit.cover,
@@ -86,7 +86,7 @@ class MentionSpot extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          spot.name,
+                          spots[index].name,
                           style: TextStyle(
                             fontSize: 17.0,
                             fontWeight: FontWeight.bold,
@@ -96,7 +96,7 @@ class MentionSpot extends StatelessWidget {
                         Row(
                           children: <Widget>[
                             Text(
-                              '${spot.commentNum}',
+                              '${spots[index].commentNum}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15.0,
@@ -114,7 +114,7 @@ class MentionSpot extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      '位于${spot.city}',
+                      '位于${spots[index].city}',
                       style: TextStyle(
                         fontSize: 15.0,
                         color: Colors.black45,
