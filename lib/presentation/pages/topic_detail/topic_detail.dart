@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel/injection/injection.dart';
-import 'package:travel/presentation/blocs/moment_pool/moment_pool_bloc.dart';
-import 'package:travel/presentation/pages/explore/tabviews/moment_tab_view.dart';
-
+import 'package:travel/presentation/components/moment_cover_pool.dart';
 import './components/components.dart';
 
 class TopicDetail extends StatefulWidget {
@@ -17,7 +13,6 @@ class _TopicDetailState extends State<TopicDetail>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
   ScrollController _controller;
-  double piexls = 0.0;
 
   @override
   void initState() {
@@ -27,12 +22,6 @@ class _TopicDetailState extends State<TopicDetail>
       vsync: this,
       initialIndex: 0,
     );
-    _controller = ScrollController()
-      ..addListener(
-        () {
-          piexls = _controller.position.pixels;
-        },
-      );
   }
 
   @override
@@ -52,16 +41,8 @@ class _TopicDetailState extends State<TopicDetail>
         body: TabBarView(
           controller: _tabController,
           children: [
-            BlocProvider<MomentPoolBloc>(
-              create: (context) =>
-                  getIt.get<MomentPoolBloc>()..add(InitializeMomentPool()),
-              child: MomentTabView(),
-            ),
-            BlocProvider<MomentPoolBloc>(
-              create: (context) =>
-                  getIt.get<MomentPoolBloc>()..add(InitializeMomentPool()),
-              child: MomentTabView(),
-            ),
+            MomentCoverPool(),
+            MomentCoverPool(),
           ],
         ),
       ),

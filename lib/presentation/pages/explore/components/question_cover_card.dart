@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:travel/route/routes.dart';
 
 class QuestionCoverCard extends StatelessWidget {
   const QuestionCoverCard({Key key}) : super(key: key);
@@ -7,7 +8,9 @@ class QuestionCoverCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        GlobalRoute.router.navigateTo(context, '/questionDetail');
+      },
       child: Container(
         padding: EdgeInsets.only(bottom: 15.0),
         margin: EdgeInsets.only(bottom: 15.0),

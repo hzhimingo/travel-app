@@ -76,3 +76,9 @@ var topicDetailHandler = Handler(
     );
   },
 );
+
+var questionDetailHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return QuestionDetail();
+  },
+);

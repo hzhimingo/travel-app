@@ -12,6 +12,7 @@ class Routes {
   static String settings = '/settings';
   static String momentDetail = '/momentDetail';
   static String topicDetail = '/topicDetail';
+  static String questionDetail = '/questionDetail';
 
   static void configureRoutes(Router router) {
     router.define(root, handler: rootHandler);
@@ -20,5 +21,6 @@ class Routes {
     router.define(settings, handler: settingsHandler);
     router.define(momentDetail, handler: momentDetailHandler);
     router.define(topicDetail, handler: topicDetailHandler);
+    router.define(questionDetail, handler: questionDetailHandler);
   }
 }
