@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:travel/route/routes.dart';
+import 'package:extended_image/extended_image.dart';
 
 class QuestionCoverCard extends StatelessWidget {
   const QuestionCoverCard({Key key}) : super(key: key);

@@ -22,6 +22,7 @@ class _TopicDetailState extends State<TopicDetail>
       vsync: this,
       initialIndex: 0,
     );
+    _controller = ScrollController();
   }
 
   @override

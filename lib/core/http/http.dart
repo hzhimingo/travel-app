@@ -3,9 +3,9 @@ import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Http {
-  final SharedPreferences sharedPreferences;
+  final SharedPreferences store;
 
-  Http({this.sharedPreferences});
+  Http({this.store});
 
   static Dio initHttpConfig() {
     Dio dio = Dio();

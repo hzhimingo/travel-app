@@ -54,21 +54,17 @@ class _HotQuestionState extends State<HotQuestion> {
           ),
           Container(
             height: 190.0,
-            padding: EdgeInsets.only(bottom: 10.0),
             margin: EdgeInsets.only(top: 10.0),
             child: ListView.builder(
+              padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: 3,
-              itemBuilder: _singleScrollItem,
+              itemBuilder: (context, index) => ScrollQuestionCard(),
             ),
           ),
         ],
       ),
     );
-  }
-
-  Widget _singleScrollItem(BuildContext context, int index) {
-    return ScrollQuestionCard();
   }
 }

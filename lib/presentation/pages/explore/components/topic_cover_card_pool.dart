@@ -19,13 +19,6 @@ class _TopicCoverCardPoolState extends State<TopicCoverCardPool>
     with AutomaticKeepAliveClientMixin {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  TopicPoolBloc _poolBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _poolBloc = BlocProvider.of<TopicPoolBloc>(context);
-  }
 
   @override
   Widget build(BuildContext context) {

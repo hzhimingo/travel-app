@@ -82,3 +82,9 @@ var questionDetailHandler = Handler(
     return QuestionDetail();
   },
 );
+
+var devSettingHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return DevSetting();
+  },
+);

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +14,7 @@ import 'package:travel/data/repositories/authorzation_repository.dart';
 import 'package:travel/data/repositories/moment_repository.dart';
 import 'package:travel/data/repositories/topic_repository.dart';
 import 'package:travel/data/repositories/user_repository.dart';
+import 'package:travel/entity/app_info.dart';
 import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/presentation/blocs/hot_topic/hot_topic_bloc.dart';
@@ -28,6 +31,55 @@ GetIt getIt = GetIt.instance;
 
 Future<void> init() async {
   //bloc factory:
+  registerBloc();
+  //http local
+  await registerSharedPreferences();
+  bool isOK = await initApiUrl();
+  if (isOK) {
+    registerHttp();
+  }
+  //特殊情况
+  registerCurrentUser();
+  //local datasource
+  registerLocalDataSource();
+  //remote datasource
+  registerRemoteDataSource();
+  //repository
+  registerRepository();
+  //service
+  registerService();
+}
+
+Future<void> registerSharedPreferences() async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  getIt.registerSingleton<SharedPreferences>(sharedPreferences);
+}
+
+Future<bool> initApiUrl() async {
+  SharedPreferences store = getIt.get<SharedPreferences>();
+  AppInfo appInfo = AppInfo(
+    appVersion: "1.0",
+    api: [
+      Api(
+        apiVersion: "1.0",
+        type: "mock",
+        host: "http://rap2api.taobao.org",
+        prefix: "/app/mock/236828/travel/api/v1",
+      ),
+    ],
+  );
+  if (!store.containsKey("AppInfo")) {
+    return await store.setString("AppInfo", json.encode(appInfo.toJson()));
+  } else {
+    return true;
+  }
+}
+
+registerHttp() {
+  getIt.registerSingleton<Dio>(Http.initHttpConfig());
+}
+
+void registerBloc() {
   getIt.registerFactory(
     () => LoginBloc(
       authorizationService: getIt(),
@@ -63,37 +115,9 @@ Future<void> init() async {
       momentService: getIt(),
     ),
   );
-  
-   //http local
-  getIt.registerSingleton<Dio>(Http.initHttpConfig());
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  getIt.registerSingleton<SharedPreferences>(sharedPreferences);
+}
 
-  //特殊情况
-  getIt.registerSingleton<UserLocalDataSource>(UserLocalDataSource(sharedPreferences: getIt()));
-  getIt.registerSingleton<UserRepository>(UserRepository(userLocal: getIt()));
-  getIt.registerSingleton<UserService>(UserService(userRepository: getIt()));
-
-  //local datasource
-  getIt.registerLazySingleton(
-    () => AuthorizationLocalDataSource(sharedPreferences: getIt()),
-  );
-
-  //remote datasource
-  getIt.registerLazySingleton(
-    () => AuthorizationRemoteDataSource(http: getIt()),
-  );
-  getIt.registerLazySingleton(
-    () => UserRemoteDataSource(http: getIt()),
-  );
-  getIt.registerLazySingleton(
-    () => MomentRemoteDataSource(http: getIt()),
-  );
-  getIt.registerLazySingleton(
-    () => TopicRemoteDataSource(http: getIt()),
-  );
-
-  //repository
+registerRepository() {
   getIt.registerLazySingleton(
     () => AuthorizationRepository(
       authorizationLocal: getIt(),
@@ -112,8 +136,9 @@ Future<void> init() async {
       remote: getIt(),
     ),
   );
+}
 
-  //service
+registerService() {
   getIt.registerLazySingleton(
     () => AuthorizationService(
       repository: getIt(),
@@ -131,4 +156,30 @@ Future<void> init() async {
   );
 }
 
+registerRemoteDataSource() {
+  getIt.registerLazySingleton(
+    () => AuthorizationRemoteDataSource(http: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => UserRemoteDataSource(http: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => MomentRemoteDataSource(http: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => TopicRemoteDataSource(http: getIt()),
+  );
+}
 
+registerLocalDataSource() {
+  getIt.registerLazySingleton(
+    () => AuthorizationLocalDataSource(sharedPreferences: getIt()),
+  );
+}
+
+registerCurrentUser() {
+  getIt.registerSingleton<UserLocalDataSource>(
+      UserLocalDataSource(sharedPreferences: getIt()));
+  getIt.registerSingleton<UserRepository>(UserRepository(userLocal: getIt()));
+  getIt.registerSingleton<UserService>(UserService(userRepository: getIt()));
+}

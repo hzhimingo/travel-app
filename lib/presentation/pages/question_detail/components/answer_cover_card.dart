@@ -8,29 +8,29 @@ class AnswerCoverCard extends StatelessWidget {
   final List<Picture> pictures = [
     Picture(
       pictureId: 1,
-      url:
-          'http://h1.ioliu.cn/bing/BrightonJetty_ZH-CN1526526038_1920x1080.jpg',
+      url: 'http://h1.ioliu.cn/bing/BrightonJetty_ZH-CN1526526038_1920x1080.jpg',
     ),
     Picture(
-        pictureId: 2,
-        url:
-            'http://h1.ioliu.cn/bing/AbiquaFalls_ZH-CN2781539758_1920x1080.jpg'),
+      pictureId: 2,
+      url: 'http://h1.ioliu.cn/bing/AbiquaFalls_ZH-CN2781539758_1920x1080.jpg',
+    ),
     Picture(
-        pictureId: 3,
-        url:
-            'http://h1.ioliu.cn/bing/CorsicaHeart_ZH-CN2795615037_1920x1080.jpg'),
+      pictureId: 3,
+      url: 'http://h1.ioliu.cn/bing/CorsicaHeart_ZH-CN2795615037_1920x1080.jpg',
+    ),
     Picture(
-        pictureId: 4,
-        url:
-            'http://h1.ioliu.cn/bing/TaikanCrane_ZH-CN3416122324_1920x1080.jpg'),
+      pictureId: 4,
+      url: 'http://h1.ioliu.cn/bing/TaikanCrane_ZH-CN3416122324_1920x1080.jpg',
+    ),
     Picture(
-        pictureId: 51,
-        url:
-            'http://h1.ioliu.cn/bing/HumpbackHerring_ZH-CN2868885675_1920x1080.jpg'),
+      pictureId: 51,
+      url:
+          'http://h1.ioliu.cn/bing/HumpbackHerring_ZH-CN2868885675_1920x1080.jpg',
+    ),
     Picture(
-        pictureId: 9,
-        url:
-            'http://h1.ioliu.cn/bing/SemucChampey_ZH-CN1774527432_1920x1080.jpg'),
+      pictureId: 9,
+      url: 'http://h1.ioliu.cn/bing/SemucChampey_ZH-CN1774527432_1920x1080.jpg',
+    ),
   ];
   AnswerCoverCard({Key key}) : super(key: key);
 
