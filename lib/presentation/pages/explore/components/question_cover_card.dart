@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:travel/entity/picture.dart';
+import 'package:travel/entity/question_cover.dart';
 import 'package:travel/route/routes.dart';
 import 'package:extended_image/extended_image.dart';
 
 class QuestionCoverCard extends StatelessWidget {
-  const QuestionCoverCard({Key key}) : super(key: key);
+  final QuestionCover questionCover;
+  const QuestionCoverCard({Key key, this.questionCover}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GlobalRoute.router.navigateTo(context, '/questionDetail');
+        GlobalRoute.router.navigateTo(
+            context, '/questionDetail?questionId=${questionCover.questionId}');
       },
       child: Container(
         padding: EdgeInsets.only(bottom: 15.0),
@@ -22,12 +26,12 @@ class QuestionCoverCard extends StatelessWidget {
           ),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              alignment: Alignment.center,
               width: double.infinity,
               child: Text(
-                '泾县的桃花潭和太平湖二选一，怎么办？',
+                questionCover.title,
                 maxLines: 2,
                 style: TextStyle(
                   fontSize: 19.0,
@@ -44,12 +48,12 @@ class QuestionCoverCard extends StatelessWidget {
                   CircleAvatar(
                     radius: 15.0,
                     backgroundImage: ExtendedNetworkImageProvider(
-                      'https://travel-1257167414.cos.ap-shanghai.myqcloud.com/avatar.jpg',
+                      questionCover.answer.avatar,
                     ),
                   ),
                   SizedBox(width: 5.0),
                   Text(
-                    '小omama',
+                    questionCover.answer.nickname,
                     style: TextStyle(
                       fontSize: 14.0,
                       color: Colors.black54,
@@ -66,7 +70,7 @@ class QuestionCoverCard extends StatelessWidget {
                 ],
               ),
             ),
-            _buildContent(true),
+            _buildContent(questionCover),
             Container(
               width: double.infinity,
               height: 30.0,
@@ -85,11 +89,20 @@ class QuestionCoverCard extends StatelessWidget {
                   Container(
                     child: Row(
                       children: <Widget>[
-                        _numberAndText(3915, '浏览'),
+                        _numberAndText(
+                          questionCover.visitedNum,
+                          '浏览',
+                        ),
                         SizedBox(width: 6.0),
-                        _numberAndText(6, '回答'),
+                        _numberAndText(
+                          questionCover.answerNum,
+                          '回答',
+                        ),
                         SizedBox(width: 6.0),
-                        _numberAndText(8, '赞'),
+                        _numberAndText(
+                          questionCover.followNum,
+                          '关注',
+                        ),
                       ],
                     ),
                   ),
@@ -147,20 +160,26 @@ class QuestionCoverCard extends StatelessWidget {
     );
   }
 
-  _buildContent(bool hasImage) {
-    int imageLength = 4;
-    if (hasImage) {
-      if (imageLength <= 2) {
-        return _buildContentHasImageLessThanTwo();
-      } else {
-        return _buildContentHasImageMoreThanThree();
+  _buildContent(QuestionCover questionCover) {
+    if (questionCover.answer.pictures != null) {
+      if (questionCover.answer.pictures.length != 0) {
+        if (questionCover.answer.pictures.length <= 2) {
+          return _buildContentHasImageLessThanTwo(
+            questionCover.answer.content,
+            questionCover.answer.pictures
+          );
+        } else {
+          return _buildContentHasImageMoreThanThree(
+            questionCover.answer.content,
+            questionCover.answer.pictures
+          );
+        }
       }
-    } else {
-      return _buildContentWithoutImage();
     }
+    return _buildContentWithoutImage(questionCover.answer.content);
   }
 
-  _buildContentHasImageLessThanTwo() {
+  _buildContentHasImageLessThanTwo(String text, List<Picture> pictures) {
     return Container(
       height: 110.0,
       margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
@@ -172,7 +191,7 @@ class QuestionCoverCard extends StatelessWidget {
               height: 110.0,
               margin: EdgeInsets.only(right: 10.0),
               child: Text(
-                '嗯，二选一的话，我建议桃花潭，其实这两个地方都可以去的，一天之内....太平湖很大，有一侧离桃花潭非常近哦，大约6公里左右的路程，你如果上午去桃花有一侧离桃花潭非常近哦，大约6公里左右的路程，你如果上午去桃花有一侧离桃花潭非常近哦，大约6公里左右的路程，你如果上午去桃花',
+                text,
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -183,7 +202,7 @@ class QuestionCoverCard extends StatelessWidget {
             ),
           ),
           ExtendedImage.network(
-            'https://p1-q.mafengwo.net/s15/M00/1F/92/CoUBGV5CEcKARp2TAAHCIyRVBQc06.jpeg?imageMogr2%2Fthumbnail%2F%21600x600r%2Fstrip%2Fquality%2F90',
+            pictures.first.url,
             cache: true,
             width: 150.0,
             height: 110.0,
@@ -196,7 +215,7 @@ class QuestionCoverCard extends StatelessWidget {
     );
   }
 
-  _buildContentHasImageMoreThanThree() {
+  _buildContentHasImageMoreThanThree(String text, List<Picture> pictures) {
     return Container(
       margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
       padding: EdgeInsets.only(
@@ -212,7 +231,7 @@ class QuestionCoverCard extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: ExtendedImage.network(
-                    'https://p1-q.mafengwo.net/s15/M00/1F/92/CoUBGV5CEcKARp2TAAHCIyRVBQc06.jpeg?imageMogr2%2Fthumbnail%2F%21600x600r%2Fstrip%2Fquality%2F90',
+                    pictures[0].url,
                     cache: true,
                     height: 120.0,
                     fit: BoxFit.cover,
@@ -227,7 +246,7 @@ class QuestionCoverCard extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.only(left: 3.0, right: 3.0),
                     child: ExtendedImage.network(
-                      'https://p1-q.mafengwo.net/s15/M00/1F/92/CoUBGV5CEcKARp2TAAHCIyRVBQc06.jpeg?imageMogr2%2Fthumbnail%2F%21600x600r%2Fstrip%2Fquality%2F90',
+                      pictures[1].url,
                       cache: true,
                       height: 120.0,
                       fit: BoxFit.cover,
@@ -236,7 +255,7 @@ class QuestionCoverCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: ExtendedImage.network(
-                    'https://p1-q.mafengwo.net/s15/M00/1F/92/CoUBGV5CEcKARp2TAAHCIyRVBQc06.jpeg?imageMogr2%2Fthumbnail%2F%21600x600r%2Fstrip%2Fquality%2F90',
+                    pictures[2].url,
                     cache: true,
                     height: 120.0,
                     fit: BoxFit.cover,
@@ -250,18 +269,18 @@ class QuestionCoverCard extends StatelessWidget {
               ],
             ),
           ),
-          _buildContentWithoutImage()
+          _buildContentWithoutImage(text)
         ],
       ),
     );
   }
 
-  _buildContentWithoutImage() {
+  _buildContentWithoutImage(String text) {
     return Container(
       margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
       padding: EdgeInsets.only(left: 5.0, right: 5.0),
       child: Text(
-        '嗯，二选一的话，我建议桃花潭，其实这两个地方都可以去的，一天之内....太平湖很大，有一侧离桃花潭非常近哦，大约6公里左右的路程，你如果上午去桃花',
+        text,
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(

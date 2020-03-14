@@ -8,10 +8,12 @@ import 'package:travel/data/datasources/local/authorization_local_datasource.dar
 import 'package:travel/data/datasources/local/user_local_datasource.dart';
 import 'package:travel/data/datasources/remote/authorzation_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/moment_remote_datasource.dart';
+import 'package:travel/data/datasources/remote/question_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/topic_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/user_remote_datasource.dart';
 import 'package:travel/data/repositories/authorzation_repository.dart';
 import 'package:travel/data/repositories/moment_repository.dart';
+import 'package:travel/data/repositories/question_respository.dart';
 import 'package:travel/data/repositories/topic_repository.dart';
 import 'package:travel/data/repositories/user_repository.dart';
 import 'package:travel/entity/app_info.dart';
@@ -21,9 +23,11 @@ import 'package:travel/presentation/blocs/hot_topic/hot_topic_bloc.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
 import 'package:travel/presentation/blocs/moment_pool/moment_pool_bloc.dart';
+import 'package:travel/presentation/blocs/question_pool/question_pool_bloc.dart';
 import 'package:travel/presentation/blocs/topic_pool/topic_pool_bloc.dart';
 import 'package:travel/service/authorization_service.dart';
 import 'package:travel/service/moment_service.dart';
+import 'package:travel/service/question_service.dart';
 import 'package:travel/service/topic_service.dart';
 import 'package:travel/service/user_service.dart';
 
@@ -115,6 +119,11 @@ void registerBloc() {
       momentService: getIt(),
     ),
   );
+  getIt.registerFactory(
+    () => QuestionPoolBloc(
+      questionService: getIt(),
+    ),
+  );
 }
 
 registerRepository() {
@@ -136,6 +145,11 @@ registerRepository() {
       remote: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => QuestionRepository(
+      remote: getIt(),
+    ),
+  );
 }
 
 registerService() {
@@ -154,6 +168,11 @@ registerService() {
       repository: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => QuestionService(
+      repository: getIt(),
+    ),
+  );
 }
 
 registerRemoteDataSource() {
@@ -168,6 +187,9 @@ registerRemoteDataSource() {
   );
   getIt.registerLazySingleton(
     () => TopicRemoteDataSource(http: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => QuestionRemoteDataSource(http: getIt()), 
   );
 }
 
