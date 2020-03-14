@@ -1,38 +1,16 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:travel/entity/answer_cover.dart';
 import 'dart:math';
 
 import 'package:travel/entity/picture.dart';
+import 'package:travel/presentation/components/card_options.dart';
+import 'package:travel/presentation/components/user_info_title.dart';
 
 class AnswerCoverCard extends StatelessWidget {
-  final List<Picture> pictures = [
-    Picture(
-      pictureId: 1,
-      url: 'http://h1.ioliu.cn/bing/BrightonJetty_ZH-CN1526526038_1920x1080.jpg',
-    ),
-    Picture(
-      pictureId: 2,
-      url: 'http://h1.ioliu.cn/bing/AbiquaFalls_ZH-CN2781539758_1920x1080.jpg',
-    ),
-    Picture(
-      pictureId: 3,
-      url: 'http://h1.ioliu.cn/bing/CorsicaHeart_ZH-CN2795615037_1920x1080.jpg',
-    ),
-    Picture(
-      pictureId: 4,
-      url: 'http://h1.ioliu.cn/bing/TaikanCrane_ZH-CN3416122324_1920x1080.jpg',
-    ),
-    Picture(
-      pictureId: 51,
-      url:
-          'http://h1.ioliu.cn/bing/HumpbackHerring_ZH-CN2868885675_1920x1080.jpg',
-    ),
-    Picture(
-      pictureId: 9,
-      url: 'http://h1.ioliu.cn/bing/SemucChampey_ZH-CN1774527432_1920x1080.jpg',
-    ),
-  ];
-  AnswerCoverCard({Key key}) : super(key: key);
+  final AnswerCover answerCover;
+  
+  AnswerCoverCard({Key key, this.answerCover}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +18,26 @@ class AnswerCoverCard extends StatelessWidget {
       onTap: () {},
       child: Container(
         color: Colors.white,
-        margin: EdgeInsets.only(bottom: 25.0),
+        margin: EdgeInsets.only(bottom: 15.0),
         padding: EdgeInsets.all(15.0),
         child: Column(
           children: <Widget>[
-            // UserInfoTitle(
-            //   avatar: 'https://travel-1257167414.cos.ap-shanghai.myqcloud.com/avatar.jpg',
-            //   nickname: 'nickname',
-            //   date: '2018-02-08',
-            //   isFollow: false,
-            // ),
-            _buildAnswerCoverContent(
-              '安大略省警方哈利快速导航flask京东方哈里斯的理发安大略省警方哈利快速导航flask京东方哈里斯的理发师接电话flask决定恢复爱的是解放拉萨的金佛微软脾气安大略省警方哈利快速导航flask京东方哈里斯的理发师接电话flask决定恢复爱的是解放拉萨的金佛微软脾气安大略省警方哈利快速导航flask京东方哈里斯的理发师安大略省警方哈利快速导航flask京东方哈里斯的理发师接电话flask决定恢复爱的是解放拉萨的金佛微软脾气安大略省警方哈利快速导航flask京东方哈里斯的理发师接电话flask决定恢复爱的是解放拉萨的金佛微软脾气安大略省警方哈利快速导航flask京东方哈里斯的理发师接电话flask决定恢复爱的是解放拉萨的金佛微软脾气接电话flask决定恢复爱的是解放拉萨的金佛微软脾气师接电话flask决定恢复爱的是解放拉萨的金佛微软脾气',
-              pictures,
+            UserInfoTitle(
+              nickname: answerCover.nickname,
+              avatar: answerCover.avatar,
+              dateTime: answerCover.date,
             ),
-            _buildAnswerCoverOptionInfo(1000, 6000, 97)
+            _buildAnswerCoverContent(
+              answerCover.content,
+              answerCover.pictures,
+            ),
+            CardOptions(
+              isFav: answerCover.isFav,
+              isStar: answerCover.isStar,
+              favNum: answerCover.favNum,
+              starNum: answerCover.starNum,
+              commentNum: answerCover.commentNum,
+            ),
           ],
         ),
       ),
@@ -163,9 +146,9 @@ class AnswerCoverCard extends StatelessWidget {
   }
 
   Widget _buildAnswerCoverCardPicture(BuildContext context, int index) {
-    Radius radius = Radius.circular(10.0);
+    Radius radius = Radius.circular(6.0);
     BoxShape shape = BoxShape.rectangle;
-    String picture = pictures[index].url;
+    String picture = answerCover.pictures[index].url;
     BoxFit boxFit = BoxFit.cover;
     if (index == 1) {
       return ExtendedImage.network(
@@ -199,7 +182,7 @@ class AnswerCoverCard extends StatelessWidget {
               ),
             ),
             child: Text(
-              '+${pictures.length - 3}',
+              '+${answerCover.pictures.length - 3}',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20.0,

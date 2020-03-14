@@ -13,7 +13,8 @@ class QuestionPool extends StatefulWidget {
 }
 
 class _QuestionPoolState extends State<QuestionPool> {
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +27,19 @@ class _QuestionPoolState extends State<QuestionPool> {
       child: BlocConsumer<QuestionPoolBloc, QuestionPoolState>(
         listener: (context, state) {
           if (state is QuestionPoolLoaded) {
-          if (_refreshController.isLoading) {
-            _refreshController.loadComplete();
+            if (_refreshController.isLoading) {
+              _refreshController.loadComplete();
+            }
           }
-        }
-        if (state is QuestionPoolLoadFailure) {
-          if (_refreshController.isLoading) {
-            _refreshController.loadFailed();
+          if (state is QuestionPoolLoadFailure) {
+            if (_refreshController.isLoading) {
+              _refreshController.loadFailed();
+            }
           }
-        }
         },
         buildWhen: (previous, current) {
-          if (current is QuestionPoolLoadFailure || current is QuestionPoolLoading) {
+          if (current is QuestionPoolLoadFailure ||
+              current is QuestionPoolLoading) {
             return false;
           } else {
             return true;
@@ -60,7 +62,9 @@ class _QuestionPoolState extends State<QuestionPool> {
               controller: _refreshController,
               enablePullDown: false,
               enablePullUp: true,
-              onLoading: () => context.bloc<QuestionPoolBloc>().add(LoadMoreQuestionCovers()),
+              onLoading: () => context
+                  .bloc<QuestionPoolBloc>()
+                  .add(LoadMoreQuestionCovers()),
               footer: ClassicFooter(),
               child: ListView.builder(
                 shrinkWrap: true,

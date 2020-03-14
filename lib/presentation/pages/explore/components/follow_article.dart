@@ -27,9 +27,11 @@ class _FollowArticleState extends State<FollowArticle> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           CircleAvatar(
+            radius: 20.0,
             backgroundImage: ExtendedNetworkImageProvider(
               'https://travel-1257167414.cos.ap-shanghai.myqcloud.com/avatar.jpg',
             ),
+            backgroundColor: Color.fromRGBO(246, 247, 249, 1.0),
           ),
           Expanded(
             child: Column(
@@ -64,11 +66,14 @@ class _FollowArticleState extends State<FollowArticle> {
         children: <Widget>[
           Text(
             nikname,
-            style: TextStyle(fontSize: 15.0, color: Colors.black54),
+            style: TextStyle(
+              fontSize: 15.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Text(
             time,
-            style: TextStyle(fontSize: 12.0, color: Colors.black38),
+            style: TextStyle(fontSize: 13.0, color: Colors.black38),
           ),
         ],
       ),

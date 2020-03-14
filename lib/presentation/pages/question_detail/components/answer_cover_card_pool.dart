@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:travel/entity/answer_cover.dart';
 import 'answer_cover_card.dart';
 
 class AnswerCoverCardPool extends StatelessWidget {
-  const AnswerCoverCardPool({Key key}) : super(key: key);
+  final List<AnswerCover> answerCovers;
+  const AnswerCoverCardPool({Key key, this.answerCovers}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,12 @@ class AnswerCoverCardPool extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text('默认排序', style: TextStyle(
-                      fontSize: 16.0,
-                    ),),
+                    Text(
+                      '默认排序',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
                     SizedBox(width: 5.0),
                     Icon(Icons.sort),
                     SizedBox(width: 5.0),
@@ -33,8 +38,10 @@ class AnswerCoverCardPool extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: 3,
-            itemBuilder: (context, index) => AnswerCoverCard(),
+            itemCount: answerCovers.length,
+            itemBuilder: (context, index) => AnswerCoverCard(
+              answerCover: answerCovers[index],
+            ),
           ),
         ],
       ),

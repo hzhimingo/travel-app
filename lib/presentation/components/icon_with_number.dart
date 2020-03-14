@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/core/util/number_convert.dart';
 
 class IconWithNumber extends StatelessWidget {
   final int number;
@@ -19,7 +20,12 @@ class IconWithNumber extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Text('$number'),
+                Text(
+                  NumberConvert.convertNumberToString(number),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             )
           ],

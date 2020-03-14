@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:travel/core/error/exceptions.dart';
 import 'package:travel/core/http/http.dart';
 import 'package:travel/entity/question_cover.dart';
+import 'package:travel/entity/question_detail.dart';
 
 class QuestionRemoteDataSource {
   final Dio http;
@@ -19,6 +20,22 @@ class QuestionRemoteDataSource {
             .map<QuestionCover>((item) => QuestionCover.fromJson(item))
             .toList();
         return questionCovers;
+      } else {
+        throw ApiException(msg: result.msg);
+      }
+    } else {
+      throw ServerException();
+    }
+  }
+
+  Future<QuestionDetail> fetchQuestionDetail() async {
+    var response = await http.get(
+      '/question/detail',
+    );
+    if (response.statusCode == 200) {
+      Result result = Result.fromJson(response.data);
+      if (result.code == 0) {
+        return result.data;
       } else {
         throw ApiException(msg: result.msg);
       }

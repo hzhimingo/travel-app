@@ -6,17 +6,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel/core/http/http.dart';
 import 'package:travel/data/datasources/local/authorization_local_datasource.dart';
 import 'package:travel/data/datasources/local/user_local_datasource.dart';
+import 'package:travel/data/datasources/remote/answer_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/authorzation_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/moment_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/question_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/topic_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/user_remote_datasource.dart';
+import 'package:travel/data/repositories/answer_repository.dart';
 import 'package:travel/data/repositories/authorzation_repository.dart';
 import 'package:travel/data/repositories/moment_repository.dart';
 import 'package:travel/data/repositories/question_respository.dart';
 import 'package:travel/data/repositories/topic_repository.dart';
 import 'package:travel/data/repositories/user_repository.dart';
 import 'package:travel/entity/app_info.dart';
+import 'package:travel/presentation/blocs/answer_pool/answer_pool_bloc.dart';
 import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/presentation/blocs/hot_topic/hot_topic_bloc.dart';
@@ -25,6 +28,7 @@ import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart'
 import 'package:travel/presentation/blocs/moment_pool/moment_pool_bloc.dart';
 import 'package:travel/presentation/blocs/question_pool/question_pool_bloc.dart';
 import 'package:travel/presentation/blocs/topic_pool/topic_pool_bloc.dart';
+import 'package:travel/service/answer_service.dart';
 import 'package:travel/service/authorization_service.dart';
 import 'package:travel/service/moment_service.dart';
 import 'package:travel/service/question_service.dart';
@@ -124,6 +128,11 @@ void registerBloc() {
       questionService: getIt(),
     ),
   );
+  getIt.registerFactory(
+    () => AnswerPoolBloc(
+      answerService: getIt(),
+    ),
+  );
 }
 
 registerRepository() {
@@ -150,6 +159,11 @@ registerRepository() {
       remote: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => AnswerRepository(
+      remote: getIt(),
+    ),
+  );
 }
 
 registerService() {
@@ -173,6 +187,11 @@ registerService() {
       repository: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => AnswerService(
+      repository: getIt(),
+    ),
+  );
 }
 
 registerRemoteDataSource() {
@@ -190,6 +209,9 @@ registerRemoteDataSource() {
   );
   getIt.registerLazySingleton(
     () => QuestionRemoteDataSource(http: getIt()), 
+  );
+  getIt.registerLazySingleton(
+    () => AnswerRemoteDataSource(http: getIt()), 
   );
 }
 

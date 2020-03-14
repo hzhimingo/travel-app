@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/injection/injection.dart';
 import 'package:travel/presentation/blocs/question_pool/question_pool_bloc.dart';
+import 'package:travel/presentation/components/common_sliver_delegate.dart';
 
 import '../components/components.dart';
 
@@ -32,28 +33,4 @@ class _QuestionTabViewState extends State<QuestionTabView> {
       ),
     );
   }
-}
-
-class CommonSliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final Widget child;
-  final double height;
-
-  CommonSliverPersistentHeaderDelegate({this.child, this.height});
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return child;
-  }
-
-  @override
-  double get maxExtent => height;
-
-  @override
-  double get minExtent => height;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return oldDelegate != this;
-  }
-
 }

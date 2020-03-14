@@ -1,6 +1,7 @@
 import 'package:travel/entity/picture.dart';
 
 class AnswerCover {
+  int answerId;
   String content;
   int favNum;
   int starNum;
@@ -12,19 +13,22 @@ class AnswerCover {
   String avatar;
   List<Picture> pictures;
 
-  AnswerCover(
-      {this.content,
-      this.favNum,
-      this.starNum,
-      this.commentNum,
-      this.isStar,
-      this.isFav,
-      this.date,
-      this.nickname,
-      this.avatar,
-      this.pictures});
+  AnswerCover({
+    this.content,
+    this.favNum,
+    this.starNum,
+    this.commentNum,
+    this.isStar,
+    this.isFav,
+    this.date,
+    this.nickname,
+    this.avatar,
+    this.pictures,
+    this.answerId,
+  });
 
   AnswerCover.fromJson(Map<String, dynamic> json) {
+    answerId = json['answerId'];
     content = json['content'];
     favNum = json['favNum'];
     starNum = json['starNum'];
@@ -44,6 +48,7 @@ class AnswerCover {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['answerId'] = this.answerId;
     data['content'] = this.content;
     data['favNum'] = this.favNum;
     data['starNum'] = this.starNum;
