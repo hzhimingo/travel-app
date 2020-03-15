@@ -1,3 +1,4 @@
+//ignore: non_constant_identifier_names
 class IconFonts {
   static final int add = 0xe64e;
   static final int bag = 0xe7e2;

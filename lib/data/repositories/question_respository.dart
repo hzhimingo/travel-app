@@ -21,9 +21,9 @@ class QuestionRepository {
     }
   }
 
-  Future<Either<Failure, QuestionDetail>> fetchQuestionDetail() async {
+  Future<Either<Failure, QuestionDetail>> fetchQuestionDetail(int questionId) async {
      try {
-      var data = await remote.fetchQuestionDetail();
+      var data = await remote.fetchQuestionDetail(questionId);
       return Right(data);
     } on ApiException catch(e) {
       return Left(ApiFailure(e.msg));

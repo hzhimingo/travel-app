@@ -13,7 +13,7 @@ class QuestionService {
     return await repository.fetchQuestionCovers();
   }
 
-  Future<Either<Failure, QuestionDetail>> fetchQuestionDetail() async {
-    return await repository.fetchQuestionDetail();
+  Future<Either<Failure, QuestionDetail>> fetchQuestionDetail(int questionId) async {
+    return await repository.fetchQuestionDetail(questionId);
   }
 }

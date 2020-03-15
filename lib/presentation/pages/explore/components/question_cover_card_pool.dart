@@ -12,12 +12,13 @@ class QuestionPool extends StatefulWidget {
   _QuestionPoolState createState() => _QuestionPoolState();
 }
 
-class _QuestionPoolState extends State<QuestionPool> {
+class _QuestionPoolState extends State<QuestionPool> with AutomaticKeepAliveClientMixin {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       margin: EdgeInsets.only(top: 25.0),
       padding: EdgeInsets.only(
@@ -80,4 +81,7 @@ class _QuestionPoolState extends State<QuestionPool> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

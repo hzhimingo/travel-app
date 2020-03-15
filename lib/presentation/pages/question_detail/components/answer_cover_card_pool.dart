@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:travel/entity/answer_cover.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:travel/presentation/blocs/answer_pool/answer_pool_bloc.dart';
 import 'answer_cover_card.dart';
 
 class AnswerCoverCardPool extends StatelessWidget {
-  final List<AnswerCover> answerCovers;
-  const AnswerCoverCardPool({Key key, this.answerCovers}) : super(key: key);
+  final RefreshController refreshController;
+
+  const AnswerCoverCardPool({Key key, this.refreshController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +39,50 @@ class AnswerCoverCardPool extends StatelessWidget {
               ],
             ),
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: answerCovers.length,
-            itemBuilder: (context, index) => AnswerCoverCard(
-              answerCover: answerCovers[index],
-            ),
+          BlocConsumer<AnswerPoolBloc, AnswerPoolState>(
+            listener: (context, state) {
+              if (state is AnswerPoolLoaded) {
+                if (refreshController.isLoading) {
+                  refreshController.loadComplete();
+                }
+              }
+              if (state is AnswerPoolLoadFailure) {
+                if (refreshController.isLoading) {
+                  refreshController.loadFailed();
+                }
+              }
+            },
+            buildWhen: (previous, current) {
+              if (current is AnswerPoolLoadFailure ||
+                  current is AnswerPoolLoading) {
+                return false;
+              } else {
+                return true;
+              }
+            },
+            //ignore: missing_return
+            builder: (context, state) {
+              if (state is AnswerPoolEmpty || state is AnswerPoolInitializing) {
+                return Center(
+                  child: Text('Loading....'),
+                );
+              }
+              if (state is AnswerPoolInitializeFailure) {
+                return Center(
+                  child: Text('Fail.....'),
+                );
+              }
+              if (state is AnswerPoolLoaded) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: state.answerCovers.length,
+                  itemBuilder: (context, index) => AnswerCoverCard(
+                    answerCover: state.answerCovers[index],
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),

@@ -1,7 +1,9 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:travel/entity/question_detail.dart';
 
 class QuestionDetailPanel extends StatelessWidget {
+  final QuestionDetail questionDetail;
   final TextStyle _numberStyle = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 17.0,
@@ -9,7 +11,7 @@ class QuestionDetailPanel extends StatelessWidget {
   final TextStyle _textStyle = TextStyle(
     fontSize: 16.0,
   );
-  QuestionDetailPanel({Key key}) : super(key: key);
+  QuestionDetailPanel({Key key, this.questionDetail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class QuestionDetailPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            '厦门有哪些惊艳了味蕾的古早味美食？',
+            questionDetail.title,
             style: TextStyle(
               fontSize: 19.0,
               fontWeight: FontWeight.bold,
@@ -32,7 +34,7 @@ class QuestionDetailPanel extends StatelessWidget {
               minHeight: 20.0,
             ),
             child: Text(
-              '去过厦门的人，你们有哪些实用的建议给我呀？谢谢大家了',
+              questionDetail.content,
               style: TextStyle(
                 fontSize: 17.0,
               ),
@@ -47,7 +49,7 @@ class QuestionDetailPanel extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    '24523',
+                    '${questionDetail.visitedNum}',
                     style: _numberStyle,
                   ),
                   Text(
@@ -61,7 +63,7 @@ class QuestionDetailPanel extends StatelessWidget {
                   ),
                   SizedBox(width: 5.0),
                   Text(
-                    '3423',
+                    '${questionDetail.answerNum}',
                     style: _numberStyle,
                   ),
                   Text(
@@ -74,17 +76,29 @@ class QuestionDetailPanel extends StatelessWidget {
           ),
           SizedBox(height: 20.0),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              CircleAvatar(
-                radius: 18.0,
-                backgroundImage: ExtendedNetworkImageProvider(
-                    'https://travel-1257167414.cos.ap-shanghai.myqcloud.com/avatar.jpg'),
+              Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 18.0,
+                    backgroundImage: ExtendedNetworkImageProvider(
+                      questionDetail.avatar,
+                    ),
+                  ),
+                  SizedBox(width: 10.0),
+                  Text(
+                    questionDetail.nickname,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: 5.0),
               Text(
-                '问于 2016-07-01',
+                '问于 ${questionDetail.date}',
                 style: TextStyle(
-                  fontSize: 16.0,
+                  fontSize: 15.0,
                   color: Colors.black45,
                 ),
               ),

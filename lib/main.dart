@@ -4,10 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:travel/injection/injection.dart';
-import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
-import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/route/routes.dart';
 import 'package:travel/core/theme/themes.dart';
+import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
+import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

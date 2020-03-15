@@ -28,14 +28,17 @@ class QuestionRemoteDataSource {
     }
   }
 
-  Future<QuestionDetail> fetchQuestionDetail() async {
+  Future<QuestionDetail> fetchQuestionDetail(int questionId) async {
     var response = await http.get(
       '/question/detail',
+      queryParameters: {
+        "questionId": questionId,
+      },
     );
     if (response.statusCode == 200) {
       Result result = Result.fromJson(response.data);
       if (result.code == 0) {
-        return result.data;
+        return QuestionDetail.fromJson(result.data);
       } else {
         throw ApiException(msg: result.msg);
       }
