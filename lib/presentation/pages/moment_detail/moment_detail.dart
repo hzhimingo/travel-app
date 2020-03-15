@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
 import 'package:travel/route/routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:travel/presentation/components/comment_input_line.dart';
+import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
 
 import './components/components.dart';
 
@@ -126,6 +127,7 @@ class MomentDetail extends StatelessWidget {
                     ],
                   ),
                 ),
+                //TODO： 需要调整
                 Positioned(
                   left: 0.0,
                   bottom: 0.0,

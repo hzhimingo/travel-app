@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/route/routes.dart';
 
 class ExploreAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget> tabs;
@@ -30,6 +31,7 @@ class ExploreAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
+                GlobalRoute.router.navigateTo(context, Routes.search);
               },
               child: Container(
                 width: double.infinity,

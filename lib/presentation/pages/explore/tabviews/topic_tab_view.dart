@@ -74,6 +74,7 @@ class _TopicTabViewState extends State<TopicTabView>
           ];
         },
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: <Widget>[
             BlocProvider(

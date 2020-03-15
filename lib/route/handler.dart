@@ -100,3 +100,15 @@ var devSettingHandler = Handler(
     return DevSetting();
   },
 );
+
+var answerDetailHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return AnswerDetail();
+  },
+);
+
+var searchHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return Search();
+  },
+);

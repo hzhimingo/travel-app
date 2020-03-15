@@ -14,6 +14,8 @@ class Routes {
   static String topicDetail = '/topicDetail';
   static String questionDetail = '/questionDetail';
   static String devSetting = '/devSetting';
+  static String answerDetail = '/answerDetail';
+  static String search = '/search';
 
   static void configureRoutes(Router router) {
     router.define(root, handler: rootHandler);
@@ -24,5 +26,7 @@ class Routes {
     router.define(topicDetail, handler: topicDetailHandler);
     router.define(questionDetail, handler: questionDetailHandler);
     router.define(devSetting, handler: devSettingHandler);
+    router.define(answerDetail, handler: answerDetailHandler);
+    router.define(search, handler: searchHandler);
   }
 }

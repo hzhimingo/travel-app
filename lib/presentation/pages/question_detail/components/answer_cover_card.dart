@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:travel/entity/picture.dart';
 import 'package:travel/presentation/components/card_options.dart';
 import 'package:travel/presentation/components/user_info_title.dart';
+import 'package:travel/route/routes.dart';
 
 class AnswerCoverCard extends StatelessWidget {
   final AnswerCover answerCover;
@@ -15,7 +16,9 @@ class AnswerCoverCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        GlobalRoute.router.navigateTo(context, '/answerDetail');
+      },
       child: Container(
         color: Colors.white,
         margin: EdgeInsets.only(bottom: 15.0),
