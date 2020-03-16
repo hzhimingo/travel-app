@@ -28,6 +28,7 @@ import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart'
 import 'package:travel/presentation/blocs/moment_pool/moment_pool_bloc.dart';
 import 'package:travel/presentation/blocs/question_detail/question_detail_bloc.dart';
 import 'package:travel/presentation/blocs/question_pool/question_pool_bloc.dart';
+import 'package:travel/presentation/blocs/topic_detail/topic_detail_bloc.dart';
 import 'package:travel/presentation/blocs/topic_pool/topic_pool_bloc.dart';
 import 'package:travel/service/answer_service.dart';
 import 'package:travel/service/authorization_service.dart';
@@ -137,6 +138,11 @@ void registerBloc() {
   getIt.registerFactory(
     () => QuestionDetailBloc(
       questionService: getIt(),
+    ),
+  );
+  getIt.registerFactory(
+    () => TopicDetailBloc(
+      topicService: getIt(),
     ),
   );
 }

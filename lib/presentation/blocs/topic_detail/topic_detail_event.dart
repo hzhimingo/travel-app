@@ -4,10 +4,11 @@ abstract class TopicDetailEvent extends Equatable {
   const TopicDetailEvent();
 }
 
-class Change extends TopicDetailEvent {
-  final bool flag;
+class LoadTopicDetail extends TopicDetailEvent {
+  final int topicId;
 
-  Change({this.flag});
+  LoadTopicDetail({this.topicId});
+
   @override
-  List<Object> get props => [flag];
+  List<Object> get props => [topicId];
 }

@@ -41,6 +41,7 @@ class AnswerDetail extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomActionPanel(),
     );
   }
 }

@@ -21,8 +21,8 @@ class Pop extends StatelessWidget {
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(
-            sigmaX: 30.0,
-            sigmaY: 30.0,
+            sigmaX: 500.0,
+            sigmaY: 500.0,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,

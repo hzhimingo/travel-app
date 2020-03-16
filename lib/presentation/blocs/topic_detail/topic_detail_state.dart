@@ -4,18 +4,21 @@ abstract class TopicDetailState extends Equatable {
   const TopicDetailState();
 }
 
-class Active extends TopicDetailState {
-  final bool flag;
-
-  Active({this.flag});
+class TopicDetailLoading extends TopicDetailState {
   @override
-  List<Object> get props => [flag];
+  List<Object> get props => [];
 }
 
-class Disable extends TopicDetailState {
-  final bool flag;
+class TopicDetailLoaded extends TopicDetailState {
+  final TopicDetail topicDetail;
 
-  Disable({this.flag});
+  TopicDetailLoaded({this.topicDetail});
+  
   @override
-  List<Object> get props => [flag];
+  List<Object> get props => [topicDetail];
+}
+
+class TopicDetailLoadFailure extends TopicDetailState {
+  @override
+  List<Object> get props => [];
 }

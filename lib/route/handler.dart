@@ -71,9 +71,8 @@ var momentDetailHandler = Handler(
 var topicDetailHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     String topicId = params['topicId'].first;
-    print(topicId);
     return BlocProvider<TopicDetailBloc>(
-      create: (context) => TopicDetailBloc(),
+      create: (context) => getIt.get<TopicDetailBloc>()..add(LoadTopicDetail(topicId: int.parse(topicId))),
       child: TopicDetail(),
     );
   },

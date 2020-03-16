@@ -17,8 +17,6 @@ class TopicCoverCardPool extends StatefulWidget {
 
 class _TopicCoverCardPoolState extends State<TopicCoverCardPool>
     with AutomaticKeepAliveClientMixin {
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
