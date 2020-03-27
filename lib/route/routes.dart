@@ -16,6 +16,8 @@ class Routes {
   static String devSetting = '/devSetting';
   static String answerDetail = '/answerDetail';
   static String search = '/search';
+  static String spotPool = '/spotPool';
+  static String spotDetail = '/spotDetail';
 
   static void configureRoutes(Router router) {
     router.define(root, handler: rootHandler);
@@ -28,5 +30,7 @@ class Routes {
     router.define(devSetting, handler: devSettingHandler);
     router.define(answerDetail, handler: answerDetailHandler);
     router.define(search, handler: searchHandler);
+    router.define(spotPool, handler: spotPoolHandler);
+    router.define(spotDetail, handler: spotDetailHandler);
   }
 }

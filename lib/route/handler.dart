@@ -6,6 +6,7 @@ import 'package:travel/presentation/blocs/answer_pool/answer_pool_bloc.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
 import 'package:travel/presentation/blocs/question_detail/question_detail_bloc.dart';
+import 'package:travel/presentation/blocs/spot_filter/spot_filter_bloc.dart';
 import 'package:travel/presentation/blocs/topic_detail/topic_detail_bloc.dart';
 import 'package:travel/presentation/pages/pages.dart';
 
@@ -72,7 +73,8 @@ var topicDetailHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     String topicId = params['topicId'].first;
     return BlocProvider<TopicDetailBloc>(
-      create: (context) => getIt.get<TopicDetailBloc>()..add(LoadTopicDetail(topicId: int.parse(topicId))),
+      create: (context) => getIt.get<TopicDetailBloc>()
+        ..add(LoadTopicDetail(topicId: int.parse(topicId))),
       child: TopicDetail(),
     );
   },
@@ -83,10 +85,12 @@ var questionDetailHandler = Handler(
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => getIt.get<QuestionDetailBloc>()..add(InitializeQuestionDetail()),
+          create: (context) =>
+              getIt.get<QuestionDetailBloc>()..add(InitializeQuestionDetail()),
         ),
         BlocProvider(
-          create: (context) => getIt.get<AnswerPoolBloc>()..add(InitializeAnswerPool()),
+          create: (context) =>
+              getIt.get<AnswerPoolBloc>()..add(InitializeAnswerPool()),
         ),
       ],
       child: QuestionDetail(),
@@ -109,5 +113,20 @@ var answerDetailHandler = Handler(
 var searchHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return Search();
+  },
+);
+
+var spotPoolHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return BlocProvider(
+      create: (context) => SpotFilterBloc(),
+      child: SpotPool(),
+    );
+  },
+);
+
+var spotDetailHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return SpotDetail();
   },
 );
