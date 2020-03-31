@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/injection/injection.dart';
+import 'package:travel/presentation/blocs/search_history/search_history_bloc.dart';
 import 'package:travel/route/routes.dart';
 
-class Search extends StatelessWidget {
-  const Search({Key key}) : super(key: key);
+import './components/components.dart';
+
+class Search extends StatefulWidget {
+  Search({Key key}) : super(key: key);
+
+  @override
+  _SearchState createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+
+  SearchHistoryBloc _searchHistoryBloc;
+  TextEditingController _editingController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _searchHistoryBloc = BlocProvider.of<SearchHistoryBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +57,7 @@ class Search extends StatelessWidget {
               SizedBox(width: 5.0),
               Expanded(
                 child: TextField(
+                  controller: _editingController,
                   maxLines: 1,
                   decoration: InputDecoration(
                     hintText: "武大樱花",
@@ -51,19 +72,32 @@ class Search extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 15.0),
             child: Center(
-              child: Text(
-                '搜索',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 17.0,
+              child: GestureDetector(
+                onTap: () {
+                  if (_editingController.text != null && _editingController.text != "") {
+                    print(_editingController.text);
+                    _searchHistoryBloc.add(AddSearchHistory(searchWords: _editingController.text));
+                  }
+                },
+                child: Text(
+                  '搜索',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 17.0,
+                  ),
                 ),
               ),
             ),
           ),
         ],
       ),
-      body: Center(
-        child: Text('Search'),
+      body: Column(
+        children: <Widget>[
+          SearchHistoryPanel(),
+          Expanded(
+            child: HotSearchPanel(),
+          ),
+        ],
       ),
     );
   }

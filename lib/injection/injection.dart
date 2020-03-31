@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel/core/http/http.dart';
 import 'package:travel/data/datasources/local/authorization_local_datasource.dart';
+import 'package:travel/data/datasources/local/search_local_datasource.dart';
 import 'package:travel/data/datasources/local/user_local_datasource.dart';
 import 'package:travel/data/datasources/remote/answer_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/authorzation_remote_datasource.dart';
@@ -18,6 +19,7 @@ import 'package:travel/data/repositories/answer_repository.dart';
 import 'package:travel/data/repositories/authorzation_repository.dart';
 import 'package:travel/data/repositories/moment_repository.dart';
 import 'package:travel/data/repositories/question_respository.dart';
+import 'package:travel/data/repositories/search_repository.dart';
 import 'package:travel/data/repositories/spot_filter_repository.dart';
 import 'package:travel/data/repositories/spot_repository.dart';
 import 'package:travel/data/repositories/topic_repository.dart';
@@ -32,6 +34,7 @@ import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart'
 import 'package:travel/presentation/blocs/moment_pool/moment_pool_bloc.dart';
 import 'package:travel/presentation/blocs/question_detail/question_detail_bloc.dart';
 import 'package:travel/presentation/blocs/question_pool/question_pool_bloc.dart';
+import 'package:travel/presentation/blocs/search_history/search_history_bloc.dart';
 import 'package:travel/presentation/blocs/spot_pool/spot_pool_bloc.dart';
 import 'package:travel/presentation/blocs/topic_detail/topic_detail_bloc.dart';
 import 'package:travel/presentation/blocs/topic_pool/topic_pool_bloc.dart';
@@ -39,6 +42,7 @@ import 'package:travel/service/answer_service.dart';
 import 'package:travel/service/authorization_service.dart';
 import 'package:travel/service/moment_service.dart';
 import 'package:travel/service/question_service.dart';
+import 'package:travel/service/search_service.dart';
 import 'package:travel/service/spot_service.dart';
 import 'package:travel/service/topic_service.dart';
 import 'package:travel/service/user_service.dart';
@@ -156,6 +160,11 @@ void registerBloc() {
       spotService: getIt(),
     ),
   );
+  getIt.registerFactory(
+    () => SearchHistoryBloc(
+      searchService: getIt(),
+    ),
+  );
 }
 
 registerRepository() {
@@ -197,6 +206,11 @@ registerRepository() {
       remote: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => SearchRepository(
+      local: getIt(),
+    ),
+  );
 }
 
 registerService() {
@@ -231,6 +245,11 @@ registerService() {
       filterRepo: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => SearchService(
+      repository: getIt(),
+    ),
+  );
 }
 
 registerRemoteDataSource() {
@@ -263,6 +282,9 @@ registerRemoteDataSource() {
 registerLocalDataSource() {
   getIt.registerLazySingleton(
     () => AuthorizationLocalDataSource(sharedPreferences: getIt()),
+  );
+   getIt.registerLazySingleton(
+    () => SearchLocalDataSource(sharedPreferences: getIt()),
   );
 }
 

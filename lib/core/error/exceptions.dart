@@ -6,3 +6,5 @@ class ApiException implements Exception {
 class ServerException implements Exception {}
 
 class CacheNotExistException implements Exception {}
+
+class CacheSaveException implements Exception {}
