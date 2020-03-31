@@ -1,44 +1,49 @@
 class Spot {
   int spotId;
-  String name;
-  int type;
-  String thumbnail;
-  int commentNum;
-  String address;
-  String city;
+  int score;
+  int scoreNum;
+  int starNum;
   String area;
+  bool isStar;
+  String name;
+  String keyword;
+  String coverImage;
 
-  Spot(
-      {this.spotId,
-      this.name,
-      this.type,
-      this.thumbnail,
-      this.commentNum,
-      this.address,
-      this.city,
-      this.area});
+  Spot({
+    this.spotId,
+    this.score,
+    this.scoreNum,
+    this.starNum,
+    this.area,
+    this.isStar,
+    this.name,
+    this.keyword,
+    this.coverImage,
+  });
 
   Spot.fromJson(Map<String, dynamic> json) {
-    spotId = json['spotId'];
-    name = json['name'];
-    type = json['type'];
-    thumbnail = json['thumbnail'];
-    commentNum = json['commentNum'];
-    address = json['address'];
-    city = json['city'];
+    spotId = json['spot_id'];
+    score = json['score'];
+    scoreNum = json['scoreNum'];
+    starNum = json['starNum'];
     area = json['area'];
+    isStar = json['isStar'];
+    name = json['name'];
+    keyword = json['keyword'];
+    coverImage = json['cover_image'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['spotId'] = this.spotId;
-    data['name'] = this.name;
-    data['type'] = this.type;
-    data['thumbnail'] = this.thumbnail;
-    data['commentNum'] = this.commentNum;
-    data['address'] = this.address;
-    data['city'] = this.city;
+    data['spot_id'] = this.spotId;
+    data['score'] = this.score;
+    data['scoreNum'] = this.scoreNum;
+    data['starNum'] = this.starNum;
     data['area'] = this.area;
+    data['isStar'] = this.isStar;
+    data['name'] = this.name;
+    data['keyword'] = this.keyword;
+    data['cover_image'] = this.coverImage;
     return data;
   }
 }

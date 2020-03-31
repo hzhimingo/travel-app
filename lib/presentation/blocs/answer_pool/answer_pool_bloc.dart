@@ -28,7 +28,7 @@ class AnswerPoolBloc extends Bloc<AnswerPoolEvent, AnswerPoolState> {
         (faliure) => AnswerPoolInitializeFailure(),
         (answerCovers) => AnswerPoolLoaded(answerCovers: answerCovers),
       );
-    }
+    }  
     if (event is LoadMoreAnswerCovers) {
       yield AnswerPoolLoading();
       var data = await answerService.fetchAnswerCovers();

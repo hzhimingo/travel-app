@@ -10,12 +10,16 @@ import 'package:travel/data/datasources/remote/answer_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/authorzation_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/moment_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/question_remote_datasource.dart';
+import 'package:travel/data/datasources/remote/spot_filter_remote_datasource.dart';
+import 'package:travel/data/datasources/remote/spot_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/topic_remote_datasource.dart';
 import 'package:travel/data/datasources/remote/user_remote_datasource.dart';
 import 'package:travel/data/repositories/answer_repository.dart';
 import 'package:travel/data/repositories/authorzation_repository.dart';
 import 'package:travel/data/repositories/moment_repository.dart';
 import 'package:travel/data/repositories/question_respository.dart';
+import 'package:travel/data/repositories/spot_filter_repository.dart';
+import 'package:travel/data/repositories/spot_repository.dart';
 import 'package:travel/data/repositories/topic_repository.dart';
 import 'package:travel/data/repositories/user_repository.dart';
 import 'package:travel/entity/app_info.dart';
@@ -28,12 +32,14 @@ import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart'
 import 'package:travel/presentation/blocs/moment_pool/moment_pool_bloc.dart';
 import 'package:travel/presentation/blocs/question_detail/question_detail_bloc.dart';
 import 'package:travel/presentation/blocs/question_pool/question_pool_bloc.dart';
+import 'package:travel/presentation/blocs/spot_pool/spot_pool_bloc.dart';
 import 'package:travel/presentation/blocs/topic_detail/topic_detail_bloc.dart';
 import 'package:travel/presentation/blocs/topic_pool/topic_pool_bloc.dart';
 import 'package:travel/service/answer_service.dart';
 import 'package:travel/service/authorization_service.dart';
 import 'package:travel/service/moment_service.dart';
 import 'package:travel/service/question_service.dart';
+import 'package:travel/service/spot_service.dart';
 import 'package:travel/service/topic_service.dart';
 import 'package:travel/service/user_service.dart';
 
@@ -145,6 +151,11 @@ void registerBloc() {
       topicService: getIt(),
     ),
   );
+  getIt.registerFactory(
+    () => SpotPoolBloc(
+      spotService: getIt(),
+    ),
+  );
 }
 
 registerRepository() {
@@ -176,6 +187,16 @@ registerRepository() {
       remote: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => SpotRepository(
+      remote: getIt(),
+    ),
+  );
+  getIt.registerLazySingleton(
+    () => SpotFilterRespository(
+      remote: getIt(),
+    ),
+  );
 }
 
 registerService() {
@@ -204,6 +225,12 @@ registerService() {
       repository: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => SpotService(
+      spotRepo: getIt(),
+      filterRepo: getIt(),
+    ),
+  );
 }
 
 registerRemoteDataSource() {
@@ -220,10 +247,16 @@ registerRemoteDataSource() {
     () => TopicRemoteDataSource(http: getIt()),
   );
   getIt.registerLazySingleton(
-    () => QuestionRemoteDataSource(http: getIt()), 
+    () => QuestionRemoteDataSource(http: getIt()),
   );
   getIt.registerLazySingleton(
-    () => AnswerRemoteDataSource(http: getIt()), 
+    () => AnswerRemoteDataSource(http: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => SpotRemoteDataSource(http: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => SpotFilterRemoteDataSource(http: getIt()),
   );
 }
 
@@ -235,7 +268,8 @@ registerLocalDataSource() {
 
 registerCurrentUser() {
   getIt.registerSingleton<UserLocalDataSource>(
-      UserLocalDataSource(sharedPreferences: getIt()));
+    UserLocalDataSource(sharedPreferences: getIt()),
+  );
   getIt.registerSingleton<UserRepository>(UserRepository(userLocal: getIt()));
   getIt.registerSingleton<UserService>(UserService(userRepository: getIt()));
 }

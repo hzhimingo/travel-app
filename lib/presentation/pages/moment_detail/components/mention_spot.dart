@@ -68,7 +68,7 @@ class MentionSpot extends StatelessWidget {
         child: Row(
           children: <Widget>[
             ExtendedImage.network(
-              spots[index].thumbnail,
+              spots[index].coverImage,
               width: 100.0,
               height: 100.0,
               fit: BoxFit.cover,
@@ -96,7 +96,7 @@ class MentionSpot extends StatelessWidget {
                         Row(
                           children: <Widget>[
                             Text(
-                              '${spots[index].commentNum}',
+                              '${spots[index].starNum}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15.0,
@@ -114,7 +114,7 @@ class MentionSpot extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      '位于${spots[index].city}',
+                      '位于${spots[index].area}',
                       style: TextStyle(
                         fontSize: 15.0,
                         color: Colors.black45,

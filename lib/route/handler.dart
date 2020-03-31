@@ -6,9 +6,10 @@ import 'package:travel/presentation/blocs/answer_pool/answer_pool_bloc.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
 import 'package:travel/presentation/blocs/question_detail/question_detail_bloc.dart';
-import 'package:travel/presentation/blocs/spot_filter/spot_filter_bloc.dart';
+import 'package:travel/presentation/blocs/spot_pool/spot_pool_bloc.dart';
 import 'package:travel/presentation/blocs/topic_detail/topic_detail_bloc.dart';
 import 'package:travel/presentation/pages/pages.dart';
+import 'package:travel/presentation/pages/spot/spot.dart';
 
 var rootHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -119,8 +120,8 @@ var searchHandler = Handler(
 var spotPoolHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return BlocProvider(
-      create: (context) => SpotFilterBloc(),
-      child: SpotPool(),
+      create: (context) => getIt.get<SpotPoolBloc>()..add(InitializeSpotPool()),
+      child: SpotPage(),
     );
   },
 );

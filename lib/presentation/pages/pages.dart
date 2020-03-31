@@ -3,7 +3,7 @@ export 'package:travel/presentation/pages/root/root.dart';
 export 'package:travel/presentation/pages/login/login.dart';
 export 'package:travel/presentation/pages/search/search.dart';
 export 'package:travel/presentation/pages/settings/settings.dart';
-export 'package:travel/presentation/pages/spot_pool/spot_pool.dart';
+export 'package:travel/presentation/pages/spot/spot.dart';
 export 'package:travel/presentation/pages/settings/dev_setting.dart';
 export 'package:travel/presentation/pages/spot_detail/spot_detail.dart';
 export 'package:travel/presentation/pages/topic_detail/topic_detail.dart';

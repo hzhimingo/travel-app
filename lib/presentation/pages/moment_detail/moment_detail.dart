@@ -116,9 +116,9 @@ class MomentDetail extends StatelessWidget {
                         padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text('${state.momentDetail.releaseDate}发布'),
                       ),
-                      MentionSpot(
-                        spots: state.momentDetail.spots,
-                      ),
+                      // MentionSpot(
+                      //   spots: state.momentDetail.spots,
+                      // ),
                       LikedUserLine(
                         urls: state.momentDetail.favUsers,
                         favNum: state.momentDetail.favNum,
