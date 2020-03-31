@@ -1,4 +1,5 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/entity/answer_cover.dart';
 import 'dart:math';
@@ -10,14 +11,18 @@ import 'package:travel/route/routes.dart';
 
 class AnswerCoverCard extends StatelessWidget {
   final AnswerCover answerCover;
-  
+
   AnswerCoverCard({Key key, this.answerCover}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GlobalRoute.router.navigateTo(context, '/answerDetail');
+        GlobalRoute.router.navigateTo(
+          context,
+          '/answerDetail',
+          transition: TransitionType.cupertino,
+        );
       },
       child: Container(
         color: Colors.white,

@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/route/routes.dart';
 
@@ -16,7 +17,11 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
       child: RaisedButton(
         child: Text('GO'),
         onPressed: () {
-          GlobalRoute.router.navigateTo(context, '/spotPool');
+          GlobalRoute.router.navigateTo(
+            context,
+            '/spotPool',
+            transition: TransitionType.cupertino,
+          );
         },
       ),
     );

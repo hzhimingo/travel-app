@@ -1,11 +1,8 @@
 import 'dart:async';
-
-import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:travel/entity/spot.dart';
 import 'package:travel/entity/spot_filter.dart';
-import 'package:travel/presentation/pages/spot_pool/components/components.dart';
 import 'package:travel/service/spot_service.dart';
 
 part 'spot_pool_event.dart';

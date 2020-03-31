@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/entity/moment_cover.dart';
 import 'package:extended_image/extended_image.dart';
@@ -14,6 +15,7 @@ class MomentCoverCard extends StatelessWidget {
         GlobalRoute.router.navigateTo(
           context,
           '/momentDetail?momentId=${momentCover.momentId}',
+           transition: TransitionType.cupertino,
         );
       },
       child: Card(

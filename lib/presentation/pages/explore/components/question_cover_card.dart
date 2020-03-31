@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/entity/picture.dart';
 import 'package:travel/entity/question_cover.dart';
@@ -13,7 +14,10 @@ class QuestionCoverCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         GlobalRoute.router.navigateTo(
-            context, '/questionDetail?questionId=${questionCover.questionId}');
+          context,
+          '/questionDetail?questionId=${questionCover.questionId}',
+          transition: TransitionType.cupertino,
+        );
       },
       child: Container(
         padding: EdgeInsets.only(bottom: 15.0),
@@ -165,14 +169,10 @@ class QuestionCoverCard extends StatelessWidget {
       if (questionCover.answer.pictures.length != 0) {
         if (questionCover.answer.pictures.length <= 2) {
           return _buildContentHasImageLessThanTwo(
-            questionCover.answer.content,
-            questionCover.answer.pictures
-          );
+              questionCover.answer.content, questionCover.answer.pictures);
         } else {
           return _buildContentHasImageMoreThanThree(
-            questionCover.answer.content,
-            questionCover.answer.pictures
-          );
+              questionCover.answer.content, questionCover.answer.pictures);
         }
       }
     }

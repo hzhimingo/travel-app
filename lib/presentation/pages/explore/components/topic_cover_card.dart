@@ -1,4 +1,5 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/core/constant/iconfont.dart';
 import 'package:travel/core/util/number_convert.dart';
@@ -14,7 +15,11 @@ class TopicCoverCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GlobalRoute.router.navigateTo(context, '/topicDetail?topicId=${topicCover.topicId}');
+        GlobalRoute.router.navigateTo(
+          context,
+          '/topicDetail?topicId=${topicCover.topicId}',
+          transition: TransitionType.cupertino,
+        );
       },
       child: Container(
         width: double.infinity,
@@ -54,14 +59,16 @@ class TopicCoverCard extends StatelessWidget {
                           style: TextStyle(color: Colors.black, fontSize: 14.0),
                           children: [
                             TextSpan(
-                              text: NumberConvert.convertNumberToString(topicCover.momentNum),
+                              text: NumberConvert.convertNumberToString(
+                                  topicCover.momentNum),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             TextSpan(text: '瞬间·'),
                             TextSpan(
-                              text: NumberConvert.convertNumberToString(topicCover.commentNum),
+                              text: NumberConvert.convertNumberToString(
+                                  topicCover.commentNum),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
