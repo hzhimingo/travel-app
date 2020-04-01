@@ -36,6 +36,10 @@ class SpotDetail extends StatelessWidget {
           children: <Widget>[
             SpotBanner(),
             SpotInfo(),
+            SpotHotMomentPool(),
+            SpotQuestionPool(),
+            SpotNearbyPool(),
+            SpotMomentPool(),
           ],
         ),
       ),
