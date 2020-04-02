@@ -43,6 +43,7 @@ class SpotDetail extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BottomActionPanel(),
     );
   }
 }

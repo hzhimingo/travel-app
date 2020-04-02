@@ -1,4 +1,5 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/entity/spot.dart';
 import 'package:travel/route/routes.dart';
@@ -11,7 +12,11 @@ class SpotCoverCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GlobalRoute.router.navigateTo(context, '/spotDetail');
+        GlobalRoute.router.navigateTo(
+          context,
+          '/spotDetail',
+          transition: TransitionType.cupertino,
+        );
       },
       child: Container(
         color: Colors.white,
