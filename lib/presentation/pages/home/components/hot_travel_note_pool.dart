@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/presentation/pages/travel_note/components/travel_note_cover_card.dart';
 
 class HotTravelNotePool extends StatelessWidget {
   const HotTravelNotePool({Key key}) : super(key: key);
@@ -6,6 +7,7 @@ class HotTravelNotePool extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 15.0),
       padding: EdgeInsets.only(
         left: 15.0,
         right: 15.0,
@@ -39,6 +41,13 @@ class HotTravelNotePool extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+          ListView.builder(
+            padding: EdgeInsets.only(top: 15.0),
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: 3,
+            itemBuilder: (context, index) => TravelNoteCoverCard(),
           ),
         ],
       ),

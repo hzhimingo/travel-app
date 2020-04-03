@@ -1,4 +1,6 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:travel/route/routes.dart';
 
 class HomeActionPanel extends StatelessWidget {
   const HomeActionPanel({Key key}) : super(key: key);
@@ -11,6 +13,13 @@ class HomeActionPanel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           GestureDetector(
+            onTap: () {
+              GlobalRoute.router.navigateTo(
+                context,
+                '/travelNote',
+                transition: TransitionType.cupertino,
+              );
+            },
             child: Column(
               children: <Widget>[
                 Container(

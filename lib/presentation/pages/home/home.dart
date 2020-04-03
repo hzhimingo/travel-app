@@ -25,11 +25,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
             SpotSwiperPool(),
             HomeActionPanel(),
             HotCityPanel(),
-            //横 固定不可加载
             HotTravelNotePool(),
-            //瀑布流，固定不可加载
+            HotTopicPool(),
             RecommendMomentPool(),
-            NearByYou(),
           ],
         ),
       ),

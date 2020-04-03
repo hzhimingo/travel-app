@@ -11,6 +11,7 @@ import 'package:travel/presentation/blocs/spot_pool/spot_pool_bloc.dart';
 import 'package:travel/presentation/blocs/topic_detail/topic_detail_bloc.dart';
 import 'package:travel/presentation/pages/pages.dart';
 import 'package:travel/presentation/pages/spot/spot.dart';
+import 'package:travel/presentation/pages/travel_note/travel_note.dart';
 
 var rootHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -133,5 +134,11 @@ var spotPoolHandler = Handler(
 var spotDetailHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return SpotDetail();
+  },
+);
+
+var travelNoteHanlder = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return TravelNote();
   },
 );
