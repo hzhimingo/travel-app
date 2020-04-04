@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/route/routes.dart';
 
@@ -31,7 +32,11 @@ class ExploreAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                GlobalRoute.router.navigateTo(context, Routes.search);
+                GlobalRoute.router.navigateTo(
+                  context,
+                  Routes.search,
+                  transition: TransitionType.cupertino,
+                );
               },
               child: Container(
                 width: double.infinity,

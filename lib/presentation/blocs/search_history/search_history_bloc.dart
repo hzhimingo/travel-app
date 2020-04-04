@@ -31,14 +31,16 @@ class SearchHistoryBloc extends Bloc<SearchHistoryEvent, SearchHistoryState> {
     if (event is AddSearchHistory) {
       var data = await searchService.addSearchHistory(event.searchWords);
       yield data.fold(
-        (failure) => SearchHistoryState(searchHistories: currentState.searchHistories),
+        (failure) =>
+            SearchHistoryState(searchHistories: currentState.searchHistories),
         (list) => SearchHistoryState(searchHistories: list),
       );
     }
     if (event is ClearAllSearchHistory) {
       var data = await searchService.removeAllSearchHistory();
       yield data.fold(
-        (failure) => SearchHistoryState(searchHistories: currentState.searchHistories),
+        (failure) =>
+            SearchHistoryState(searchHistories: currentState.searchHistories),
         (list) => SearchHistoryState(searchHistories: []),
       );
     }

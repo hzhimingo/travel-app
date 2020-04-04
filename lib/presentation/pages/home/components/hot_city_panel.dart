@@ -1,5 +1,7 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:travel/route/routes.dart';
 
 class HotCityPanel extends StatelessWidget {
   const HotCityPanel({Key key}) : super(key: key);
@@ -26,21 +28,30 @@ class HotCityPanel extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      '更多',
-                      style: TextStyle(
-                        fontSize: 16.0,
+                GestureDetector(
+                  onTap: () {
+                    GlobalRoute.router.navigateTo(
+                      context,
+                      '/citySelector',
+                      transition: TransitionType.cupertino,
+                    );
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '更多',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.black38,
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 19.0,
                         color: Colors.black38,
                       ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 19.0,
-                      color: Colors.black38,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -102,12 +113,11 @@ class _HotCityItem extends StatelessWidget {
               width: 60.0,
               height: 20.0,
               decoration: BoxDecoration(
-                color: Color.fromRGBO(0, 0, 0, 0.4),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(5.0),
-                  bottomRight: Radius.circular(5.0),
-                )
-              ),
+                  color: Color.fromRGBO(0, 0, 0, 0.4),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(5.0),
+                    bottomRight: Radius.circular(5.0),
+                  )),
               child: Text(
                 '北京',
                 style: TextStyle(

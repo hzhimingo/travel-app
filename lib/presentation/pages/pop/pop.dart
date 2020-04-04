@@ -21,15 +21,30 @@ class Pop extends StatelessWidget {
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(
-            sigmaX: 500.0,
-            sigmaY: 500.0,
+            sigmaX: 9.0,
+            sigmaY: 9.0,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      GlobalRoute.router.pop(context);
+                      GlobalRoute.router.navigateTo(context, '/editMoment');
+                    },
+                  ),
+                ],
+              ),
               IconButton(
-                icon: Icon(Icons.close, color: Colors.black, size: 28.0,),
-                onPressed: (){
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.black,
+                  size: 28.0,
+                ),
+                onPressed: () {
                   GlobalRoute.router.pop(context);
                 },
               ),

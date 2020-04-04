@@ -36,6 +36,13 @@ class HomeActionPanel extends StatelessWidget {
             ),
           ),
           GestureDetector(
+            onTap: () {
+              GlobalRoute.router.navigateTo(
+                context,
+                '/pictureSelector',
+                transition: TransitionType.cupertino,
+              );
+            },
             child: Column(
               children: <Widget>[
                 Container(

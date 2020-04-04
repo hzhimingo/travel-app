@@ -6,13 +6,8 @@ class ProfileMomentTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView.builder(
-        itemBuilder: (context, index) => Container(
-          width: MediaQuery.of(context).size.width,
-          height: 200.0,
-          color: Colors.yellow,
-          margin: EdgeInsets.only(bottom: 20.0),
-        ),
+      child: Center(
+        child: Text('Moment'),
       ),
     );
   }
