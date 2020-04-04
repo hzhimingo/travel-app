@@ -9,9 +9,8 @@ import 'package:travel/presentation/blocs/question_detail/question_detail_bloc.d
 import 'package:travel/presentation/blocs/search_history/search_history_bloc.dart';
 import 'package:travel/presentation/blocs/spot_pool/spot_pool_bloc.dart';
 import 'package:travel/presentation/blocs/topic_detail/topic_detail_bloc.dart';
+import 'package:travel/presentation/components/picture_selector.dart';
 import 'package:travel/presentation/pages/pages.dart';
-import 'package:travel/presentation/pages/spot/spot.dart';
-import 'package:travel/presentation/pages/travel_note/travel_note.dart';
 
 var rootHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -140,5 +139,23 @@ var spotDetailHandler = Handler(
 var travelNoteHanlder = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return TravelNote();
+  },
+);
+
+var citySelectorHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return CitySelector();
+  },
+);
+
+var pictureSelectorHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return PictureSelector();
+  },
+);
+
+var editMomentHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return EditMomnet();
   },
 );

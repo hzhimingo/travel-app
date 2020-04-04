@@ -25,8 +25,9 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_spinkit: ^4.1.2
   pull_to_refresh: ^1.5.8
-  shared_preferences: ^0.5.6+2
   pin_code_text_field: ^1.5.1
+  shared_preferences: ^0.5.6+2
+  multi_image_picker: ^4.6.5+rc.1
   
 
 dev_dependencies:

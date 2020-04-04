@@ -20,6 +20,8 @@ class Routes {
   static String spotDetail = '/spotDetail';
   static String travelNote = '/travelNote';
   static String citySelector = '/citySelector';
+  static String pictureSelector = '/pictureSelector';
+  static String editMoment = '/editMoment';
 
   static void configureRoutes(Router router) {
     router.define(root, handler: rootHandler);
@@ -36,5 +38,7 @@ class Routes {
     router.define(spotDetail, handler: spotDetailHandler);
     router.define(travelNote, handler: travelNoteHanlder);
     router.define(citySelector, handler: citySelectorHandler);
+    router.define(pictureSelector, handler: pictureSelectorHandler);
+    router.define(editMoment, handler: editMomentHandler);
   }
 }
