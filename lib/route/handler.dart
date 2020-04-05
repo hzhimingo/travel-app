@@ -159,3 +159,15 @@ var editMomentHandler = Handler(
     return EditMomnet();
   },
 );
+
+var commentPageHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return CommentPage();
+  },
+);
+
+var replyHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return ReplyPage();
+  },
+);

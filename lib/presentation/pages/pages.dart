@@ -12,6 +12,8 @@ export 'package:travel/presentation/pages/settings/dev_setting.dart';
 export 'package:travel/presentation/pages/travel_note/travel_note.dart';
 export 'package:travel/presentation/pages/spot_detail/spot_detail.dart';
 export 'package:travel/presentation/pages/topic_detail/topic_detail.dart';
+export 'package:travel/presentation/pages/comment_reply/comment_page.dart';
+export 'package:travel/presentation/pages/comment_reply/reply_page.dart';
 export 'package:travel/presentation/pages/moment_detail/moment_detail.dart';
 export 'package:travel/presentation/pages/answer_detail/answer_detail.dart';
 export 'package:travel/presentation/pages/city_selector/city_selector.dart';

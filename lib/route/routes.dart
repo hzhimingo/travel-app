@@ -22,6 +22,8 @@ class Routes {
   static String citySelector = '/citySelector';
   static String pictureSelector = '/pictureSelector';
   static String editMoment = '/editMoment';
+  static String comment = '/comment';
+  static String reply = '/reply';
 
   static void configureRoutes(Router router) {
     router.define(root, handler: rootHandler);
@@ -40,5 +42,7 @@ class Routes {
     router.define(citySelector, handler: citySelectorHandler);
     router.define(pictureSelector, handler: pictureSelectorHandler);
     router.define(editMoment, handler: editMomentHandler);
+    router.define(comment, handler: commentPageHandler);
+    router.define(reply, handler: replyHandler);
   }
 }
