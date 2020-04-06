@@ -1,9 +1,36 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:travel/presentation/pages/comment_reply/components/reply_cover_pool.dart';
+import 'package:extended_image/extended_image.dart';
 
-class CommentLine extends StatelessWidget {
-  const CommentLine({Key key}) : super(key: key);
+import './time_and_option.dart';
+
+class ReplyCard extends StatelessWidget {
+  final int commentAuthorId;
+  final int replyId;
+  final int replyAuthorId;
+  final String replyAuthorNickname;
+  final String replyAuthorAvatar;
+  final int replyAuthorLevel;
+  final int replyToId;
+  final String replyToNickname;
+  final String content;
+  final String time;
+  final int thumbUpNum;
+  final bool isThumbUp;
+  const ReplyCard({
+    Key key,
+    this.commentAuthorId,
+    this.replyId,
+    this.replyAuthorId,
+    this.replyAuthorAvatar,
+    this.replyAuthorNickname,
+    this.replyAuthorLevel,
+    this.replyToId,
+    this.replyToNickname,
+    this.content,
+    this.time,
+    this.thumbUpNum,
+    this.isThumbUp,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +49,7 @@ class CommentLine extends StatelessWidget {
             CircleAvatar(
               radius: 16.0,
               backgroundImage: ExtendedNetworkImageProvider(
-                'https://p1-q.mafengwo.net/s15/M00/96/01/CoUBGV4pHj6AdsKGAADkQCnAbQE62.jpeg',
+                replyAuthorAvatar,
               ),
             ),
             SizedBox(width: 10.0),
@@ -42,7 +69,7 @@ class CommentLine extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Text(
-                          '一定',
+                          replyAuthorNickname,
                           style: TextStyle(
                             fontSize: 15.0,
                             fontWeight: FontWeight.bold,
@@ -61,7 +88,7 @@ class CommentLine extends StatelessWidget {
                             color: Colors.blueAccent,
                           ),
                           child: Text(
-                            'LV.4',
+                            'LV.$replyAuthorLevel',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 9.0,
@@ -72,66 +99,53 @@ class CommentLine extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: Text(
-                        '给摄影师加个鸡腿！这么美的照片以后能不能经常发',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          '20小时前',
+                      child: RichText(
+                        textAlign: TextAlign.start,
+                        text: TextSpan(
                           style: TextStyle(
-                            fontSize: 13.0,
-                            color: Colors.grey[500],
+                            color: Colors.black,
                           ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.thumb_up,
-                                  size: 17.0,
-                                  color: Colors.grey[400],
-                                ),
-                                SizedBox(width: 5.0),
-                                Text(
-                                  '251',
-                                  style: TextStyle(
-                                    fontSize: 13.0,
-                                    color: Colors.grey[400],
-                                  ),
-                                ),
-                              ],
+                          children: [
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Offstage(
+                                offstage: commentAuthorId == replyToId,
+                                child: Text('回复', style: TextStyle(
+                                  fontSize: 15.0,
+                                ),),
+                              ),
                             ),
-                            SizedBox(width: 20.0),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.comment,
-                                  size: 17.0,
-                                  color: Colors.grey[500],
-                                ),
-                                SizedBox(width: 5.0),
-                                Text(
-                                  '37',
-                                  style: TextStyle(
-                                    fontSize: 13.0,
-                                    color: Colors.grey[400],
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Offstage(
+                                offstage: commentAuthorId == replyToId,
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Text(
+                                    '@$replyToNickname:',
+                                    style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 15.0,
+                                    ),
                                   ),
                                 ),
-                              ],
+                              ),
+                            ),
+                            TextSpan(
+                              text: content,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                              )
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                    ReplyCoverPool(),
+                    TimeAndOption(
+                      time: time,
+                      thumbUpNum: thumbUpNum,
+                      isThumbUp: isThumbUp,
+                    ),
                   ],
                 ),
               ),

@@ -26,7 +26,7 @@ class ReplyCoverPool extends StatelessWidget {
               replyNickname: '你好世界',
               replyToId: 2,
               replyToNickname: '牛逼的世界',
-              content: '一定要买一套红裙子',
+              content: '一定要买一套红裙子山东分公司',
             ),
           ),
           GestureDetector(
@@ -73,6 +73,7 @@ class _ReplyCoverItem extends StatelessWidget {
   Widget build(BuildContext context) {
     List<InlineSpan> children = List();
     children.add(WidgetSpan(
+      alignment: PlaceholderAlignment.middle,
       child: GestureDetector(
         onTap: () {},
         child: Text(
@@ -83,13 +84,16 @@ class _ReplyCoverItem extends StatelessWidget {
     ));
     if (replyToId == null) {
       children.add(WidgetSpan(
+        alignment: PlaceholderAlignment.middle,
         child: Text('回复'),
       ));
     } else {
       children.add(WidgetSpan(
+        alignment: PlaceholderAlignment.middle,
         child: Text('回复'),
       ));
       children.add(WidgetSpan(
+        alignment: PlaceholderAlignment.middle,
         child: GestureDetector(
           onTap: () {},
           child: Text(
