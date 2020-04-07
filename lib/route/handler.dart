@@ -171,3 +171,57 @@ var replyHandler = Handler(
     return ReplyPage();
   },
 );
+
+var editTravelNoteHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return EditTravelNote();
+  },
+);
+
+var editQuestionHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return EditQuestion();
+  },
+);
+
+var historyHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return History();
+  },
+);
+
+var followHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return Follow();
+  },
+);
+
+var favoriteHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return Favorite();
+  },
+);
+
+var messageCenterHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return MessageCenter();
+  },
+);
+
+var collectHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return Collect();
+  },
+);
+
+var pictureAlbumHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return PictureAlbum();
+  },
+);
+
+var spotMapHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return SpotMap();
+  },
+);

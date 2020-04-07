@@ -22,8 +22,17 @@ class Routes {
   static String citySelector = '/citySelector';
   static String pictureSelector = '/pictureSelector';
   static String editMoment = '/editMoment';
+  static String editTravelNote = '/editTravelNote';
+  static String editQuestion = '/editQuestion';
   static String comment = '/comment';
   static String reply = '/reply';
+  static String history = '/history';
+  static String favorite = '/favorite';
+  static String follow = '/follow';
+  static String messageCenter = '/messageCenter';
+  static String collect = '/collect';
+  static String pictureAlbum = '/pictureAlbum';
+  static String spotMap = '/spotMap';
 
   static void configureRoutes(Router router) {
     router.define(root, handler: rootHandler);
@@ -44,5 +53,14 @@ class Routes {
     router.define(editMoment, handler: editMomentHandler);
     router.define(comment, handler: commentPageHandler);
     router.define(reply, handler: replyHandler);
+    router.define(editTravelNote, handler: editTravelNoteHandler);
+    router.define(editQuestion, handler: editQuestionHandler);
+    router.define(history, handler: historyHandler);
+    router.define(favorite, handler: favoriteHandler);
+    router.define(follow, handler: followHandler);
+    router.define(messageCenter, handler: messageCenterHandler);
+    router.define(collect, handler: collectHandler);
+    router.define(pictureAlbum, handler: pictureAlbumHandler);
+    router.define(spotMap, handler: spotMapHandler);
   }
 }
