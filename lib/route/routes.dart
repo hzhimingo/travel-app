@@ -33,6 +33,7 @@ class Routes {
   static String collect = '/collect';
   static String pictureAlbum = '/pictureAlbum';
   static String spotMap = '/spotMap';
+  static String pictureAlbumDetail = '/pictureAlbumDetail';
 
   static void configureRoutes(Router router) {
     router.define(root, handler: rootHandler);
@@ -62,5 +63,6 @@ class Routes {
     router.define(collect, handler: collectHandler);
     router.define(pictureAlbum, handler: pictureAlbumHandler);
     router.define(spotMap, handler: spotMapHandler);
+    router.define(pictureAlbumDetail, handler: pictureAlbumDetailHandler);
   }
 }
