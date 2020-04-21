@@ -12,6 +12,7 @@ export 'package:travel/presentation/pages/history/history.dart';
 export 'package:travel/presentation/pages/favorite/favorite.dart';
 export 'package:travel/presentation/pages/collect/collect.dart';
 export 'package:travel/presentation/pages/picture_album/picture_album.dart';
+export 'package:travel/presentation/pages/picture_album/picture_album_detail.dart';
 export 'package:travel/presentation/pages/message_center/message_center.dart';
 export 'package:travel/presentation/pages/settings/settings.dart';
 export 'package:travel/presentation/pages/settings/dev_setting.dart';

@@ -59,6 +59,13 @@ class HomeActionPanel extends StatelessWidget {
             ),
           ),
           GestureDetector(
+            onTap: () {
+              GlobalRoute.router.navigateTo(
+                context,
+                '/comment',
+                transition: TransitionType.cupertino,
+              );
+            },
             child: Column(
               children: <Widget>[
                 Container(
@@ -75,6 +82,13 @@ class HomeActionPanel extends StatelessWidget {
             ),
           ),
           GestureDetector(
+            onTap: () {
+               GlobalRoute.router.navigateTo(
+                context,
+                '/spotMap',
+                transition: TransitionType.cupertino,
+              );
+            },
             child: Column(
               children: <Widget>[
                 Container(

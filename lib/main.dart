@@ -1,3 +1,4 @@
+import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +15,12 @@ void main() async {
   await init();
   setStatusBar();
   setRoute();
+  await AmapCore.init('f6422eadda731fb0d9ffb3260a5cf899');
   runApp(TravelApp());
+  await AmapService.init(
+    iosKey: '7a04506d15fdb7585707f7091d715ef4',
+    androidKey: '7c9daac55e90a439f7b4304b465297fa',
+  );
 }
 
 /// 设置状态栏

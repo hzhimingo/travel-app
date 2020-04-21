@@ -8,6 +8,15 @@ class EditQuestion extends StatefulWidget {
 }
 
 class _EditQuestionState extends State<EditQuestion> {
+
+  TextEditingController _controller;
+  
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,12 +24,18 @@ class _EditQuestionState extends State<EditQuestion> {
         brightness: Brightness.light,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black,),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
           onPressed: () {},
         ),
         actions: <Widget>[
           Text('发表问题'),
         ],
+      ),
+      body: TextField(
+        controller: _controller,
       ),
     );
   }

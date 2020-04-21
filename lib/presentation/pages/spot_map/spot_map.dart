@@ -1,5 +1,6 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:flutter/material.dart';
+import 'package:travel/route/routes.dart';
 
 class SpotMap extends StatelessWidget {
   const SpotMap({Key key}) : super(key: key);
@@ -49,7 +50,7 @@ class SpotMap extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.5,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(15.0),
+                borderRadius: BorderRadius.circular(20.0),
               ),
             ),
           ),
@@ -64,6 +65,9 @@ class SpotMap extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: GestureDetector(
+                onTap: () {
+                  GlobalRoute.router.pop(context);
+                },
                 child: Icon(
                   Icons.arrow_back_ios,
                   color: Colors.black,

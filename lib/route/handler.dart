@@ -225,3 +225,9 @@ var spotMapHandler = Handler(
     return SpotMap();
   },
 );
+
+var pictureAlbumDetailHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return PictureAlbumDetail();
+  },
+);

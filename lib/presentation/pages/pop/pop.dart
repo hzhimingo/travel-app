@@ -36,6 +36,20 @@ class Pop extends StatelessWidget {
                       GlobalRoute.router.navigateTo(context, '/editMoment');
                     },
                   ),
+                  IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      GlobalRoute.router.pop(context);
+                      GlobalRoute.router.navigateTo(context, '/editTravelNote');
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      GlobalRoute.router.pop(context);
+                      GlobalRoute.router.navigateTo(context, '/editQuestion');
+                    },
+                  )
                 ],
               ),
               IconButton(
