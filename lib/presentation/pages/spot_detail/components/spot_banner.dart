@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class SpotBanner extends StatelessWidget {
@@ -18,7 +19,12 @@ class SpotBanner extends StatelessWidget {
             height: 230.0,
             margin: EdgeInsets.only(right: 5.0),
             decoration: BoxDecoration(
-              color: Colors.yellow,
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: ExtendedNetworkImageProvider(
+                  'https://n1-q.mafengwo.net/s11/M00/46/1A/wKgBEFrsPkeARLM7AAEBBbum5WQ58.jpeg'
+                )
+              ),
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),
@@ -27,7 +33,12 @@ class SpotBanner extends StatelessWidget {
             height: 230.0,
             margin: EdgeInsets.only(right: 5.0),
             decoration: BoxDecoration(
-              color: Colors.green,
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: ExtendedNetworkImageProvider(
+                  'https://n1-q.mafengwo.net/s12/M00/37/05/wKgED1vN30-AP3EdAAhmMYBv9YI45.jpeg'
+                )
+              ),
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),
@@ -36,7 +47,12 @@ class SpotBanner extends StatelessWidget {
             height: 230.0,
             margin: EdgeInsets.only(right: 5.0),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: ExtendedNetworkImageProvider(
+                  'https://n1-q.mafengwo.net/s1/M00/6F/50/wKgIC1xWmuKAIRc8ABvON1lfBS461.jpeg'
+                )
+              ),
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),

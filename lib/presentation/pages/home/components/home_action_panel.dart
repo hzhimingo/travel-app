@@ -39,7 +39,7 @@ class HomeActionPanel extends StatelessWidget {
             onTap: () {
               GlobalRoute.router.navigateTo(
                 context,
-                '/pictureSelector',
+                '/spotPool',
                 transition: TransitionType.cupertino,
               );
             },

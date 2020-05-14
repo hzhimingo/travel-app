@@ -62,7 +62,7 @@ class Root extends StatelessWidget {
           CustomBottomNavigationBarItem(
             icon: IconData(IconFonts.bag, fontFamily: 'IconFont'),
             activeIcon: IconData(IconFonts.bag_fill, fontFamily: 'IconFont'),
-            label: '出行',
+            label: '问答',
           ),
           CustomBottomNavigationBarItem(
             icon: IconData(IconFonts.people, fontFamily: 'IconFont'),

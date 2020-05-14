@@ -1,4 +1,3 @@
-import 'package:amap_all_fluttify/amap_all_fluttify.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/route/routes.dart';
 
@@ -121,8 +120,8 @@ class _CitySelectorState extends State<CitySelector> {
                   RaisedButton(
                     child: Text('获取单次定位'),
                     onPressed: () async {
-                      final location = await AmapLocation.fetchLocation();
-                      print(location.city);
+                      // final location = await AmapLocation.fetchLocation();
+                      // print(location.city);
                     },
                   ),
                 ],

@@ -15,11 +15,11 @@ void main() async {
   await init();
   setStatusBar();
   setRoute();
-  await AmapCore.init('f6422eadda731fb0d9ffb3260a5cf899');
+  //await AmapCore.init('f81d5ea15d76dff806bdc3e55382110e');
   runApp(TravelApp());
   await AmapService.init(
-    iosKey: '7a04506d15fdb7585707f7091d715ef4',
-    androidKey: '7c9daac55e90a439f7b4304b465297fa',
+    iosKey: 'f81d5ea15d76dff806bdc3e55382110e',
+    androidKey: 'f81d5ea15d76dff806bdc3e55382110e',
   );
 }
 
@@ -51,10 +51,12 @@ class TravelApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthorizationBloc>(
-            create: (context) => getIt.get<AuthorizationBloc>()..add(ResumeAuthorized()),
+            create: (context) =>
+                getIt.get<AuthorizationBloc>()..add(ResumeAuthorized()),
           ),
           BlocProvider<CurrentUserBloc>(
-            create: (context) => getIt.get<CurrentUserBloc>()..add(RefreshCurrentUser()),
+            create: (context) =>
+                getIt.get<CurrentUserBloc>()..add(RefreshCurrentUser()),
           ),
         ],
         child: MaterialApp(
