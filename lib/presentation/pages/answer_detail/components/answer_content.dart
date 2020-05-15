@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:travel/entity/answer_detail.dart';
 import 'package:travel/presentation/components/user_info_title.dart';
 
 class AnswerContent extends StatelessWidget {
-  const AnswerContent({Key key}) : super(key: key);
+  final AnswerDetailData answerDetailData;
+  const AnswerContent({Key key, this.answerDetailData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +17,25 @@ class AnswerContent extends StatelessWidget {
       child: Column(
         children: <Widget>[
           UserInfoTitle(
-            nickname: "坦克疯子",
-            avatar: "https://travel-1257167414.cos.ap-shanghai.myqcloud.com/avatar.jpg",
-            dateTime: "2020-02-18",
+            nickname: answerDetailData.nickname,
+            avatar: answerDetailData.avatar,
+            dateTime: answerDetailData.date,
           ),
+          Container(
+            padding: EdgeInsets.only(
+              top: 10.0,
+              bottom: 10.0,
+              left: 5.0,
+              right: 5.0,
+            ),
+            child: Text(
+              answerDetailData.content,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 17.0,
+              ),
+            ),
+          )
         ],
       ),
     );

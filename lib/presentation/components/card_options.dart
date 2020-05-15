@@ -94,7 +94,7 @@ class _CardOptionsState extends State<CardOptions> {
                 size: 27.0,
                 color: isStar ? Colors.yellow : Colors.black,
               ),
-              number: 12000,
+              number: starNum,
             ),
           ),
           InkResponse(

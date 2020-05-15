@@ -29,22 +29,12 @@ class QuestionDetailPanel extends StatelessWidget {
             ),
           ),
           SizedBox(height: 15.0),
-          Container(
-            constraints: BoxConstraints(
-              minHeight: 20.0,
-            ),
-            child: Text(
-              questionDetail.content,
-              style: TextStyle(
-                fontSize: 17.0,
-              ),
-            ),
-          ),
+          _buildQuestionContent(questionDetail.content),
           SizedBox(height: 15.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              _buildTag('厦门'),
+              _buildTag('问题'),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
@@ -130,6 +120,24 @@ class QuestionDetailPanel extends StatelessWidget {
         name,
         style: TextStyle(
           fontSize: 15.0,
+        ),
+      ),
+    );
+  }
+}
+
+_buildQuestionContent(String content) {
+  if (content == null) {
+    return Container();
+  } else {
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: 20.0,
+      ),
+      child: Text(
+        content,
+        style: TextStyle(
+          fontSize: 17.0,
         ),
       ),
     );

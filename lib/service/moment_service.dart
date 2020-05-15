@@ -11,6 +11,7 @@ class MomentService {
   MomentService({this.repository});
 
   Future<Either<Failure, List<MomentCover>>> fetchMomentCovers() async {
+    print("GET DATA SERVICE");
     return await repository.fetchMomentCovers();
   }
 

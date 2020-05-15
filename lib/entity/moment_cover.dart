@@ -1,7 +1,7 @@
 import 'package:travel/entity/picture.dart';
 
 class MomentCover {
-  int isFavorite;
+  bool isFavorite;
   int favoriteNum;
   int momentId;
   String coverText;

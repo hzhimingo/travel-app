@@ -4,11 +4,17 @@ import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:travel/core/util/validators.dart';
+import 'package:travel/service/login_service.dart';
 
 part 'sms_form_event.dart';
 part 'sms_form_state.dart';
 
 class SmsFormBloc extends Bloc<SmsFormEvent, SmsFormState> {
+
+  final LoginService loginService;
+
+  SmsFormBloc({this.loginService});
+
   @override
   SmsFormState get initialState => SmsUnSend(isPhoneValided: false, phoneNumber: null);
 
@@ -27,10 +33,12 @@ class SmsFormBloc extends Bloc<SmsFormEvent, SmsFormState> {
       yield SmsUnSend(isPhoneValided: false, phoneNumber: null);
     }
     if (event is RequestSendSmsCode) {
-      print('${event.phoneNumber}');
       yield SmsSending();
-      Future.delayed(Duration(seconds: 2));
-      yield SmsSendSuccess(phoneNumber: event.phoneNumber);
+      var result = await loginService.sendLoginSMSCode(event.phoneNumber);
+      yield result.fold(
+        (failure) => SmsSendFailure(),
+        (success) => SmsSendSuccess(phoneNumber: event.phoneNumber)
+      );
     }
   }
 }

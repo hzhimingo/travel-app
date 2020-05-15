@@ -11,6 +11,7 @@ class SmsCodeLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String phoneNumber = "";
     //ignore: close_sinks
     final LoginBloc _loginBloc = BlocProvider.of<LoginBloc>(context);
     return Container(
@@ -33,6 +34,7 @@ class SmsCodeLogin extends StatelessWidget {
                 BlocBuilder<SmsFormBloc, SmsFormState>(
                   builder: (context, state) {
                     if (state is SmsSendSuccess) {
+                      phoneNumber = state.phoneNumber;
                       return Text(
                         state.phoneNumber,
                         style: TextStyle(color: Colors.white, fontSize: 17.0),
@@ -53,7 +55,9 @@ class SmsCodeLogin extends StatelessWidget {
             defaultBorderColor: Color.fromRGBO(255, 255, 255, 0.1),
             hasTextBorderColor: Color.fromRGBO(255, 255, 255, 0.1),
             onTextChanged: (text) {},
-            onDone: (text) {},
+            onDone: (text) {
+              _loginBloc.add(LoginBySmsCode(phoneNumber: phoneNumber, checkCode: text));
+            },
             wrapAlignment: WrapAlignment.spaceAround,
             pinBoxRadius: 5.0,
             pinTextStyle: TextStyle(fontSize: 30.0, color: Colors.white),

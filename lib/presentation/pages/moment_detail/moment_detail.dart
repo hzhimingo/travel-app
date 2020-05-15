@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:travel/injection/injection.dart';
+import 'package:travel/presentation/blocs/collect/collect_bloc.dart';
+import 'package:travel/presentation/blocs/comment_cover_pool/comment_cover_pool_bloc.dart';
+import 'package:travel/presentation/blocs/thumbup/thumbup_bloc.dart';
+import 'package:travel/presentation/components/comment/comment_cover_pool.dart';
 import 'package:travel/route/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:travel/presentation/components/comment_input_line.dart';
 import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
 
 import './components/components.dart';
@@ -107,36 +111,52 @@ class MomentDetail extends StatelessWidget {
                         ),
                       ),
                       LocationLine(
-                        country: state.momentDetail.country,
-                        city: state.momentDetail.city,
-                        location: state.momentDetail.locationName,
+                        country: state.momentDetail.spot.countryName,
+                        city: state.momentDetail.spot.cityName,
+                        location: state.momentDetail.spot.spotName,
                       ),
                       MomentContent(text: state.momentDetail.content),
                       Padding(
                         padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text('${state.momentDetail.releaseDate}发布'),
                       ),
-                      // MentionSpot(
-                      //   spots: state.momentDetail.spots,
-                      // ),
                       LikedUserLine(
-                        urls: state.momentDetail.favUsers,
+                        urls: state.momentDetail.favUser,
                         favNum: state.momentDetail.favNum,
                       ),
-                      CommentInputLine(),
+                      BlocProvider<CommentCoverPoolBloc>(
+                        create: (context) => getIt.get<CommentCoverPoolBloc>()..add(
+                            LoadCommentCoverPool(
+                                commentCovers: state.momentDetail.comments),
+                          ),
+                        child: CommentCoverPool(
+                          serviceBusinessId: state.momentDetail.momentId,
+                          authorNickname: state.momentDetail.nickname,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                //TODO： 需要调整
                 Positioned(
                   left: 0.0,
                   bottom: 0.0,
-                  child: BottomActionPanel(
-                    favNum: state.momentDetail.favNum,
-                    starNum: state.momentDetail.starNum,
-                    commentNum: state.momentDetail.commentNum,
-                    isFav: state.momentDetail.isFav,
-                    isStar: state.momentDetail.isStar,
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (context) => getIt.get<ThumbupBloc>(),
+                      ),
+                      BlocProvider(
+                        create: (context) => getIt.get<CollectBloc>(),
+                      ),
+                    ],
+                    child: BottomActionPanel(
+                      serviceBusinessId: state.momentDetail.momentId,
+                      favNum: state.momentDetail.favNum,
+                      starNum: state.momentDetail.starNum,
+                      commentNum: state.momentDetail.commentNum,
+                      isFav: state.momentDetail.isFav,
+                      isStar: state.momentDetail.isCollect,
+                    ),
                   ),
                 ),
               ],

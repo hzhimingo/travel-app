@@ -69,7 +69,7 @@ class RecommendMomentPool extends StatelessWidget {
               momentCover: MomentCover(
                 momentId: 1,
                 favoriteNum: 34,
-                isFavorite: 0,
+                isFavorite: false,
                 coverImage: Picture(
                   pictureId: 1,
                   url: 'https://n1-q.mafengwo.net/s15/M00/04/AA/CoUBGV5NFDmANXrcAArIWVUv4pU859.jpg?imageMogr2%2Fthumbnail%2F360x%2Fstrip%2Fquality%2F90',

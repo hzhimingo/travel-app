@@ -20,7 +20,7 @@ class AnswerCoverCard extends StatelessWidget {
       onTap: () {
         GlobalRoute.router.navigateTo(
           context,
-          '/answerDetail',
+          '/answerDetail?answerId=${answerCover.answerId}',
           transition: TransitionType.cupertino,
         );
       },

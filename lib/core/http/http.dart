@@ -9,8 +9,9 @@ class Http {
 
   static Dio initHttpConfig() {
     Dio dio = Dio();
-    dio.options.baseUrl = 'http://rap2api.taobao.org/app/mock/236828/travel/api/v1';
+    dio.options.baseUrl = 'http://192.168.0.117:8200';
     dio.interceptors.add(HttpInterceptor());
+    dio.options.connectTimeout = 2000;
     return dio;
   }
 }

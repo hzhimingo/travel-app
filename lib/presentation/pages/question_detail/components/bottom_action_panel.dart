@@ -1,7 +1,29 @@
 import 'package:flutter/material.dart';
 
-class BottomActionPanel extends StatelessWidget {
-  const BottomActionPanel({Key key}) : super(key: key);
+class BottomActionPanel extends StatefulWidget {
+  final bool isCollect;
+  final int collectNum;
+  BottomActionPanel({
+    Key key,
+    this.isCollect,
+    this.collectNum,
+  }) : super(key: key);
+
+  @override
+  _BottomActionPanelState createState() => _BottomActionPanelState();
+}
+
+class _BottomActionPanelState extends State<BottomActionPanel> {
+
+  int collectNum = 0;
+  bool isCollect = false;
+
+  @override
+  void initState() {
+    super.initState();
+    collectNum = widget.collectNum;
+    isCollect = widget.isCollect;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +49,22 @@ class BottomActionPanel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              if (isCollect) {
+                setState(() {
+                  isCollect = !isCollect;
+                });
+              } else {
+                setState(() {
+                  isCollect = !isCollect;
+                });
+              }
+            },
             child: Container(
+              alignment: Alignment.center,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Icon(
                     Icons.add_circle_outline,
@@ -37,7 +72,7 @@ class BottomActionPanel extends StatelessWidget {
                   ),
                   SizedBox(width: 5.0),
                   Text(
-                    '关注问题(${447})',
+                    isCollect ? '已关注' : '关注问题($collectNum)',
                     style: TextStyle(fontSize: 17.0),
                   )
                 ],

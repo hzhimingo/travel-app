@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:travel/injection/injection.dart';
 import 'package:travel/presentation/blocs/answer_pool/answer_pool_bloc.dart';
 import 'package:travel/presentation/blocs/question_detail/question_detail_bloc.dart';
-import 'package:travel/presentation/blocs/question_pool/question_pool_bloc.dart';
 import 'package:travel/route/routes.dart';
 
 import './components/components.dart';
@@ -66,7 +64,7 @@ class _QuestionDetailState extends State<QuestionDetail> {
               enablePullDown: false,
               enablePullUp: true,
               footer: ClassicFooter(),
-              onLoading: () => _answerPoolBloc.add(LoadMoreAnswerCovers()),
+              onLoading: () => _answerPoolBloc.add(LoadMoreAnswerCovers(questionId: state.questionDetail.questionId)),
               child: ListView(
                 children: <Widget>[
                   QuestionDetailPanel(
@@ -88,7 +86,10 @@ class _QuestionDetailState extends State<QuestionDetail> {
       bottomNavigationBar: BlocBuilder<QuestionDetailBloc, QuestionDetailState>(
         builder: (context, state) {
           if (state is QuestionDetailLoaded) {
-            return BottomActionPanel();
+            return BottomActionPanel(
+              isCollect: state.questionDetail.isCollect,
+              collectNum: 10,
+            );
           } else {
             return Container();
           }

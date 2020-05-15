@@ -26,7 +26,11 @@ class QuestionCover {
     followNum = json['followNum'];
     answer =
         json['answer'] != null ? new AnswerCover.fromJson(json['answer']) : null;
-    tags = json['tags'].cast<String>();
+    if (json['tags'] != null) {
+      tags = json['tags'].cast<String>();
+    } else {
+      tags = [];
+    }
   }
 
   Map<String, dynamic> toJson() {

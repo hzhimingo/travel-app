@@ -12,6 +12,10 @@ class AuthorizationService {
     return await repository.getAuthorizedByPwd(account, password);
   }
 
+  Future<Either<Failure, Authorization>> getAuthorizedBySMSCode(String mobile, String code) async {
+    return await repository.getAuthorizedBySMSCode(mobile, code);
+  }
+
   Future<Either<Failure, Authorization>> getLocalAuthorized() async {
     return await repository.getStoreAuthoried();
   }

@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:travel/entity/answer_cover.dart';
 import 'package:travel/entity/picture.dart';
 import 'package:travel/entity/question_cover.dart';
 import 'package:travel/route/routes.dart';
@@ -43,37 +44,7 @@ class QuestionCoverCard extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 40.0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 15.0,
-                    backgroundImage: ExtendedNetworkImageProvider(
-                      questionCover.answer.avatar,
-                    ),
-                  ),
-                  SizedBox(width: 5.0),
-                  Text(
-                    questionCover.answer.nickname,
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 5.0),
-                  Text(
-                    '的回答',
-                    style: TextStyle(
-                      color: Colors.black45,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildAnswerAuthor(questionCover.answer),
             _buildContent(questionCover),
             Container(
               width: double.infinity,
@@ -85,8 +56,7 @@ class QuestionCoverCard extends StatelessWidget {
                   Container(
                     child: Row(
                       children: <Widget>[
-                        _tag('泾县'),
-                        _tag('目的地推荐'),
+                        _tag('问题'),
                       ],
                     ),
                   ),
@@ -165,18 +135,22 @@ class QuestionCoverCard extends StatelessWidget {
   }
 
   _buildContent(QuestionCover questionCover) {
-    if (questionCover.answer.pictures != null) {
-      if (questionCover.answer.pictures.length != 0) {
-        if (questionCover.answer.pictures.length <= 2) {
-          return _buildContentHasImageLessThanTwo(
-              questionCover.answer.content, questionCover.answer.pictures);
-        } else {
-          return _buildContentHasImageMoreThanThree(
-              questionCover.answer.content, questionCover.answer.pictures);
+    if (questionCover.answer == null) {
+      return Container();
+    } else {
+      if (questionCover.answer.pictures != null) {
+        if (questionCover.answer.pictures.length != 0) {
+          if (questionCover.answer.pictures.length <= 2) {
+            return _buildContentHasImageLessThanTwo(
+                questionCover.answer.content, questionCover.answer.pictures);
+          } else {
+            return _buildContentHasImageMoreThanThree(
+                questionCover.answer.content, questionCover.answer.pictures);
+          }
         }
       }
+      return _buildContentWithoutImage(questionCover.answer.content);
     }
-    return _buildContentWithoutImage(questionCover.answer.content);
   }
 
   _buildContentHasImageLessThanTwo(String text, List<Picture> pictures) {
@@ -289,5 +263,43 @@ class QuestionCoverCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _buildAnswerAuthor(AnswerCover answerCover) {
+    if (answerCover == null) {
+      return Container();
+    } else {
+      return Container(
+        width: double.infinity,
+        height: 40.0,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            CircleAvatar(
+              radius: 15.0,
+              backgroundImage: ExtendedNetworkImageProvider(
+                questionCover.answer.avatar,
+              ),
+            ),
+            SizedBox(width: 5.0),
+            Text(
+              questionCover.answer.nickname,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black54,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: 5.0),
+            Text(
+              '的回答',
+              style: TextStyle(
+                color: Colors.black45,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }

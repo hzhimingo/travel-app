@@ -43,7 +43,8 @@ class CommonLoginButton extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         context.bloc<SmsFormBloc>().add(
-                            RequestSendSmsCode(phoneNumber: state.phoneNumber));
+                            RequestSendSmsCode(phoneNumber: state.phoneNumber),
+                          );
                       },
                       child: _buildButton('获取验证码', activeColor),
                     );

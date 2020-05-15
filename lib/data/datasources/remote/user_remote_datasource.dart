@@ -10,10 +10,7 @@ class UserRemoteDataSource {
 
   Future<User> getUserInfo(int userId) async {
     var response = await http.get(
-      '/user',
-      queryParameters: {
-        'userId': userId,
-      },
+      '/user/$userId',
     );
     if (response.statusCode == 200) {
       Result result = Result.fromJson(response.data);

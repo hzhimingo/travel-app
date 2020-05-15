@@ -1,105 +1,100 @@
+import 'package:travel/entity/comment_cover.dart';
+import 'package:travel/entity/moment_spot.dart';
 import 'package:travel/entity/picture.dart';
-import 'package:travel/entity/spot.dart';
 
 class MomentDetail {
-  String content;
-  String releaseDate;
-  String takeDate;
-  String country;
-  String city;
-  bool isFav;
-  bool isStar;
-  String locationName;
-  int authorId;
-  String avatar;
-  String nickname;
-  List<Picture> pictures;
-  String title;
-  List<Spot> spots;
-  int commentNum;
-  int favNum;
-  int starNum;
-  List<String> favUsers;
   int momentId;
+  String title;
+  String content;
+  int authorId;
+  String nickname;
+  String avatar;
+  List<Picture> pictures;
+  int starNum;
+  int favNum;
+  int commentNum;
+  bool isFav;
+  bool isCollect;
+  String releaseDate;
+  MomentSpot spot;
+  List<String> favUser;
+  List<CommentCover> comments;
 
   MomentDetail(
-      {this.content,
-      this.releaseDate,
-      this.takeDate,
-      this.country,
-      this.city,
-      this.isFav,
-      this.isStar,
-      this.locationName,
-      this.authorId,
-      this.avatar,
-      this.nickname,
-      this.pictures,
+      {this.momentId,
       this.title,
-      this.spots,
-      this.commentNum,
-      this.favNum,
+      this.content,
+      this.authorId,
+      this.nickname,
+      this.avatar,
+      this.pictures,
       this.starNum,
-      this.favUsers,
-      this.momentId});
+      this.favNum,
+      this.commentNum,
+      this.isFav,
+      this.isCollect,
+      this.releaseDate,
+      this.spot,
+      this.comments,
+      this.favUser,});
 
   MomentDetail.fromJson(Map<String, dynamic> json) {
+    momentId = json['momentId'];
+    title = json['title'];
     content = json['content'];
-    releaseDate = json['releaseDate'];
-    takeDate = json['takeDate'];
-    country = json['country'];
-    city = json['city'];
-    isFav = json['isFav'];
-    isStar = json['isStar'];
-    locationName = json['locationName'];
     authorId = json['authorId'];
-    avatar = json['avatar'];
     nickname = json['nickname'];
+    avatar = json['avatar'];
     if (json['pictures'] != null) {
       pictures = new List<Picture>();
       json['pictures'].forEach((v) {
         pictures.add(new Picture.fromJson(v));
       });
     }
-    title = json['title'];
-    if (json['spot'] != null) {
-      spots = new List<Spot>();
-      json['spot'].forEach((v) {
-        spots.add(new Spot.fromJson(v));
+    if (json['favUser'] != null) {
+      favUser = json['favUser'].cast<String>();
+    } else {
+      favUser = [];
+    }
+    comments = new List<CommentCover>();
+    if (json['comments'] != null) {
+      json['comments'].forEach((v) {
+        comments.add(new CommentCover.fromJson(v));
       });
     }
-    commentNum = json['commentNum'];
-    favNum = json['favNum'];
     starNum = json['starNum'];
-    favUsers = json['favUsers'].cast<String>();
-    momentId = json['momentId'];
+    favNum = json['favNum'];
+    commentNum = json['commentNum'];
+    isFav = json['isFav'];
+    isCollect = json['isCollect'];
+    releaseDate = json['releaseDate'];
+    spot = json['spot'] != null ? new MomentSpot.fromJson(json['spot']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['momentId'] = this.momentId;
+    data['title'] = this.title;
     data['content'] = this.content;
-    data['releaseDate'] = this.releaseDate;
-    data['takeDate'] = this.takeDate;
-    data['country'] = this.country;
-    data['city'] = this.city;
-    data['isFav'] = this.isFav;
-    data['isStar'] = this.isStar;
-    data['locationName'] = this.locationName;
     data['authorId'] = this.authorId;
-    data['avatar'] = this.avatar;
     data['nickname'] = this.nickname;
+    data['avatar'] = this.avatar;
     if (this.pictures != null) {
       data['pictures'] = this.pictures.map((v) => v.toJson()).toList();
     }
-    data['title'] = this.title;
-    if (this.spots != null) {
-      data['spot'] = this.spots.map((v) => v.toJson()).toList();
-    }
-    data['commentNum'] = this.commentNum;
-    data['favNum'] = this.favNum;
     data['starNum'] = this.starNum;
-    data['favUsers'] = this.favUsers;
-    data['momentId'] = this.momentId;
+    data['favNum'] = this.favNum;
+    data['commentNum'] = this.commentNum;
+    data['isFav'] = this.isFav;
+    data['isCollect'] = this.isCollect;
+    data['releaseDate'] = this.releaseDate;
+    data['favUser'] = this.favUser;
+    if (this.spot != null) {
+      data['spot'] = this.spot.toJson();
+    }
+    if (this.comments != null) {
+      data['comments'] = this.comments.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

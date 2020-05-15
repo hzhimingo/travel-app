@@ -49,6 +49,35 @@ class AuthorizationRepository {
     }
   }
 
+  Future<Either<Failure, Authorization>> getAuthorizedBySMSCode(
+      String mobile, String code) async {
+    try {
+      var data = await authorizationRemote.getAuthorizedBySMSCode(mobile, code);
+      if (data != null) {
+        //储存token信息
+        authorizationLocal.storeAuthorization(data);
+        //解析access_token中的信息
+        //获取当前用户信息
+        var user = await userRemote.getUserInfo(42669858835927040);
+        //如果不为空的话，就当前存储获取到的用户信息
+        if (user != null) {
+          userLocal.storeCurrentUser(user);
+        }
+      }
+      return Right(data);
+    } on ApiException catch (e) {
+      //其中一项捕获了异常清除掉存储的信息
+      authorizationLocal.removeAuthorized();
+      userLocal.removeLocalCurrentUser();
+      return Left(ApiFailure(e.msg));
+    } on ServerException {
+      //其中一项捕获了异常清除掉存储的信息
+      authorizationLocal.removeAuthorized();
+      userLocal.removeLocalCurrentUser();
+      return Left(ServerFailure());
+    }
+  }
+
   Future<Either<Failure, Authorization>> getStoreAuthoried() async {
     try {
       var data = await authorizationLocal.getAuthorized();

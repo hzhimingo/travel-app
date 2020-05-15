@@ -10,40 +10,47 @@ class MomentRemoteDataSource {
   MomentRemoteDataSource({this.http});
 
   Future<List<MomentCover>> fetchMomentCovers() async {
+    List<MomentCover> momentCovers;
     var response = await http.get(
       '/moment/covers',
-    );
-    if (response.statusCode == 200) {
+      queryParameters: {
+        'boundary': 0,
+        'offset': 15,
+      },
+    ).then((response) {
       Result result = Result.fromJson(response.data);
+      print(result);
       if (result.code == 0) {
-        List<MomentCover> momentCovers = result.data['moments']
+        momentCovers = result.data["data"]
             .map<MomentCover>((item) => MomentCover.fromJson(item))
             .toList();
-        return momentCovers;
       } else {
         throw ApiException(msg: result.msg);
       }
-    } else {
+    }).catchError((r) {
+      print(r);
       throw ServerException();
-    }
+    });
+    return momentCovers;
   }
 
   Future<MomentDetail> fetchMomentDetail(int id) async {
-    var response = await http.get(
-      '/moment/detail',
-      queryParameters: {
-        'momentId': id,
-      }
-    );
-    if (response.statusCode == 200) {
+    MomentDetail momentDetail;
+    await http.get(
+      '/moment/$id',
+    ).then((response) {
+      print(response.data);
       Result result = Result.fromJson(response.data);
       if (result.code == 0) {
-        return MomentDetail.fromJson(result.data);
+        momentDetail = MomentDetail.fromJson(result.data);
+        print(momentDetail);
       } else {
         throw ApiException(msg: result.msg);
       }
-    } else {
+    }).catchError((r) {
+      print(r);
       throw ServerException();
-    }
+    });
+    return momentDetail;
   }
 }

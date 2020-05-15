@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class QuestionCoverPanel extends StatelessWidget {
-  const QuestionCoverPanel({Key key}) : super(key: key);
+  final int questionId;
+  final String title;
+  final int answerNum;
+  const QuestionCoverPanel({
+    Key key,
+    this.questionId,
+    this.title,
+    this.answerNum,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,7 @@ class QuestionCoverPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            '南昌当地人都喜欢去哪吃当地最地道的美食？',
+            title,
             style: TextStyle(
               fontSize: 19.0,
               fontWeight: FontWeight.bold,

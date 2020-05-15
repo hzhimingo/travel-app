@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:travel/injection/injection.dart';
 import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/presentation/blocs/pwd_form/pwd_form_bloc.dart';
@@ -91,7 +92,7 @@ class Login extends StatelessWidget {
                     if (state is UnLoggedIn) {
                       if (state.loginType == LoginType.SmsCode) {
                         return BlocProvider<SmsFormBloc>(
-                          create: (context) => SmsFormBloc(),
+                          create: (context) => getIt.get<SmsFormBloc>(),
                           child: SmsLoginForm(),
                         );
                       } else {

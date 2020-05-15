@@ -23,6 +23,7 @@ class MomentPoolBloc extends Bloc<MomentPoolEvent, MomentPoolState> {
   ) async* {
     final currentState = state;
     if (event is InitializeMomentPool) {
+      print("GET DATA");
       yield MomentPoolInitializing();
       var data = await momentService.fetchMomentCovers();
       yield data.fold(
@@ -39,6 +40,7 @@ class MomentPoolBloc extends Bloc<MomentPoolEvent, MomentPoolState> {
       );
     }
     if (event is LoadMoreMomentCovers) {
+      print("GET DATA");
       yield MomentPoolLoading();
       var data = await momentService.fetchMomentCovers();
       yield data.fold(

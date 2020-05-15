@@ -10,40 +10,45 @@ class QuestionRemoteDataSource {
   QuestionRemoteDataSource({this.http});
 
   Future<List<QuestionCover>> fetchQuestionCovers() async {
-    var response = await http.get(
-      '/question/covers',
-    );
-    if (response.statusCode == 200) {
+    List<QuestionCover> questionCovers;
+    await http.get(
+      '/qa/question/covers',
+      queryParameters: {
+        'boundary': 0,
+        'offset': 10,
+      }
+    ).then((response) {
       Result result = Result.fromJson(response.data);
       if (result.code == 0) {
-        List<QuestionCover> questionCovers = result.data
+        questionCovers = result.data["data"]
             .map<QuestionCover>((item) => QuestionCover.fromJson(item))
             .toList();
-        return questionCovers;
       } else {
         throw ApiException(msg: result.msg);
       }
-    } else {
-      throw ServerException();
-    }
+    }).catchError((r) {
+      print(r);
+       throw ServerException();
+    });
+    return questionCovers;
   }
 
   Future<QuestionDetail> fetchQuestionDetail(int questionId) async {
-    var response = await http.get(
-      '/question/detail',
-      queryParameters: {
-        "questionId": questionId,
-      },
-    );
-    if (response.statusCode == 200) {
+    print(questionId);
+    QuestionDetail questionDetail;
+    await http.get(
+      '/qa/question/$questionId',
+    ).then((response) {
       Result result = Result.fromJson(response.data);
+      print(result);
       if (result.code == 0) {
-        return QuestionDetail.fromJson(result.data);
+        questionDetail = QuestionDetail.fromJson(result.data);
       } else {
         throw ApiException(msg: result.msg);
       }
-    } else {
+    }).catchError((r) {
       throw ServerException();
-    }
+    });
+    return questionDetail;
   }
 }

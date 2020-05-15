@@ -6,9 +6,9 @@ class QuestionDetail {
   int answerNum;
   String nickname;
   String date;
-  List<String> tags;
   int authorId;
   String avatar;
+  bool isCollect;
 
   QuestionDetail(
       {this.questionId,
@@ -18,9 +18,9 @@ class QuestionDetail {
       this.answerNum,
       this.nickname,
       this.date,
-      this.tags,
       this.authorId,
-      this.avatar});
+      this.avatar,
+      this.isCollect});
 
   QuestionDetail.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
@@ -30,7 +30,7 @@ class QuestionDetail {
     answerNum = json['answerNum'];
     nickname = json['nickname'];
     date = json['date'];
-    tags = json['tags'].cast<String>();
+    isCollect = json['isCollect'];
     authorId = json['authorId'];
     avatar = json['avatar'];
   }
@@ -44,7 +44,7 @@ class QuestionDetail {
     data['answerNum'] = this.answerNum;
     data['nickname'] = this.nickname;
     data['date'] = this.date;
-    data['tags'] = this.tags;
+    data['isCollect'] = this.isCollect;
     data['authorId'] = this.authorId;
     data['avatar'] = this.avatar;
     return data;

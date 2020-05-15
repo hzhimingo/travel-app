@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/injection/injection.dart';
+import 'package:travel/presentation/blocs/answer_detail/answer_detail_bloc.dart';
 import 'package:travel/presentation/blocs/answer_pool/answer_pool_bloc.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/blocs/moment_detail/moment_detail_bloc.dart';
@@ -84,15 +85,16 @@ var topicDetailHandler = Handler(
 
 var questionDetailHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    String questionId = params['questionId'].first;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) =>
-              getIt.get<QuestionDetailBloc>()..add(InitializeQuestionDetail()),
+              getIt.get<QuestionDetailBloc>()..add(InitializeQuestionDetail(questionId: int.parse(questionId))),
         ),
         BlocProvider(
           create: (context) =>
-              getIt.get<AnswerPoolBloc>()..add(InitializeAnswerPool()),
+              getIt.get<AnswerPoolBloc>()..add(InitializeAnswerPool(questionId: int.parse(questionId))),
         ),
       ],
       child: QuestionDetail(),
@@ -108,7 +110,12 @@ var devSettingHandler = Handler(
 
 var answerDetailHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    return AnswerDetail();
+    String answerId = params['answerId'].first;
+    print(answerId);
+    return BlocProvider(
+      create: (context) => getIt.get<AnswerDetailBloc>()..add(FetchAnswerDetail(answerId: int.parse(answerId))),
+      child: AnswerDetail(),
+    );
   },
 );
 

@@ -26,7 +26,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield UnLoggedIn(loginType: LoginType.Password);
     }
     if (event is LoginBySmsCode) {
+      print(event.phoneNumber);
       yield LoggingIn();
+      var result = await authorizationService.getAuthorizedBySMSCode(event.phoneNumber, event.checkCode);
+      yield result.fold(
+        (failure) => LoginFailure(),
+        (authorzation) => LoginSuccess(),
+      );
     }
     if (event is LoginByPassword) {
       yield LoggingIn();

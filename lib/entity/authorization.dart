@@ -2,15 +2,17 @@ class Authorization {
   String accessToken;
   String tokenType;
   String refreshToken;
-  String expiresIn;
+  int expiresIn;
   String scope;
+  String jti;
 
   Authorization(
       {this.accessToken,
       this.tokenType,
       this.refreshToken,
       this.expiresIn,
-      this.scope});
+      this.scope,
+      this.jti});
 
   Authorization.fromJson(Map<String, dynamic> json) {
     accessToken = json['access_token'];
@@ -18,6 +20,7 @@ class Authorization {
     refreshToken = json['refresh_token'];
     expiresIn = json['expires_in'];
     scope = json['scope'];
+    jti = json['jti'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +30,7 @@ class Authorization {
     data['refresh_token'] = this.refreshToken;
     data['expires_in'] = this.expiresIn;
     data['scope'] = this.scope;
+    data['jti'] = this.jti;
     return data;
   }
 }
