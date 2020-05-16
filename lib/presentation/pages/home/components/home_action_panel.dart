@@ -16,7 +16,7 @@ class HomeActionPanel extends StatelessWidget {
             onTap: () {
               GlobalRoute.router.navigateTo(
                 context,
-                '/travelNote',
+                '/spotPool',
                 transition: TransitionType.cupertino,
               );
             },
@@ -39,7 +39,7 @@ class HomeActionPanel extends StatelessWidget {
             onTap: () {
               GlobalRoute.router.navigateTo(
                 context,
-                '/spotPool',
+                '/travelNote',
                 transition: TransitionType.cupertino,
               );
             },

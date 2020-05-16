@@ -44,6 +44,10 @@ class AnswerRemoteDataSource {
     return answerCovers;
   }
 
+  Future<List<AnswerCover>> fetchHotAnswerCovers(int questionId, int userId) {
+
+  }
+
   Future<AnswerDetailData> fetchAnswerDetail(int answerId, int userId) async {
     AnswerDetailData answerDetail;
     var headers;

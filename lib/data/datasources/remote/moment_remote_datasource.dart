@@ -55,7 +55,6 @@ class MomentRemoteDataSource {
       Result result = Result.fromJson(response.data);
       if (result.code == 0) {
         momentDetail = MomentDetail.fromJson(result.data);
-        print(momentDetail);
       } else {
         throw ApiException(msg: result.msg);
       }
@@ -68,17 +67,6 @@ class MomentRemoteDataSource {
 
   Future<bool> addMoment(PostMomentForm form) async {
     bool isSuccess;
-    // List<MultipartFile> pictures = new List<MultipartFile>();
-    // for (Asset asset in form.assets) {
-    //     ByteData byteData = await asset.getByteData();
-    //     List<int> imageData = byteData.buffer.asUint8List();
-    //     MultipartFile multipartFile = new MultipartFile.fromBytes(
-    //       imageData,
-    //       filename: 'picture',
-    //       contentType: MediaType("image", "jpg"),
-    //     );
-    //     pictures.add(multipartFile);
-    // }
     print("${form.userId} ${form.title} ${form.content} ${form.spot} ${form.pictures.length}");
     FormData formData = FormData.fromMap({
       'userId': form.userId,
@@ -91,7 +79,6 @@ class MomentRemoteDataSource {
       '/moment/',
       data: formData
     ).then((response) {
-      print(response.data);
       Result result = Result.fromJson(response.data);
       if (result.code == 0) {
         isSuccess = true;
