@@ -10,53 +10,66 @@ class TopicRemoteDataSource {
   TopicRemoteDataSource({this.http});
 
   Future<List<TopicCover>> fetchHotTopic() async {
-    var response = await http.get(
+    List<TopicCover> momentCovers;
+    print("Fetch Cover");
+    Dio dio = Dio();
+    dio.options.baseUrl =
+        'http://rap2.taobao.org:38080/app/mock/236828/travel/api/v1';
+    print(dio.options.baseUrl);
+    await dio.get(
       '/topic/covers',
       queryParameters: {
         'isHot': 1,
       },
-    );
-    if (response.statusCode == 200) {
+    ).then((response) {
       Result result = Result.fromJson(response.data);
       if (result.code == 0) {
-        List<TopicCover> momentCovers = result.data
+        momentCovers = result.data
             .map<TopicCover>((item) => TopicCover.fromJson(item))
             .toList();
-        return momentCovers;
       } else {
         throw ApiException(msg: result.msg);
       }
-    } else {
+    }).catchError((r) {
+      print(r);
       throw ServerException();
-    }
+    });
+    return momentCovers;
   }
 
   Future<List<TopicCover>> fetchTopicCovers() async {
-    var response = await http.get(
+    List<TopicCover> momentCovers;
+    print("Fetch Cover");
+    Dio dio = Dio();
+    dio.options.baseUrl =
+        'http://rap2.taobao.org:38080/app/mock/236828/travel/api/v1';
+    print(dio.options.baseUrl);
+    await dio.get(
       '/topic/covers',
-    );
-    if (response.statusCode == 200) {
+    ).then((response) {
       Result result = Result.fromJson(response.data);
+      print(result);
       if (result.code == 0) {
-        List<TopicCover> momentCovers = result.data
+        momentCovers = result.data
             .map<TopicCover>((item) => TopicCover.fromJson(item))
             .toList();
-        return momentCovers;
       } else {
         throw ApiException(msg: result.msg);
       }
-    } else {
+    }).catchError((r) {
+      print(r);
       throw ServerException();
-    }
+    });
+    return momentCovers;
   }
 
   Future<TopicDetail> fetchTopicDetail(int topicId) async {
-    var response = await http.get(
-      '/topic/detail',
-      queryParameters: {
-        'topicId': topicId,
-      }
-    );
+    Dio dio = Dio();
+    dio.options.baseUrl =
+        'http://rap2.taobao.org:38080/app/mock/236828/travel/api/v1';
+    var response = await dio.get('/topic/detail', queryParameters: {
+      'topicId': topicId,
+    });
     if (response.statusCode == 200) {
       Result result = Result.fromJson(response.data);
       print(result);

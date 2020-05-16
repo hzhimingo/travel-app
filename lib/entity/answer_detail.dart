@@ -16,7 +16,7 @@ class AnswerDetailData {
   int starNum;
   int commentNum;
   bool isStar;
-  bool isCollect;
+  bool isFav;
   List<CommentCover> comments;
 
   AnswerDetailData(
@@ -34,7 +34,7 @@ class AnswerDetailData {
       this.starNum,
       this.commentNum,
       this.isStar,
-      this.isCollect,
+      this.isFav,
       this.comments,
   });
 
@@ -58,7 +58,7 @@ class AnswerDetailData {
     starNum = json['starNum'];
     commentNum = json['commentNum'];
     isStar = json['isStar'];
-    isCollect = json['isCollect'];
+    isFav = json['isFav'];
     comments = new List<CommentCover>();
     if (json['comments'] != null) {
       json['comments'].forEach((v) {
@@ -85,7 +85,7 @@ class AnswerDetailData {
     data['starNum'] = this.starNum;
     data['commentNum'] = this.commentNum;
     data['isStar'] = this.isStar;
-    data['isCollect'] = this.isCollect;
+    data['isFav'] = this.isFav;
     if (this.comments != null) {
       data['comments'] = this.comments.map((v) => v.toJson()).toList();
     }

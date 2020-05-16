@@ -27,7 +27,7 @@ class HomeActionPanel extends StatelessWidget {
                   height: 48.0,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/images/suggest_food.png')),
+                        image: AssetImage('assets/images/suggest_view.png')),
                   ),
                 ),
                 SizedBox(height: 4.0),
@@ -50,11 +50,11 @@ class HomeActionPanel extends StatelessWidget {
                   height: 48.0,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/images/suggest_food.png')),
+                        image: AssetImage('assets/images/suggest_guide.png')),
                   ),
                 ),
                 SizedBox(height: 4.0),
-                Text('景点'),
+                Text('游记'),
               ],
             ),
           ),
@@ -73,11 +73,11 @@ class HomeActionPanel extends StatelessWidget {
                   height: 48.0,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/images/suggest_food.png')),
+                        image: AssetImage('assets/images/suggest_qa.png')),
                   ),
                 ),
                 SizedBox(height: 4.0),
-                Text('景点'),
+                Text('讨论'),
               ],
             ),
           ),
@@ -100,7 +100,7 @@ class HomeActionPanel extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 4.0),
-                Text('景点'),
+                Text('美食'),
               ],
             ),
           ),

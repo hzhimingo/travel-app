@@ -6,9 +6,10 @@ abstract class AnswerDetailEvent extends Equatable {
 
 class FetchAnswerDetail extends AnswerDetailEvent {
   final int answerId;
+  final int userId;
 
-  FetchAnswerDetail({this.answerId});
+  FetchAnswerDetail({this.answerId, this.userId});
 
   @override
-  List<Object> get props => [answerId];
+  List<Object> get props => [answerId, userId];
 }

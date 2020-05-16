@@ -31,4 +31,15 @@ class QuestionRepository {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, bool>> submitQuestion(int userId, String title, String content) async {
+     try {
+      var data = await remote.submitQuestion(userId, title, content);
+      return Right(data);
+    } on ApiException catch(e) {
+      return Left(ApiFailure(e.msg));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

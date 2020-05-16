@@ -1,7 +1,9 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/entity/moment_cover.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/route/routes.dart';
 
 class MomentCoverCard extends StatelessWidget {
@@ -10,13 +12,23 @@ class MomentCoverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CurrentUserBloc _userBloc = BlocProvider.of<CurrentUserBloc>(context);
     return GestureDetector(
       onTap: () {
-        GlobalRoute.router.navigateTo(
-          context,
-          '/momentDetail?momentId=${momentCover.momentId}',
-           transition: TransitionType.cupertino,
-        );
+        final currentState = _userBloc.state;
+        if (currentState is CurrentUserLoaded) {
+          GlobalRoute.router.navigateTo(
+            context,
+            '/momentDetail?momentId=${momentCover.momentId}&userId=${currentState.currentUser.userId}',
+            transition: TransitionType.cupertino,
+          );
+        } else {
+          GlobalRoute.router.navigateTo(
+            context,
+            '/momentDetail?momentId=${momentCover.momentId}',
+            transition: TransitionType.cupertino,
+          );
+        }
       },
       child: Card(
         child: Column(

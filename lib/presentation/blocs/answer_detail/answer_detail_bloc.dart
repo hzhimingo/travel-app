@@ -22,7 +22,7 @@ class AnswerDetailBloc extends Bloc<AnswerDetailEvent, AnswerDetailState> {
     AnswerDetailEvent event,
   ) async* {
     if (event is FetchAnswerDetail) {
-      var result = await answerService.fetchAnswerDetail(event.answerId);
+      var result = await answerService.fetchAnswerDetail(event.answerId, event.userId);
       yield result.fold(
         (failure) => AnswerDetailLoadFail(),
         (answerDetail) => AnswerDetailLoaded(detail: answerDetail)

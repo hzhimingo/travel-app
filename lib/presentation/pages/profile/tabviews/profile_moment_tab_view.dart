@@ -7,7 +7,7 @@ class ProfileMomentTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Moment'),
+        child: Text('这里空空如也'),
       ),
     );
   }

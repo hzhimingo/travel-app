@@ -1,5 +1,5 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:travel/injection/injection.dart';
 import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
@@ -72,7 +72,7 @@ class Login extends StatelessWidget {
                 BlocConsumer<LoginBloc, LoginState>(
                   listener: (context, state) {
                     if (state is LoginSuccess) {
-                      print('登录成功.....');
+                      showToast("登录成功");
                       context.bloc<AuthorizationBloc>().add(GrantAuthorized());
                       context.bloc<CurrentUserBloc>().add(RefreshCurrentUser());
                       Future.delayed(Duration(milliseconds: 500)).then((value) {
@@ -80,6 +80,7 @@ class Login extends StatelessWidget {
                       });
                     }
                     if (state is LoginFailure) {
+                      showToast("登录失败");
                       print('登录失败......发生了错误');
                     }
                     if (state is LoggingIn) {

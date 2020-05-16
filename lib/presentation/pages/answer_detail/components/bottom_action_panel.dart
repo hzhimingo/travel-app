@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
+import 'package:travel/presentation/blocs/collect/collect_bloc.dart';
+import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
+import 'package:travel/presentation/blocs/thumbup/thumbup_bloc.dart';
 import 'package:travel/presentation/components/icon_with_number.dart';
+import 'package:travel/route/routes.dart';
 
 class BottomActionPanel extends StatefulWidget {
+  final int serviceBusinessId;
   final int favNum;
-  final int collectNum;
+  final int starNum;
   final int commentNum;
   final bool isFav;
-  final bool isCollect;
+  final bool isStar;
   BottomActionPanel({
     Key key,
     this.favNum,
     this.isFav,
-    this.collectNum,
+    this.starNum,
     this.commentNum,
-    this.isCollect,
+    this.isStar,
+    this.serviceBusinessId,
   }) : super(key: key);
 
   @override
@@ -22,19 +31,23 @@ class BottomActionPanel extends StatefulWidget {
 
 class _BottomActionPanelState extends State<BottomActionPanel> {
   int favNum = 0;
-  int collectNum = 0;
+  int starNum = 0;
   int commentNum = 0;
   bool isFav = false;
-  bool isCollect = false;
+  bool isStar = false;
+  AuthorizationBloc _authorizationBloc;
+  CurrentUserBloc _currentUserBloc;
 
   @override
   void initState() {
     super.initState();
     this.favNum = widget.favNum;
-    this.collectNum = widget.collectNum;
+    this.starNum = widget.starNum;
     this.commentNum = widget.commentNum;
-    this.isCollect = widget.isCollect;
+    this.isStar = widget.isStar;
     this.isFav = widget.isFav;
+    _authorizationBloc = BlocProvider.of<AuthorizationBloc>(context);
+    _currentUserBloc = BlocProvider.of<CurrentUserBloc>(context);
   }
 
   @override
@@ -53,48 +66,122 @@ class _BottomActionPanelState extends State<BottomActionPanel> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              if (isFav) {
-                setState(() {
-                  isFav = !isFav;
-                  favNum = favNum - 1;
-                });
-              } else {
+          BlocListener<ThumbupBloc, ThumbupState>(
+            listener: (context, state) {
+              if (state is Thumbuped) {
+                showToast("点赞成功");
                 setState(() {
                   isFav = !isFav;
                   favNum = favNum + 1;
                 });
               }
-            },
-            child: IconWithNumber(
-              icon: Icon(
-                isFav ? Icons.favorite : Icons.favorite_border,
-                color: isFav ? Colors.redAccent : Colors.grey,
-              ),
-              number: favNum,
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (isCollect) {
+              if (state is UnThumbup) {
+                showToast("取消点赞成功");
                 setState(() {
-                  isCollect = !isCollect;
-                  collectNum = collectNum - 1;
-                });
-              } else {
-                setState(() {
-                  isCollect = !isCollect;
-                  collectNum = collectNum + 1;
+                  isFav = !isFav;
+                  favNum = favNum - 1;
                 });
               }
+              if (state is ThumbUpFailed) {
+                showToast('点赞失败，请稍后再试');
+              }
+              if (state is CancelThumbUpFailed) {
+                showToast('取消点赞失败，请稍后再试');
+              }
             },
-            child: IconWithNumber(
-              icon: Icon(
-                isCollect ? Icons.star : Icons.star_border,
-                color: isCollect ? Colors.yellowAccent : Colors.grey,
+            child: GestureDetector(
+              onTap: () {
+                if (_authorizationBloc.state is UnAuthorized) {
+                  GlobalRoute.router.navigateTo(context, '/login');
+                } else {
+                  final currentState = _currentUserBloc.state;
+                  if (currentState is CurrentUserLoaded) {
+                    print(currentState.currentUser.userId);
+                    if (isFav) {
+                      context.bloc<ThumbupBloc>().add(
+                            CancelThumbUp(
+                              userId: currentState.currentUser.userId,
+                              serviceBusinessId: widget.serviceBusinessId,
+                            ),
+                          );
+                    } else {
+                      context.bloc<ThumbupBloc>().add(
+                            Thumbup(
+                              userId: currentState.currentUser.userId,
+                              serviceBusinessId: widget.serviceBusinessId,
+                            ),
+                          );
+                    }
+                  }
+                }
+              },
+              child: IconWithNumber(
+                icon: Icon(
+                  isFav ? Icons.favorite : Icons.favorite_border,
+                  color: isFav ? Colors.redAccent : Colors.black,
+                  size: 28.0,
+                ),
+                number: favNum,
               ),
-              number: collectNum,
+            ),
+          ),
+          BlocListener<CollectBloc, CollectState>(
+            listener: (context, state) {
+              if (state is Collected) {
+                showToast("收藏成功");
+                setState(() {
+                  isStar = !isStar;
+                  starNum = starNum + 1;
+                });
+              }
+              if (state is UnCollect) {
+                showToast("取消收藏成功");
+                setState(() {
+                  isStar = !isStar;
+                  starNum = starNum - 1;
+                });
+              }
+              if (state is CollectFailed) {
+                showToast('收藏失败，请稍后再试');
+              }
+              if (state is CancelThumbUpFailed) {
+                showToast('取消收藏失败，请稍后再试');
+              }
+            },
+            child: GestureDetector(
+              onTap: () {
+                if (_authorizationBloc.state is UnAuthorized) {
+                  GlobalRoute.router.navigateTo(context, '/login');
+                } else {
+                  final currentState = _currentUserBloc.state;
+                  if (currentState is CurrentUserLoaded) {
+                    if (isStar) {
+                      context.bloc<CollectBloc>().add(
+                            CancelCollect(
+                              userId: currentState.currentUser.userId,
+                              serviceBusinessId: widget.serviceBusinessId,
+                            ),
+                          );
+                    } else {
+                      context.bloc<CollectBloc>().add(
+                            ActionCollect(
+                              typeId: 1,
+                              userId: currentState.currentUser.userId,
+                              serviceBusinessId: widget.serviceBusinessId,
+                            ),
+                          );
+                    }
+                  }
+                }
+              },
+              child: IconWithNumber(
+                icon: Icon(
+                  isStar ? Icons.star : Icons.star_border,
+                  color: isStar ? Colors.yellow : Colors.black,
+                  size: 28.0,
+                ),
+                number: starNum,
+              ),
             ),
           ),
           IconWithNumber(

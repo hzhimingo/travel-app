@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:travel/core/platform/custom_behavior.dart';
 import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
@@ -83,31 +84,41 @@ class Settings extends StatelessWidget {
               onPressed: () {},
             ),
             SizedBox(height: 10.0),
-            Offstage(
-              offstage: _authorizationBloc.state is UnAuthorized,
-              child: GestureDetector(
-                onTap: () {
-                  _authorizationBloc.add(RevokeAuthorized());
-                  _currentUserBloc.add(RemoveCurrentUser());
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(
-                    left: 15.0,
-                    right: 15.0,
-                    bottom: 15.0,
-                    top: 15.0,
-                  ),
-                  color: Colors.white,
-                  child: Text(
-                    '退出当前账号',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 18.0,
+            BlocConsumer<AuthorizationBloc, AuthorizationState>(
+              listener: (context, state) {
+                if (state is UnAuthorized) {
+                  showToast("已退出登录");
+                }
+              },
+              builder: (context, state) {
+                if (state is UnAuthorized) {
+                  return Container();
+                } else {
+                  return GestureDetector(
+                    onTap: () {
+                      _authorizationBloc.add(RevokeAuthorized());
+                      _currentUserBloc.add(RemoveCurrentUser());
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(
+                        left: 15.0,
+                        right: 15.0,
+                        bottom: 15.0,
+                        top: 15.0,
+                      ),
+                      color: Colors.white,
+                      child: Text(
+                        '退出当前账号',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 18.0,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
+                  );
+                }
+              },
             ),
           ],
         ),

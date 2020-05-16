@@ -38,19 +38,6 @@ class QuestionDetailPanel extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    '${questionDetail.visitedNum}',
-                    style: _numberStyle,
-                  ),
-                  Text(
-                    '浏览',
-                    style: _textStyle,
-                  ),
-                  SizedBox(width: 5.0),
-                  Text(
-                    '·',
-                    style: _textStyle,
-                  ),
                   SizedBox(width: 5.0),
                   Text(
                     '${questionDetail.answerNum}',

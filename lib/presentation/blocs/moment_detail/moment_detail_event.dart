@@ -6,8 +6,9 @@ abstract class MomentDetailEvent extends Equatable {
 
 class FetchMomnetDetail extends MomentDetailEvent {
   final int momentId;
+  final int userId;
 
-  FetchMomnetDetail({this.momentId});
+  FetchMomnetDetail({this.momentId, this.userId});
   @override
-  List<Object> get props => [momentId];
+  List<Object> get props => [momentId, userId];
 }

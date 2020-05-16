@@ -22,7 +22,7 @@ class MomentDetailBloc extends Bloc<MomentDetailEvent, MomentDetailState> {
     MomentDetailEvent event,
   ) async* {
     if (event is FetchMomnetDetail) {
-      var data = await momentService.fetchMomentDetail(event.momentId);
+      var data = await momentService.fetchMomentDetail(event.momentId, event.userId);
       yield data.fold(
         (failure) => MomentDetailFaliure(),
         (momentDetail) => MomentDetailLoaded(momentDetail: momentDetail),

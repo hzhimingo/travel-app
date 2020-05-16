@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:travel/core/error/failures.dart';
 import 'package:travel/data/repositories/spot_filter_repository.dart';
 import 'package:travel/data/repositories/spot_repository.dart';
+import 'package:travel/entity/simple_spot.dart';
 import 'package:travel/entity/spot.dart';
 
 class SpotService {
@@ -26,5 +27,9 @@ class SpotService {
 
   Future<Either<Failure, List<Spot>>> fetchSpots(Map<String, dynamic> params) async {
     return await spotRepo.fetchSpots(params);
+  }
+
+  Future<Either<Failure, List<SimpleSpot>>> fetchSimplSpots(int city) async {
+    return await spotRepo.fetchSimpleSpots(city);
   }
 }

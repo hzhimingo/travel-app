@@ -15,6 +15,7 @@ class AnswerContent extends StatelessWidget {
         right: 15.0,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           UserInfoTitle(
             nickname: answerDetailData.nickname,

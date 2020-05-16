@@ -60,9 +60,9 @@ class UserInfoPanel extends StatelessWidget {
               builder: (context, state) {
                 if (state is CurrentUserLoaded) {
                   return _buildRowInfo(
-                    state.currentUser.followNum,
-                    state.currentUser.fansNum,
-                    state.currentUser.visitedNum,
+                    0,
+                    0,
+                    0,
                   );
                 } else {
                   return _buildRowInfo(0, 0, 0);

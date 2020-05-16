@@ -13,24 +13,27 @@ class Stroke extends StatefulWidget {
   _StrokeState createState() => _StrokeState();
 }
 
-class _StrokeState extends State<Stroke> with AutomaticKeepAliveClientMixin{
+class _StrokeState extends State<Stroke> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return NestedScrollView(
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return [
-          SliverPersistentHeader(
-            delegate: CommonSliverPersistentHeaderDelegate(
-              height: 250.0,
-              child: HotQuestion(),
+    return SafeArea(
+      child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverPersistentHeader(
+              delegate: CommonSliverPersistentHeaderDelegate(
+                height: 250.0,
+                child: HotQuestion(),
+              ),
             ),
-          ),
-        ];
-      },
-      body: BlocProvider(
-        create: (context) => getIt.get<QuestionPoolBloc>()..add(InitializeQuestionPool()),
-        child: QuestionPool(),
+          ];
+        },
+        body: BlocProvider(
+          create: (context) =>
+              getIt.get<QuestionPoolBloc>()..add(InitializeQuestionPool()),
+          child: QuestionPool(),
+        ),
       ),
     );
   }

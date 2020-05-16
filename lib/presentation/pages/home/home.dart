@@ -1,6 +1,8 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/route/routes.dart';
 
 import './components/components.dart';
@@ -91,30 +93,49 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                 ),
               ),
             ),
-            Container(
-              width: 40.0,
-              height: 40.0,
-              margin: EdgeInsets.only(left: 15.0),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: ExtendedNetworkImageProvider(
-                    'https://p1-q.mafengwo.net/s15/M00/96/01/CoUBGV4pHj6AdsKGAADkQCnAbQE62.jpeg?imageMogr2%2Fthumbnail%2F%21120x120r%2Fgravity%2FCenter%2Fcrop%2F%21120x120%2Fquality%2F90',
-                  ),
-                ),
-                shape: BoxShape.circle,
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset.zero,
-                    blurRadius: 5.0,
-                    spreadRadius: 3.0,
-                    color: Colors.grey[300],
-                  ),
-                ],
-              ),
-            ),
+            BlocBuilder<CurrentUserBloc, CurrentUserState>(
+              builder: (context, state) {
+                if (state is CurrentUserLoaded) {
+                  return _buildUserAvatar(
+                    state.currentUser.avatar,
+                  );
+                } else {
+                  return GestureDetector(
+                    onTap: () {
+                      GlobalRoute.router.navigateTo(context, Routes.login);
+                    },
+                    child: _buildUserAvatar(
+                      'https://assets.leetcode-cn.com/aliyun-lc-upload/default_avatar.png',
+                    ),
+                  );
+                }
+              },
+            )
           ],
         ),
+      ),
+    );
+  }
+
+  _buildUserAvatar(String url) {
+    return Container(
+      width: 40.0,
+      height: 40.0,
+      margin: EdgeInsets.only(left: 15.0),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: ExtendedNetworkImageProvider(url),
+        ),
+        shape: BoxShape.circle,
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            offset: Offset.zero,
+            blurRadius: 5.0,
+            spreadRadius: 3.0,
+            color: Colors.grey[300],
+          ),
+        ],
       ),
     );
   }

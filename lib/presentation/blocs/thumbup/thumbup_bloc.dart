@@ -33,7 +33,7 @@ class ThumbupBloc extends Bloc<ThumbupEvent, ThumbupState> {
       var result = await thumbUpService.cancelThumbUp(event.userId, event.serviceBusinessId);
       yield result.fold(
         (failure) => CancelThumbUpFailed(),
-        (success) => Thumbuped()
+        (success) => UnThumbup()
       );
     }
   }

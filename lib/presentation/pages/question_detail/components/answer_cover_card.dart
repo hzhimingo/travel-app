@@ -1,26 +1,37 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/entity/answer_cover.dart';
 import 'dart:math';
 
 import 'package:travel/entity/picture.dart';
+import 'package:travel/injection/injection.dart';
+import 'package:travel/presentation/blocs/collect/collect_bloc.dart';
+import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
+import 'package:travel/presentation/blocs/thumbup/thumbup_bloc.dart';
 import 'package:travel/presentation/components/card_options.dart';
 import 'package:travel/presentation/components/user_info_title.dart';
 import 'package:travel/route/routes.dart';
 
 class AnswerCoverCard extends StatelessWidget {
+  final String question;
   final AnswerCover answerCover;
 
-  AnswerCoverCard({Key key, this.answerCover}) : super(key: key);
+  AnswerCoverCard({Key key, this.answerCover, this.question}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        final currentState = BlocProvider.of<CurrentUserBloc>(context).state;
+        int userId;
+        if (currentState is CurrentUserLoaded) {
+          userId = currentState.currentUser.userId;
+        }
         GlobalRoute.router.navigateTo(
           context,
-          '/answerDetail?answerId=${answerCover.answerId}',
+          '/answerDetail?answerId=${answerCover.answerId}&question=${Uri.encodeComponent(question)}&userId=$userId',
           transition: TransitionType.cupertino,
         );
       },
@@ -39,12 +50,23 @@ class AnswerCoverCard extends StatelessWidget {
               answerCover.content,
               answerCover.pictures,
             ),
-            CardOptions(
-              isFav: answerCover.isFav,
-              isStar: answerCover.isStar,
-              favNum: answerCover.favNum,
-              starNum: answerCover.starNum,
-              commentNum: answerCover.commentNum,
+            MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) =>  getIt.get<ThumbupBloc>(),
+                ),
+                BlocProvider(
+                  create: (context) => getIt.get<CollectBloc>(),
+                ),
+              ],
+              child: CardOptions(
+                serviceBusinessId: answerCover.answerId,
+                isFav: answerCover.isFav,
+                isStar: answerCover.isStar,
+                favNum: answerCover.favNum,
+                starNum: answerCover.starNum,
+                commentNum: answerCover.commentNum,
+              ),
             ),
           ],
         ),
@@ -121,12 +143,15 @@ class AnswerCoverCard extends StatelessWidget {
 
   _buildAnswerCoverContent(String text, List<Picture> pictures) {
     List<Widget> children = [
-      Text(
-        text,
-        maxLines: 7,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-          fontSize: 17.0,
+      Container(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          text,
+          maxLines: 7,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 17.0,
+          ),
         ),
       ),
     ];
@@ -148,6 +173,8 @@ class AnswerCoverCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: children,
       ),
     );

@@ -5,16 +5,22 @@ abstract class MomentPoolState extends Equatable {
 }
 
 class MomentPoolInitializing extends MomentPoolState {
+  MomentPoolInitializing();
+
   @override
   List<Object> get props => [];
 }
 
 class MomentPoolEmpty extends MomentPoolState {
+  MomentPoolEmpty();
+
   @override
   List<Object> get props => [];
 }
 
 class MomentPoolLoading extends MomentPoolState {
+  MomentPoolLoading();
+
   @override
   List<Object> get props => [];
 }
@@ -29,6 +35,8 @@ class MomentPoolLoaded extends MomentPoolState {
 }
 
 class MomentPoolLoadFailure extends MomentPoolState {
+
+  MomentPoolLoadFailure();
   @override
   List<Object> get props => [];
 }

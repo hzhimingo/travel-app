@@ -72,7 +72,7 @@ class ExploreAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: TabBar(
                 labelColor: Color.fromRGBO(70, 130, 255, 1.0),
                 unselectedLabelColor: Colors.black38,
-                isScrollable: true,
+                // isScrollable: true,
                 labelStyle: TextStyle(
                   fontSize: 17.0,
                   fontWeight: FontWeight.bold,

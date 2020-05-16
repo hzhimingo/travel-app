@@ -4,6 +4,7 @@ import 'package:travel/core/error/failures.dart';
 import 'package:travel/entity/moment_cover.dart';
 import 'package:travel/data/repositories/moment_repository.dart';
 import 'package:travel/entity/moment_detail.dart';
+import 'package:travel/entity/post_moment_form.dart';
 
 class MomentService {
   final MomentRepository repository;
@@ -15,8 +16,12 @@ class MomentService {
     return await repository.fetchMomentCovers();
   }
 
-  Future<Either<Failure, MomentDetail>> fetchMomentDetail(int id) async {
-    return await repository.fetchMomentDetail(id);
+  Future<Either<Failure, MomentDetail>> fetchMomentDetail(int momentId, int userId) async {
+    return await repository.fetchMomentDetail(momentId, userId);
+  }
+
+  Future<Either<Failure, bool>> addMoment(PostMomentForm form) async {
+    return await repository.addMoment(form);
   }
 }
 

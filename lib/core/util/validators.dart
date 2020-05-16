@@ -36,7 +36,7 @@ class Validators {
   }
 
   static bool isPassword(String text) {
-    if (text.length >= 8) {
+    if (text.length >= 6) {
       return true;
     } else {
       return false;

@@ -7,7 +7,7 @@ class ProfileTravelNoteTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('TravelNoteTabView'),
+        child: Text('这里空空如也'),
       ),
     );
   }

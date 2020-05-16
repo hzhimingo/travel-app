@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:travel/presentation/blocs/login/login_bloc.dart';
 import 'package:travel/presentation/blocs/sms_form/sms_form_bloc.dart';
@@ -11,6 +12,7 @@ class SmsCodeLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //showToast("验证码已发送，注意查收");
     String phoneNumber = "";
     //ignore: close_sinks
     final LoginBloc _loginBloc = BlocProvider.of<LoginBloc>(context);

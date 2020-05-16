@@ -34,6 +34,7 @@ class CollectRemoteDatasource {
 
   Future<bool> cancelCollect(int userId, int serviceBusinessId) async {
     bool isSuccess;
+    print("$userId 取消收藏 $serviceBusinessId");
     FormData formData = new FormData.fromMap({
       'userId': userId,
       'serviceBusinessId': serviceBusinessId,

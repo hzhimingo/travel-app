@@ -118,11 +118,44 @@ class _CitySelectorState extends State<CitySelector> {
                     ),
                   ),
                   RaisedButton(
-                    child: Text('获取单次定位'),
+                    child: Text('获取定位'),
                     onPressed: () async {
                       // final location = await AmapLocation.fetchLocation();
                       // print(location.city);
                     },
+                  ),
+                  SizedBox(height: 15.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      SingleCityItem(city: '北京'),
+                      SingleCityItem(city: '上海'),
+                      SingleCityItem(city: '广州')
+                    ],
+                  ),
+                  SizedBox(height: 15.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      SingleCityItem(city: '三亚'),
+                      SingleCityItem(city: '重庆'),
+                      SingleCityItem(city: '成都')
+                    ],
+                  ),
+                  SizedBox(height: 15.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      SingleCityItem(city: '云南'),
+                      SingleCityItem(city: '杭州'),
+                      SingleCityItem(city: '西安')
+                    ],
+                  ),
+                  SizedBox(height: 15.0),
+                  Row(
+                    children: <Widget>[
+                      SingleCityItem(city: '南京'),
+                    ],
                   ),
                 ],
               ),
@@ -130,37 +163,37 @@ class _CitySelectorState extends State<CitySelector> {
             RegionPool(),
             Container(
               child: Center(
-                child: Text('Hello2'),
+                child: Text('暂无数据'),
               ),
             ),
             Container(
               child: Center(
-                child: Text('Hello3'),
+                child: Text('暂无数据'),
               ),
             ),
             Container(
               child: Center(
-                child: Text('Hello4'),
+                child: Text('暂无数据'),
               ),
             ),
             Container(
               child: Center(
-                child: Text('Hello5'),
+                child: Text('暂无数据'),
               ),
             ),
             Container(
               child: Center(
-                child: Text('Hello6'),
+                child: Text('暂无数据'),
               ),
             ),
             Container(
               child: Center(
-                child: Text('Hello7'),
+                child: Text('暂无数据'),
               ),
             ),
             Container(
               child: Center(
-                child: Text('Hello8'),
+                child: Text('暂无数据'),
               ),
             ),
           ],

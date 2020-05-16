@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travel/presentation/blocs/answer_pool/answer_pool_bloc.dart';
+import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/presentation/blocs/question_detail/question_detail_bloc.dart';
 import 'package:travel/route/routes.dart';
 
@@ -59,18 +60,24 @@ class _QuestionDetailState extends State<QuestionDetail> {
               child: Text('Loading....'),
             );
           } else if (state is QuestionDetailLoaded) {
+            final currentState = context.bloc<CurrentUserBloc>().state;
+            int userId;
+            if (currentState is CurrentUserLoaded) {
+              userId = currentState.currentUser.userId;
+            }
             return SmartRefresher(
               controller: _refreshController,
               enablePullDown: false,
               enablePullUp: true,
               footer: ClassicFooter(),
-              onLoading: () => _answerPoolBloc.add(LoadMoreAnswerCovers(questionId: state.questionDetail.questionId)),
+              onLoading: () => _answerPoolBloc.add(LoadMoreAnswerCovers(questionId: state.questionDetail.questionId, userId: userId)),
               child: ListView(
                 children: <Widget>[
                   QuestionDetailPanel(
                     questionDetail: state.questionDetail,
                   ),
                   AnswerCoverCardPool(
+                    question: state.questionDetail.title,
                     refreshController: _refreshController,
                   ),
                 ],
@@ -78,7 +85,7 @@ class _QuestionDetailState extends State<QuestionDetail> {
             );
           } else {
             return Center(
-              child: Text('Failure....'),
+              child: Text('加载失败了'),
             );
           }
         },
@@ -89,6 +96,7 @@ class _QuestionDetailState extends State<QuestionDetail> {
             return BottomActionPanel(
               isCollect: state.questionDetail.isCollect,
               collectNum: 10,
+              question: state.questionDetail.questionId,
             );
           } else {
             return Container();

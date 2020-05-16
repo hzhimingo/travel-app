@@ -83,12 +83,14 @@ class _BottomActionPanelState extends State<BottomActionPanel> {
           BlocListener<ThumbupBloc, ThumbupState>(
             listener: (context, state) {
               if (state is Thumbuped) {
+                showToast("点赞成功");
                 setState(() {
                   isFav = !isFav;
                   favNum = favNum + 1;
                 });
               }
               if (state is UnThumbup) {
+                showToast("取消点赞成功");
                 setState(() {
                   isFav = !isFav;
                   favNum = favNum - 1;
@@ -110,15 +112,19 @@ class _BottomActionPanelState extends State<BottomActionPanel> {
                   if (currentState is CurrentUserLoaded) {
                     print(currentState.currentUser.userId);
                     if (isFav) {
-                      context.bloc<ThumbupBloc>().add(CancelThumbUp(
-                            userId: currentState.currentUser.userId,
-                            serviceBusinessId: widget.serviceBusinessId,
-                          ));
+                      context.bloc<ThumbupBloc>().add(
+                            CancelThumbUp(
+                              userId: currentState.currentUser.userId,
+                              serviceBusinessId: widget.serviceBusinessId,
+                            ),
+                          );
                     } else {
-                      context.bloc<ThumbupBloc>().add(Thumbup(
-                            userId: currentState.currentUser.userId,
-                            serviceBusinessId: widget.serviceBusinessId,
-                          ));
+                      context.bloc<ThumbupBloc>().add(
+                            Thumbup(
+                              userId: currentState.currentUser.userId,
+                              serviceBusinessId: widget.serviceBusinessId,
+                            ),
+                          );
                     }
                   }
                 }
@@ -136,12 +142,14 @@ class _BottomActionPanelState extends State<BottomActionPanel> {
           BlocListener<CollectBloc, CollectState>(
             listener: (context, state) {
               if (state is Collected) {
+                showToast("收藏成功");
                 setState(() {
                   isStar = !isStar;
                   starNum = starNum + 1;
                 });
               }
               if (state is UnCollect) {
+                showToast("取消收藏成功");
                 setState(() {
                   isStar = !isStar;
                   starNum = starNum - 1;

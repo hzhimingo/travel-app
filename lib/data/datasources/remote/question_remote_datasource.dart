@@ -40,7 +40,6 @@ class QuestionRemoteDataSource {
       '/qa/question/$questionId',
     ).then((response) {
       Result result = Result.fromJson(response.data);
-      print(result);
       if (result.code == 0) {
         questionDetail = QuestionDetail.fromJson(result.data);
       } else {
@@ -50,5 +49,29 @@ class QuestionRemoteDataSource {
       throw ServerException();
     });
     return questionDetail;
+  }
+
+  Future<bool> submitQuestion(int userId, String title, String content) async {
+    bool isSuccess;
+    print("$userId 发布问题 $title");
+    FormData formData = FormData.fromMap({
+      "userId": userId,
+      "title": title,
+      "content": content
+    });
+    await http.post(
+      '/qa/question/',
+      data: formData
+    ).then((response) {
+      Result result = Result.fromJson(response.data);
+      if (result.code == 0) {
+        isSuccess = true;
+      } else {
+        throw ApiException(msg: result.msg);
+      }
+    }).catchError((r) {
+      throw ServerException();
+    });
+    return isSuccess;
   }
 }

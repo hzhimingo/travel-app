@@ -16,4 +16,8 @@ class QuestionService {
   Future<Either<Failure, QuestionDetail>> fetchQuestionDetail(int questionId) async {
     return await repository.fetchQuestionDetail(questionId);
   }
+
+  Future<Either<Failure, bool>> submitQuestion(int userId, String title, String content) async {
+    return await repository.submitQuestion(userId, title, content);
+  }
 }

@@ -7,18 +7,20 @@ abstract class AnswerPoolEvent extends Equatable {
 class InitializeAnswerPool extends AnswerPoolEvent {
 
   final int questionId;
+  final int userId;
 
-  InitializeAnswerPool({this.questionId});
+  InitializeAnswerPool({this.questionId, this.userId});
 
   @override
-  List<Object> get props => [questionId];
+  List<Object> get props => [questionId, userId];
 }
 
 class LoadMoreAnswerCovers extends AnswerPoolEvent {
 
   final int questionId;
+  final int userId;
 
-  LoadMoreAnswerCovers({this.questionId});
+  LoadMoreAnswerCovers({this.questionId, this.userId});
 
   @override
   List<Object> get props => [questionId];

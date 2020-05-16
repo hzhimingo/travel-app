@@ -5,9 +5,10 @@ import 'package:travel/presentation/blocs/answer_pool/answer_pool_bloc.dart';
 import 'answer_cover_card.dart';
 
 class AnswerCoverCardPool extends StatelessWidget {
+  final String question;
   final RefreshController refreshController;
 
-  const AnswerCoverCardPool({Key key, this.refreshController})
+  const AnswerCoverCardPool({Key key, this.refreshController, this.question})
       : super(key: key);
 
   @override
@@ -78,6 +79,7 @@ class AnswerCoverCardPool extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: state.answerCovers.length,
                   itemBuilder: (context, index) => AnswerCoverCard(
+                    question: question,
                     answerCover: state.answerCovers[index],
                   ),
                 );

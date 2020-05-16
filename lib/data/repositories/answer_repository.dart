@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:travel/core/error/failures.dart';
 import 'package:travel/core/error/exceptions.dart';
 import 'package:travel/data/datasources/remote/answer_remote_datasource.dart';
@@ -10,9 +11,9 @@ class AnswerRepository {
 
   AnswerRepository({this.remote});
 
-  Future<Either<Failure, List<AnswerCover>>> fetchAnswerCovers(int questionId) async {
+  Future<Either<Failure, List<AnswerCover>>> fetchAnswerCovers(int questionId, int userId) async {
     try {
-      var data = await remote.fetchAnswerCovers(questionId);
+      var data = await remote.fetchAnswerCovers(questionId, userId);
       return Right(data);
     } on ApiException catch(e) {
       return Left(ApiFailure(e.msg));
@@ -21,9 +22,9 @@ class AnswerRepository {
     }
   }
 
-  Future<Either<Failure, AnswerDetailData>> fetchAnswerDetail(int answerId) async {
+  Future<Either<Failure, AnswerDetailData>> fetchAnswerDetail(int answerId, int userId) async {
     try {
-      var data = await remote.fetchAnswerDetail(answerId);
+      var data = await remote.fetchAnswerDetail(answerId, userId);
       return Right(data);
     } on ApiException catch(e) {
       return Left(ApiFailure(e.msg));
@@ -31,4 +32,16 @@ class AnswerRepository {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, bool>> postAnswer(int userId, String content, int question, List<MultipartFile> pics) async {
+    try {
+      var data = await remote.postAnswer(userId, content, question, pics);
+      return Right(data);
+    } on ApiException catch(e) {
+      return Left(ApiFailure(e.msg));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
 }

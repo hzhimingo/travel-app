@@ -1,8 +1,10 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/entity/answer_cover.dart';
 import 'package:travel/entity/picture.dart';
 import 'package:travel/entity/question_cover.dart';
+import 'package:travel/presentation/blocs/current_user/current_user_bloc.dart';
 import 'package:travel/route/routes.dart';
 import 'package:extended_image/extended_image.dart';
 
@@ -14,11 +16,20 @@ class QuestionCoverCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GlobalRoute.router.navigateTo(
-          context,
-          '/questionDetail?questionId=${questionCover.questionId}',
-          transition: TransitionType.cupertino,
-        );
+        final currentState = BlocProvider.of<CurrentUserBloc>(context).state;
+        if (currentState is CurrentUserLoaded) {
+          GlobalRoute.router.navigateTo(
+            context,
+            '/questionDetail?questionId=${questionCover.questionId}&userId=${currentState.currentUser.userId}',
+            transition: TransitionType.cupertino,
+          );
+        } else {
+          GlobalRoute.router.navigateTo(
+            context,
+            '/questionDetail?questionId=${questionCover.questionId}',
+            transition: TransitionType.cupertino,
+          );
+        }
       },
       child: Container(
         padding: EdgeInsets.only(bottom: 15.0),
@@ -63,10 +74,6 @@ class QuestionCoverCard extends StatelessWidget {
                   Container(
                     child: Row(
                       children: <Widget>[
-                        _numberAndText(
-                          questionCover.visitedNum,
-                          '浏览',
-                        ),
                         SizedBox(width: 6.0),
                         _numberAndText(
                           questionCover.answerNum,

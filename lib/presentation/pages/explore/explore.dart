@@ -19,11 +19,8 @@ class _ExploreState extends State<Explore>
 
   TabController _tabController;
   final List<Widget> _tabs = [
-    Tab(text: '关注'),
-    Tab(text: '推荐'),
     Tab(text: '国内'),
     Tab(text: '国外'),
-    Tab(text: '问答'),
     Tab(text: '话题'),
     Tab(text: '美食'),
   ];
@@ -34,7 +31,7 @@ class _ExploreState extends State<Explore>
     _tabController = TabController(
       length: _tabs.length,
       vsync: this,
-      initialIndex: 5,
+      initialIndex: 1,
     );
   }
 
@@ -52,11 +49,6 @@ class _ExploreState extends State<Explore>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            FollowTabView(),
-            BlocProvider<MomentPoolBloc>(
-              create: (context) => getIt.get<MomentPoolBloc>()..add(InitializeMomentPool()),
-              child: MomentTabView(),
-            ),
              BlocProvider<MomentPoolBloc>(
               create: (context) => getIt.get<MomentPoolBloc>()..add(InitializeMomentPool()),
               child: MomentTabView(),
@@ -65,7 +57,6 @@ class _ExploreState extends State<Explore>
               create: (context) => getIt.get<MomentPoolBloc>()..add(InitializeMomentPool()),
               child: MomentTabView(),
             ),
-            QuestionTabView(),
             TopicTabView(),
              BlocProvider<MomentPoolBloc>(
               create: (context) => getIt.get<MomentPoolBloc>()..add(InitializeMomentPool()),

@@ -34,6 +34,8 @@ class Routes {
   static String pictureAlbum = '/pictureAlbum';
   static String spotMap = '/spotMap';
   static String pictureAlbumDetail = '/pictureAlbumDetail';
+  static String spotSelector = '/spotSelector';
+  static String editAnswer = '/editAnswer';
 
   static void configureRoutes(Router router) {
     router.define(root, handler: rootHandler);
@@ -64,5 +66,7 @@ class Routes {
     router.define(pictureAlbum, handler: pictureAlbumHandler);
     router.define(spotMap, handler: spotMapHandler);
     router.define(pictureAlbumDetail, handler: pictureAlbumDetailHandler);
+    router.define(spotSelector, handler: spotSelectorHandler);
+    router.define(editAnswer, handler: editAnswerHandler);
   }
 }

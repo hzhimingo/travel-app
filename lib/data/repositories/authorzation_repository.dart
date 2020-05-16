@@ -29,7 +29,7 @@ class AuthorizationRepository {
         authorizationLocal.storeAuthorization(data);
         //解析access_token中的信息
         //获取当前用户信息
-        var user = await userRemote.getUserInfo(12341234);
+        var user = await userRemote.getUserInfo(42669858835927040);
         //如果不为空的话，就当前存储获取到的用户信息
         if (user != null) {
           userLocal.storeCurrentUser(user);

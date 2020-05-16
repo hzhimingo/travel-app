@@ -1,10 +1,16 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
+import 'package:travel/route/routes.dart';
 
 class BottomActionPanel extends StatefulWidget {
+  final int question;
   final bool isCollect;
   final int collectNum;
   BottomActionPanel({
     Key key,
+    this.question,
     this.isCollect,
     this.collectNum,
   }) : super(key: key);
@@ -14,15 +20,16 @@ class BottomActionPanel extends StatefulWidget {
 }
 
 class _BottomActionPanelState extends State<BottomActionPanel> {
-
   int collectNum = 0;
   bool isCollect = false;
+  AuthorizationBloc _authorizationBloc;
 
   @override
   void initState() {
     super.initState();
     collectNum = widget.collectNum;
     isCollect = widget.isCollect;
+    _authorizationBloc = BlocProvider.of<AuthorizationBloc>(context);
   }
 
   @override
@@ -80,6 +87,21 @@ class _BottomActionPanelState extends State<BottomActionPanel> {
             ),
           ),
           GestureDetector(
+            onTap: () {
+              if (_authorizationBloc.state is UnAuthorized) {
+                GlobalRoute.router.navigateTo(
+                  context,
+                  '/login',
+                  transition: TransitionType.cupertino,
+                );
+              } else {
+                GlobalRoute.router.navigateTo(
+                  context,
+                  '/editAnswer?questionId=${widget.question}',
+                  transition: TransitionType.cupertino,
+                );
+              }
+            },
             child: Container(
               child: Row(
                 children: <Widget>[

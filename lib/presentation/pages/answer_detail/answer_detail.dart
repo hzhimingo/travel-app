@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/injection/injection.dart';
 import 'package:travel/presentation/blocs/answer_detail/answer_detail_bloc.dart';
+import 'package:travel/presentation/blocs/collect/collect_bloc.dart';
 import 'package:travel/presentation/blocs/comment_cover_pool/comment_cover_pool_bloc.dart';
+import 'package:travel/presentation/blocs/thumbup/thumbup_bloc.dart';
 import 'package:travel/presentation/components/comment/comment_cover_pool.dart';
 import 'package:travel/route/routes.dart';
 
 import './components/components.dart';
 
 class AnswerDetail extends StatelessWidget {
-  const AnswerDetail({Key key}) : super(key: key);
+  final String question;
+  const AnswerDetail({Key key, this.question}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +65,16 @@ class AnswerDetail extends StatelessWidget {
                     QuestionCoverPanel(
                       questionId: 1,
                       answerNum: 10,
-                      title: '这是问题这是问题这是问题这是问题这是问题这是问题00',
+                      title: question,
                     ),
                     AnswerContent(
                       answerDetailData: state.detail,
                     ),
                     BlocProvider<CommentCoverPoolBloc>(
-                      create: (context) =>
-                          getIt.get<CommentCoverPoolBloc>()..add(LoadCommentCoverPool(
-                            commentCovers: state.detail.comments,
-                          )),
+                      create: (context) => getIt.get<CommentCoverPoolBloc>()
+                        ..add(LoadCommentCoverPool(
+                          commentCovers: state.detail.comments,
+                        )),
                       child: CommentCoverPool(
                         serviceBusinessId: state.detail.answerId,
                         authorNickname: state.detail.nickname,
@@ -87,12 +90,23 @@ class AnswerDetail extends StatelessWidget {
       bottomNavigationBar: BlocBuilder<AnswerDetailBloc, AnswerDetailState>(
         builder: (context, state) {
           if (state is AnswerDetailLoaded) {
-            return BottomActionPanel(
-              favNum: state.detail.favNum,
-              collectNum: state.detail.starNum,
-              commentNum: state.detail.commentNum,
-              isCollect: state.detail.isCollect,
-              isFav: state.detail.isStar,
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => getIt.get<ThumbupBloc>(),
+                ),
+                BlocProvider(
+                  create: (context) => getIt.get<CollectBloc>(),
+                ),
+              ],
+              child: BottomActionPanel(
+                serviceBusinessId: state.detail.answerId,
+                favNum: state.detail.favNum,
+                starNum: state.detail.starNum,
+                commentNum: state.detail.commentNum,
+                isStar: state.detail.isStar,
+                isFav: state.detail.isFav,
+              ),
             );
           } else {
             return Container();
