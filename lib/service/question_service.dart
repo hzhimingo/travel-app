@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:travel/core/error/failures.dart';
 import 'package:travel/data/repositories/question_respository.dart';
+import 'package:travel/entity/page.dart';
 import 'package:travel/entity/question_cover.dart';
 import 'package:travel/entity/question_detail.dart';
 
@@ -9,8 +10,8 @@ class QuestionService {
 
   QuestionService({this.repository});
 
-  Future<Either<Failure, List<QuestionCover>>> fetchQuestionCovers() async {
-    return await repository.fetchQuestionCovers();
+  Future<Either<Failure, Page<List<QuestionCover>>>> fetchQuestionCovers(int boundary, int offset) async {
+    return await repository.fetchQuestionCovers(boundary, offset);
   }
 
   Future<Either<Failure, QuestionDetail>> fetchQuestionDetail(int questionId) async {

@@ -26,6 +26,9 @@ class _MomentTabViewState extends State<MomentTabView>
     return BlocConsumer<MomentPoolBloc, MomentPoolState>(
       listener: (context, state) {
         if (state is MomentPoolLoaded) {
+          if (!state.page.hasNext) {
+            _refreshController.loadNoData();
+          }
           if (_refreshController.isRefresh) {
             _refreshController.refreshCompleted();
           }
@@ -72,18 +75,21 @@ class _MomentTabViewState extends State<MomentTabView>
               enablePullUp: true,
               enablePullDown: true,
               onRefresh: () => context.bloc<MomentPoolBloc>().add(RefreshMomentPool()),
-              onLoading: () => context.bloc<MomentPoolBloc>().add(LoadMoreMomentCovers()),
+              onLoading: () => context.bloc<MomentPoolBloc>().add(LoadMoreMomentCovers(
+                boundary: state.page.boundary + state.page.offset,
+                offset: state.page.offset
+              )),
               header: CustomDropHeader(),
               footer: ClassicFooter(),
               child: WaterfallFlow.builder(
-                itemCount: state.momentCovers.length,
+                itemCount: state.page.data.length,
                 gridDelegate: SliverWaterfallFlowDelegate(
                   crossAxisCount: 2,
                   collectGarbage: (List<int> garbages) {
                     garbages.forEach(
                       (index) {
                         final provider = ExtendedNetworkImageProvider(
-                          state.momentCovers[index].coverImage.url,
+                          state.page.data[index].coverImage.url,
                         );
                         provider.evict();
                       },
@@ -91,7 +97,7 @@ class _MomentTabViewState extends State<MomentTabView>
                   },
                 ),
                 itemBuilder: (context, index) => MomentCoverCard(
-                  momentCover: state.momentCovers[index],
+                  momentCover: state.page.data[index],
                 ),
               ),
             ),

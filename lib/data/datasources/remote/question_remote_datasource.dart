@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:travel/core/error/exceptions.dart';
 import 'package:travel/core/http/http.dart';
+import 'package:travel/entity/page.dart';
 import 'package:travel/entity/question_cover.dart';
 import 'package:travel/entity/question_detail.dart';
 
@@ -9,20 +10,26 @@ class QuestionRemoteDataSource {
 
   QuestionRemoteDataSource({this.http});
 
-  Future<List<QuestionCover>> fetchQuestionCovers() async {
-    List<QuestionCover> questionCovers;
+  Future<Page<List<QuestionCover>>> fetchQuestionCovers(int boundary, int offset) async {
+    Page<List<QuestionCover>> page;
     await http.get(
       '/qa/question/covers',
       queryParameters: {
-        'boundary': 0,
-        'offset': 10,
+        'boundary': boundary,
+        'offset': offset,
       }
     ).then((response) {
       Result result = Result.fromJson(response.data);
       if (result.code == 0) {
-        questionCovers = result.data["data"]
+        List<QuestionCover> questionCovers = result.data["data"]
             .map<QuestionCover>((item) => QuestionCover.fromJson(item))
             .toList();
+        page = Page(
+          boundary: result.data['boundary'],
+          offset: result.data['offset'],
+          data: questionCovers,
+          hasNext: result.data['hasNext'],
+        );
       } else {
         throw ApiException(msg: result.msg);
       }
@@ -30,7 +37,7 @@ class QuestionRemoteDataSource {
       print(r);
        throw ServerException();
     });
-    return questionCovers;
+    return page;
   }
 
   Future<QuestionDetail> fetchQuestionDetail(int questionId) async {

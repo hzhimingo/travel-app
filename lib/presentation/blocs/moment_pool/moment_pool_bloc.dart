@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:travel/entity/moment_cover.dart';
+import 'package:travel/entity/page.dart';
 import 'package:travel/service/moment_service.dart';
 
 part 'moment_pool_event.dart';
@@ -24,30 +25,31 @@ class MomentPoolBloc extends Bloc<MomentPoolEvent, MomentPoolState> {
     final currentState = state;
     if (event is InitializeMomentPool) {
       yield MomentPoolInitializing();
-      var data = await momentService.fetchMomentCovers();
+      var data = await momentService.fetchMomentCovers(0, 15);
       yield data.fold(
         (faliure) => MomentPoolEmpty(),
-        (momentCovers) => MomentPoolLoaded(momentCovers: momentCovers),
+        (page) => MomentPoolLoaded(page: page),
       );
     }
     if (event is RefreshMomentPool) {
       yield MomentPoolLoading();
-      var data = await momentService.fetchMomentCovers();
+      var data = await momentService.fetchMomentCovers(0, 15);
       yield data.fold(
         (faliure) => MomentPoolLoadFailure(),
-        (momentCovers) => MomentPoolLoaded(momentCovers: momentCovers),
+        (page) => MomentPoolLoaded(page: page),
       );
     }
     if (event is LoadMoreMomentCovers) {
       yield MomentPoolLoading();
-      var data = await momentService.fetchMomentCovers();
+      var data = await momentService.fetchMomentCovers(event.boundary, event.offset);
       yield data.fold(
         (faliure) => MomentPoolLoadFailure(),
-        (momentCovers) {
+        (page) {
           if (currentState is MomentPoolLoaded) {
-            return MomentPoolLoaded(momentCovers: currentState.momentCovers + momentCovers);
+            page.data = currentState.page.data + page.data;
+            return MomentPoolLoaded(page: page);
           } else {
-            return MomentPoolLoaded(momentCovers: momentCovers);
+            return MomentPoolLoadFailure();
           }
         },
       );

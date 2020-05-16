@@ -1,12 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:travel/core/error/exceptions.dart';
 import 'package:travel/core/http/http.dart';
 import 'package:travel/entity/moment_cover.dart';
 import 'package:travel/entity/moment_detail.dart';
+import 'package:travel/entity/page.dart';
 import 'package:travel/entity/post_moment_form.dart';
 
 class MomentRemoteDataSource {
@@ -14,20 +13,27 @@ class MomentRemoteDataSource {
 
   MomentRemoteDataSource({this.http});
 
-  Future<List<MomentCover>> fetchMomentCovers() async {
-    List<MomentCover> momentCovers;
+  Future<Page<List<MomentCover>>> fetchMomentCovers(int boundary, int offset) async {
+    Page<List<MomentCover>> page;
     await http.get(
       '/moment/covers',
       queryParameters: {
-        'boundary': 0,
-        'offset': 15,
+        'boundary': boundary,
+        'offset': offset,
       },
     ).then((response) {
       Result result = Result.fromJson(response.data);
       if (result.code == 0) {
-        momentCovers = result.data["data"]
+        List<MomentCover> momentCovers = result.data["data"]
             .map<MomentCover>((item) => MomentCover.fromJson(item))
             .toList();
+          page = Page(
+          boundary: result.data['boundary'],
+          offset: result.data['offset'],
+          data: momentCovers,
+          hasNext: result.data['hasNext'],
+        );
+         print("${page.boundary} ${page.offset} ${page.hasNext} ${page.data.length}");
       } else {
         throw ApiException(msg: result.msg);
       }
@@ -35,7 +41,7 @@ class MomentRemoteDataSource {
       print(r);
       throw ServerException();
     });
-    return momentCovers;
+    return page;
   }
 
   Future<MomentDetail> fetchMomentDetail(int momentId, int userId) async {

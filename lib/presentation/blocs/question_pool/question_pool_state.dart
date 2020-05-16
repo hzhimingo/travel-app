@@ -25,11 +25,11 @@ class QuestionPoolLoading extends QuestionPoolState {
 }
 
 class QuestionPoolLoaded extends QuestionPoolState {
-  final List<QuestionCover> questionCovers;
+  final Page<List<QuestionCover>> page;
 
-  QuestionPoolLoaded({this.questionCovers});
+  QuestionPoolLoaded({this.page});
   @override
-  List<Object> get props => [questionCovers];
+  List<Object> get props => [page];
 }
 
 class QuestionPoolLoadFailure extends QuestionPoolState {

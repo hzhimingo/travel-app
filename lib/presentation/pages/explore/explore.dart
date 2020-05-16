@@ -31,7 +31,7 @@ class _ExploreState extends State<Explore>
     _tabController = TabController(
       length: _tabs.length,
       vsync: this,
-      initialIndex: 1,
+      initialIndex: 0,
     );
   }
 

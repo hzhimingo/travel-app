@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:travel/core/error/failures.dart';
 import 'package:travel/core/error/exceptions.dart';
 import 'package:travel/data/datasources/remote/question_remote_datasource.dart';
+import 'package:travel/entity/page.dart';
 import 'package:travel/entity/question_cover.dart';
 import 'package:travel/entity/question_detail.dart';
 
@@ -10,9 +11,9 @@ class QuestionRepository {
 
   QuestionRepository({this.remote});
 
-  Future<Either<Failure, List<QuestionCover>>> fetchQuestionCovers() async {
+  Future<Either<Failure, Page<List<QuestionCover>>>> fetchQuestionCovers(int boundary, int offset) async {
      try {
-      var data = await remote.fetchQuestionCovers();
+      var data = await remote.fetchQuestionCovers(boundary, offset);
       return Right(data);
     } on ApiException catch(e) {
       return Left(ApiFailure(e.msg));

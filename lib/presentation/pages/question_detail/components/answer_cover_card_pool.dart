@@ -43,6 +43,9 @@ class AnswerCoverCardPool extends StatelessWidget {
           BlocConsumer<AnswerPoolBloc, AnswerPoolState>(
             listener: (context, state) {
               if (state is AnswerPoolLoaded) {
+                if (!state.page.hasNext) {
+                  refreshController.loadNoData();
+                }
                 if (refreshController.isLoading) {
                   refreshController.loadComplete();
                 }
@@ -77,10 +80,10 @@ class AnswerCoverCardPool extends StatelessWidget {
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: state.answerCovers.length,
+                  itemCount: state.page.data.length,
                   itemBuilder: (context, index) => AnswerCoverCard(
                     question: question,
-                    answerCover: state.answerCovers[index],
+                    answerCover: state.page.data[index],
                   ),
                 );
               }

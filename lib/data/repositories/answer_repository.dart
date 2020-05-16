@@ -5,15 +5,16 @@ import 'package:travel/core/error/exceptions.dart';
 import 'package:travel/data/datasources/remote/answer_remote_datasource.dart';
 import 'package:travel/entity/answer_cover.dart';
 import 'package:travel/entity/answer_detail.dart';
+import 'package:travel/entity/page.dart';
 
 class AnswerRepository {
   final AnswerRemoteDataSource remote;
 
   AnswerRepository({this.remote});
 
-  Future<Either<Failure, List<AnswerCover>>> fetchAnswerCovers(int questionId, int userId) async {
+  Future<Either<Failure, Page<List<AnswerCover>>>> fetchAnswerCovers(int questionId, int userId, int boundary, int offset) async {
     try {
-      var data = await remote.fetchAnswerCovers(questionId, userId);
+      var data = await remote.fetchAnswerCovers(questionId, userId, boundary, offset);
       return Right(data);
     } on ApiException catch(e) {
       return Left(ApiFailure(e.msg));

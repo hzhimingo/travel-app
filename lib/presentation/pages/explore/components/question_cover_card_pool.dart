@@ -28,6 +28,9 @@ class _QuestionPoolState extends State<QuestionPool> with AutomaticKeepAliveClie
       child: BlocConsumer<QuestionPoolBloc, QuestionPoolState>(
         listener: (context, state) {
           if (state is QuestionPoolLoaded) {
+            if (!state.page.hasNext) {
+              _refreshController.loadNoData();
+            }
             if (_refreshController.isLoading) {
               _refreshController.loadComplete();
             }
@@ -66,15 +69,16 @@ class _QuestionPoolState extends State<QuestionPool> with AutomaticKeepAliveClie
               onLoading: () => context
                   .bloc<QuestionPoolBloc>()
                   .add(LoadMoreQuestionCovers(
-                    
+                    boundary: state.page.boundary + state.page.offset,
+                    offset: state.page.offset
                   )),
               footer: ClassicFooter(),
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: state.questionCovers.length,
+                itemCount: state.page.data.length,
                 itemBuilder: (context, index) => QuestionCoverCard(
-                  questionCover: state.questionCovers[index],
+                  questionCover: state.page.data[index],
                 ),
               ),
             );

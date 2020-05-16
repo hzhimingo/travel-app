@@ -4,6 +4,7 @@ import 'package:travel/core/error/exceptions.dart';
 import 'package:travel/entity/moment_cover.dart';
 import 'package:travel/entity/moment_detail.dart';
 import 'package:travel/data/datasources/remote/moment_remote_datasource.dart';
+import 'package:travel/entity/page.dart';
 import 'package:travel/entity/post_moment_form.dart';
 
 class MomentRepository {
@@ -11,9 +12,9 @@ class MomentRepository {
 
   MomentRepository({this.remote});
 
-  Future<Either<Failure, List<MomentCover>>> fetchMomentCovers() async {
+  Future<Either<Failure, Page<List<MomentCover>>>> fetchMomentCovers(int boundary, int offset) async {
     try {
-      var data = await remote.fetchMomentCovers();
+      var data = await remote.fetchMomentCovers(boundary, offset);
       return Right(data);
     } on ApiException catch(e) {
       return Left(ApiFailure(e.msg));

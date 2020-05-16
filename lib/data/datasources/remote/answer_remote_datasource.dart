@@ -3,26 +3,26 @@ import 'package:travel/core/error/exceptions.dart';
 import 'package:travel/core/http/http.dart';
 import 'package:travel/entity/answer_cover.dart';
 import 'package:travel/entity/answer_detail.dart';
+import 'package:travel/entity/page.dart';
 
 class AnswerRemoteDataSource {
   final Dio http;
 
   AnswerRemoteDataSource({this.http});
 
-  Future<List<AnswerCover>> fetchAnswerCovers(int questionId, int userId) async {
-    List<AnswerCover> answerCovers;
+  Future<Page<List<AnswerCover>>> fetchAnswerCovers(int questionId, int userId, int boundary, int offset) async {
+    Page<List<AnswerCover>> page;
     var headers;
     if (userId != null) {
       headers = {
         'userId': userId,
       };
     }
-    print("questionId:$questionId");
     await http.get(
       '/qa/answer/covers',
       queryParameters: {
-        'boundary': 0,
-        'offset': 15,
+        'boundary': boundary,
+        'offset': offset,
         'question': questionId,
       },
       options: Options(
@@ -31,17 +31,22 @@ class AnswerRemoteDataSource {
     ).then((response) {
       Result result = Result.fromJson(response.data);
       if (result.code == 0) {
-        answerCovers = result.data["data"]
+        List<AnswerCover> answerCovers = result.data["data"]
             .map<AnswerCover>((item) => AnswerCover.fromJson(item))
             .toList();
-        
+        page = Page(
+          boundary: result.data['boundary'],
+          offset: result.data['offset'],
+          data: answerCovers,
+          hasNext: result.data['hasNext'],
+        );
       } else {
         throw ApiException(msg: result.msg);
       }
     }).catchError((r) {
       throw ServerException();
     });
-    return answerCovers;
+    return page;
   }
 
   Future<List<AnswerCover>> fetchHotAnswerCovers(int questionId, int userId) {

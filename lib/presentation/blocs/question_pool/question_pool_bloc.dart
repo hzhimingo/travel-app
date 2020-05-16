@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:travel/entity/page.dart';
 import 'package:travel/entity/question_cover.dart';
 import 'package:travel/service/question_service.dart';
 
@@ -23,22 +24,23 @@ class QuestionPoolBloc extends Bloc<QuestionPoolEvent, QuestionPoolState> {
     final currentState = state;
     if (event is InitializeQuestionPool) {
       yield QuestionPoolInitializing();
-      var data = await questionService.fetchQuestionCovers();
+      var data = await questionService.fetchQuestionCovers(0, 15);
       yield data.fold(
         (faliure) => QuestionPoolInitializeFailure(),
-        (questionCovers) => QuestionPoolLoaded(questionCovers: questionCovers),
+        (page) => QuestionPoolLoaded(page: page),
       );
     }
     if (event is LoadMoreQuestionCovers) {
       yield QuestionPoolLoading();
-      var data = await questionService.fetchQuestionCovers();
+      var data = await questionService.fetchQuestionCovers(event.boundary, event.offset);
       yield data.fold(
         (faliure) => QuestionPoolLoadFailure(),
-        (questionCovers) {
+        (page) {
           if (currentState is QuestionPoolLoaded) {
-            return QuestionPoolLoaded(questionCovers: currentState.questionCovers + questionCovers);
+            page.data = currentState.page.data + page.data;
+            return QuestionPoolLoaded(page: page);
           } else {
-            return QuestionPoolLoaded(questionCovers: questionCovers);
+            return QuestionPoolLoadFailure();
           }
         },
       );

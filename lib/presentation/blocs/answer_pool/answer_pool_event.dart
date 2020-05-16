@@ -19,8 +19,10 @@ class LoadMoreAnswerCovers extends AnswerPoolEvent {
 
   final int questionId;
   final int userId;
+  final int boundary;
+  final int offset;
 
-  LoadMoreAnswerCovers({this.questionId, this.userId});
+  LoadMoreAnswerCovers({this.questionId, this.userId, this.boundary, this.offset});
 
   @override
   List<Object> get props => [questionId];

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:travel/entity/answer_cover.dart';
+import 'package:travel/entity/page.dart';
 import 'package:travel/service/answer_service.dart';
 
 part 'answer_pool_event.dart';
@@ -23,22 +24,23 @@ class AnswerPoolBloc extends Bloc<AnswerPoolEvent, AnswerPoolState> {
     final currentState = state;
     if (event is InitializeAnswerPool) {
       yield AnswerPoolInitializing();
-      var data = await answerService.fetchAnswerCovers(event.questionId, event.userId);
+      var data = await answerService.fetchAnswerCovers(event.questionId, event.userId, 0, 15);
       yield data.fold(
         (faliure) => AnswerPoolInitializeFailure(),
-        (answerCovers) => AnswerPoolLoaded(answerCovers: answerCovers),
+        (page) => AnswerPoolLoaded(page: page),
       );
     }  
     if (event is LoadMoreAnswerCovers) {
       yield AnswerPoolLoading();
-      var data = await answerService.fetchAnswerCovers(event.questionId, event.userId);
+      var data = await answerService.fetchAnswerCovers(event.questionId, event.userId, event.boundary, event.offset);
       yield data.fold(
         (faliure) =>AnswerPoolLoadFailure(),
-        (answerCovers) {
+        (page) {
           if (currentState is AnswerPoolLoaded) {
-            return AnswerPoolLoaded(answerCovers: currentState.answerCovers + answerCovers);
+            page.data = currentState.page.data + page.data;
+            return AnswerPoolLoaded(page: page);
           } else {
-            return AnswerPoolLoaded(answerCovers: answerCovers);
+            return AnswerPoolLoadFailure();
           }
         },
       );

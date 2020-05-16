@@ -26,12 +26,12 @@ class MomentPoolLoading extends MomentPoolState {
 }
 
 class MomentPoolLoaded extends MomentPoolState {
-  final List<MomentCover> momentCovers;
+  final Page<List<MomentCover>> page;
 
-  MomentPoolLoaded({@required this.momentCovers});
+  MomentPoolLoaded({@required this.page});
 
   @override
-  List<Object> get props => [this.momentCovers];
+  List<Object> get props => [this.page];
 }
 
 class MomentPoolLoadFailure extends MomentPoolState {

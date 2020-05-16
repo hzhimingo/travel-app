@@ -65,12 +65,24 @@ class _QuestionDetailState extends State<QuestionDetail> {
             if (currentState is CurrentUserLoaded) {
               userId = currentState.currentUser.userId;
             }
+            int boundary = 0;
+            int offset = 15;
+            final answerCurrentState = context.bloc<AnswerPoolBloc>().state;
+            if (answerCurrentState is AnswerPoolLoaded) {
+              boundary = answerCurrentState.page.boundary + answerCurrentState.page.offset;
+              offset = answerCurrentState.page.offset;
+            }
             return SmartRefresher(
               controller: _refreshController,
               enablePullDown: false,
               enablePullUp: true,
               footer: ClassicFooter(),
-              onLoading: () => _answerPoolBloc.add(LoadMoreAnswerCovers(questionId: state.questionDetail.questionId, userId: userId)),
+              onLoading: () => _answerPoolBloc.add(LoadMoreAnswerCovers(
+                questionId: state.questionDetail.questionId,
+                userId: userId,
+                boundary: boundary,
+                offset: offset,
+              )),
               child: ListView(
                 children: <Widget>[
                   QuestionDetailPanel(
