@@ -17,3 +17,14 @@ class LoadMoreQuestionCovers extends QuestionPoolEvent {
   @override
   List<Object> get props => [boundary, offset];
 }
+
+class RefreshQuestionCovers extends QuestionPoolEvent {
+
+  final int boundary;
+  final int offset;
+
+  RefreshQuestionCovers({this.boundary, this.offset});
+
+  @override
+  List<Object> get props => [boundary, offset];
+}

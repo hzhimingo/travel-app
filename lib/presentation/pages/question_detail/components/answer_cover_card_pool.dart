@@ -43,9 +43,6 @@ class AnswerCoverCardPool extends StatelessWidget {
           BlocConsumer<AnswerPoolBloc, AnswerPoolState>(
             listener: (context, state) {
               if (state is AnswerPoolLoaded) {
-                if (!state.page.hasNext) {
-                  refreshController.loadNoData();
-                }
                 if (refreshController.isLoading) {
                   refreshController.loadComplete();
                 }

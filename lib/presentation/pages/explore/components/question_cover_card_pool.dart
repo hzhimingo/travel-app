@@ -12,7 +12,8 @@ class QuestionPool extends StatefulWidget {
   _QuestionPoolState createState() => _QuestionPoolState();
 }
 
-class _QuestionPoolState extends State<QuestionPool> with AutomaticKeepAliveClientMixin {
+class _QuestionPoolState extends State<QuestionPool>
+    with AutomaticKeepAliveClientMixin {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
@@ -28,9 +29,6 @@ class _QuestionPoolState extends State<QuestionPool> with AutomaticKeepAliveClie
       child: BlocConsumer<QuestionPoolBloc, QuestionPoolState>(
         listener: (context, state) {
           if (state is QuestionPoolLoaded) {
-            if (!state.page.hasNext) {
-              _refreshController.loadNoData();
-            }
             if (_refreshController.isLoading) {
               _refreshController.loadComplete();
             }
@@ -66,12 +64,18 @@ class _QuestionPoolState extends State<QuestionPool> with AutomaticKeepAliveClie
               controller: _refreshController,
               enablePullDown: false,
               enablePullUp: true,
-              onLoading: () => context
-                  .bloc<QuestionPoolBloc>()
-                  .add(LoadMoreQuestionCovers(
-                    boundary: state.page.boundary + state.page.offset,
-                    offset: state.page.offset
-                  )),
+              onLoading: () {
+                if (state.page.hasNext) {
+                  context.bloc<QuestionPoolBloc>().add(LoadMoreQuestionCovers(
+                      boundary: state.page.boundary + state.page.offset,
+                      offset: state.page.offset));
+                } else {
+                  context.bloc<QuestionPoolBloc>().add(RefreshQuestionCovers(
+                        boundary: 0,
+                        offset: state.page.offset,
+                      ));
+                }
+              },
               footer: ClassicFooter(),
               child: ListView.builder(
                 shrinkWrap: true,

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:travel/presentation/blocs/authorization/authorization_bloc.dart';
@@ -33,7 +34,29 @@ class _EditAnswerState extends State<EditAnswer> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<EditAnswerBloc, EditAnswerState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is SubmitAnswerSuccess) {
+          showToast("发布成功");
+          GlobalRoute.router.pop(context);
+          GlobalRoute.router.pop(context);
+        }
+        if (state is SubmitAnswerFailed) {
+          showToast("发布失败，请稍后再试");
+        }
+        if (state is SubmitAnswerIng) {
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                  width: 100.0,
+                  height: 100.0,
+                  color: Colors.white,
+                  child: SpinKitRing(color: Colors.blue),
+                );
+              });
+        }
+      },
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

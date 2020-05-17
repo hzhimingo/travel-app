@@ -10,8 +10,12 @@ class InitializeMomentPool extends MomentPoolEvent {
 }
 
 class RefreshMomentPool extends MomentPoolEvent {
+  final int boundary;
+  final int offset;
+
+  RefreshMomentPool({this.boundary, this.offset});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [boundary, offset];
 }
 
 class LoadMoreMomentCovers extends MomentPoolEvent {

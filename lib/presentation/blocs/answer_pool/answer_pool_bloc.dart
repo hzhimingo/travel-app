@@ -24,17 +24,32 @@ class AnswerPoolBloc extends Bloc<AnswerPoolEvent, AnswerPoolState> {
     final currentState = state;
     if (event is InitializeAnswerPool) {
       yield AnswerPoolInitializing();
-      var data = await answerService.fetchAnswerCovers(event.questionId, event.userId, 0, 15);
+      var data = await answerService.fetchAnswerCovers(
+          event.questionId, event.userId, 0, 15);
       yield data.fold(
         (faliure) => AnswerPoolInitializeFailure(),
         (page) => AnswerPoolLoaded(page: page),
       );
-    }  
+    }
+    if (event is RefreshAnswerCovers) {
+      yield AnswerPoolLoading();
+      var data = await answerService.fetchAnswerCovers(
+        event.questionId,
+        event.userId,
+        event.boundary,
+        event.offset,
+      );
+      yield data.fold(
+        (faliure) => AnswerPoolInitializeFailure(),
+        (page) => AnswerPoolLoaded(page: page),
+      );
+    }
     if (event is LoadMoreAnswerCovers) {
       yield AnswerPoolLoading();
-      var data = await answerService.fetchAnswerCovers(event.questionId, event.userId, event.boundary, event.offset);
+      var data = await answerService.fetchAnswerCovers(
+          event.questionId, event.userId, event.boundary, event.offset);
       yield data.fold(
-        (faliure) =>AnswerPoolLoadFailure(),
+        (faliure) => AnswerPoolLoadFailure(),
         (page) {
           if (currentState is AnswerPoolLoaded) {
             page.data = currentState.page.data + page.data;

@@ -27,3 +27,15 @@ class LoadMoreAnswerCovers extends AnswerPoolEvent {
   @override
   List<Object> get props => [questionId];
 }
+
+class RefreshAnswerCovers extends AnswerPoolEvent {
+  final int questionId;
+  final int userId;
+  final int boundary;
+  final int offset;
+
+  RefreshAnswerCovers({this.questionId, this.userId, this.boundary, this.offset});
+
+  @override
+  List<Object> get props => [questionId, userId, boundary, offset];
+}

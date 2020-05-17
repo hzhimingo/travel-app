@@ -28,12 +28,18 @@ class AnswerCoverCard extends StatelessWidget {
         int userId;
         if (currentState is CurrentUserLoaded) {
           userId = currentState.currentUser.userId;
+          GlobalRoute.router.navigateTo(
+            context,
+            '/answerDetail?answerId=${answerCover.answerId}&question=${Uri.encodeComponent(question)}&userId=$userId',
+            transition: TransitionType.cupertino,
+          );
+        } else {
+          GlobalRoute.router.navigateTo(
+            context,
+            '/answerDetail?answerId=${answerCover.answerId}&question=${Uri.encodeComponent(question)}',
+            transition: TransitionType.cupertino,
+          );
         }
-        GlobalRoute.router.navigateTo(
-          context,
-          '/answerDetail?answerId=${answerCover.answerId}&question=${Uri.encodeComponent(question)}&userId=$userId',
-          transition: TransitionType.cupertino,
-        );
       },
       child: Container(
         color: Colors.white,
@@ -53,7 +59,7 @@ class AnswerCoverCard extends StatelessWidget {
             MultiBlocProvider(
               providers: [
                 BlocProvider(
-                  create: (context) =>  getIt.get<ThumbupBloc>(),
+                  create: (context) => getIt.get<ThumbupBloc>(),
                 ),
                 BlocProvider(
                   create: (context) => getIt.get<CollectBloc>(),

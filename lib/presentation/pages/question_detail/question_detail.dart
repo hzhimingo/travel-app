@@ -67,22 +67,35 @@ class _QuestionDetailState extends State<QuestionDetail> {
             }
             int boundary = 0;
             int offset = 15;
+            bool hasNext = false;
             final answerCurrentState = context.bloc<AnswerPoolBloc>().state;
             if (answerCurrentState is AnswerPoolLoaded) {
-              boundary = answerCurrentState.page.boundary + answerCurrentState.page.offset;
+              boundary = answerCurrentState.page.boundary;
               offset = answerCurrentState.page.offset;
+              hasNext = answerCurrentState.page.hasNext;
             }
             return SmartRefresher(
               controller: _refreshController,
               enablePullDown: false,
               enablePullUp: true,
               footer: ClassicFooter(),
-              onLoading: () => _answerPoolBloc.add(LoadMoreAnswerCovers(
-                questionId: state.questionDetail.questionId,
-                userId: userId,
-                boundary: boundary,
-                offset: offset,
-              )),
+              onLoading: () {
+                if (hasNext) {
+                  _answerPoolBloc.add(LoadMoreAnswerCovers(
+                    questionId: state.questionDetail.questionId,
+                    userId: userId,
+                    boundary: boundary,
+                    offset: offset,
+                  ));
+                } else {
+                   _answerPoolBloc.add(RefreshAnswerCovers(
+                    questionId: state.questionDetail.questionId,
+                    userId: userId,
+                    boundary: 0,
+                    offset: boundary + offset,
+                  ));
+                }
+              },
               child: ListView(
                 children: <Widget>[
                   QuestionDetailPanel(

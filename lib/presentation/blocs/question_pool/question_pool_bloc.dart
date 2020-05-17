@@ -45,5 +45,13 @@ class QuestionPoolBloc extends Bloc<QuestionPoolEvent, QuestionPoolState> {
         },
       );
     }
+    if (event is RefreshQuestionCovers) {
+      yield QuestionPoolLoading();
+      var data = await questionService.fetchQuestionCovers(event.boundary, event.offset);
+      yield data.fold(
+        (failure) => QuestionPoolLoadFailure(),
+        (page) => QuestionPoolLoaded(page: page)
+      );
+    }
   }
 }

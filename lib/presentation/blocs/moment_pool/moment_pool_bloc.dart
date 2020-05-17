@@ -33,7 +33,7 @@ class MomentPoolBloc extends Bloc<MomentPoolEvent, MomentPoolState> {
     }
     if (event is RefreshMomentPool) {
       yield MomentPoolLoading();
-      var data = await momentService.fetchMomentCovers(0, 15);
+      var data = await momentService.fetchMomentCovers(event.boundary, event.offset);
       yield data.fold(
         (faliure) => MomentPoolLoadFailure(),
         (page) => MomentPoolLoaded(page: page),
@@ -41,6 +41,7 @@ class MomentPoolBloc extends Bloc<MomentPoolEvent, MomentPoolState> {
     }
     if (event is LoadMoreMomentCovers) {
       yield MomentPoolLoading();
+      print("${event.boundary} ${event.offset}");
       var data = await momentService.fetchMomentCovers(event.boundary, event.offset);
       yield data.fold(
         (faliure) => MomentPoolLoadFailure(),

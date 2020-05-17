@@ -26,9 +26,6 @@ class _MomentTabViewState extends State<MomentTabView>
     return BlocConsumer<MomentPoolBloc, MomentPoolState>(
       listener: (context, state) {
         if (state is MomentPoolLoaded) {
-          if (!state.page.hasNext) {
-            _refreshController.loadNoData();
-          }
           if (_refreshController.isRefresh) {
             _refreshController.refreshCompleted();
           }
@@ -74,11 +71,20 @@ class _MomentTabViewState extends State<MomentTabView>
               controller: _refreshController,
               enablePullUp: true,
               enablePullDown: true,
-              onRefresh: () => context.bloc<MomentPoolBloc>().add(RefreshMomentPool()),
-              onLoading: () => context.bloc<MomentPoolBloc>().add(LoadMoreMomentCovers(
-                boundary: state.page.boundary + state.page.offset,
-                offset: state.page.offset
-              )),
+              onRefresh: () => context
+                  .bloc<MomentPoolBloc>()
+                  .add(RefreshMomentPool(boundary: 0, offset: 15)),
+              onLoading: () {
+                if (state.page.hasNext) {
+                  context.bloc<MomentPoolBloc>().add(LoadMoreMomentCovers(
+                      boundary: state.page.boundary + state.page.offset,
+                      offset: state.page.offset));
+                } else {
+                  context
+                      .bloc<MomentPoolBloc>()
+                      .add(RefreshMomentPool(boundary: 0, offset: state.page.boundary + state.page.offset));
+                }
+              },
               header: CustomDropHeader(),
               footer: ClassicFooter(),
               child: WaterfallFlow.builder(
